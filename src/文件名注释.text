@@ -3,9 +3,9 @@ login 登录模块
 	login.vue : 登录组件
 	Register.vue: 注册
 	updatePassword.vue：修改密码
-	
---------------------------------------------------------------------	
-	
+
+--------------------------------------------------------------------
+
 main 主页模块
 	main.vue:主页
 
@@ -15,8 +15,8 @@ permissions 权限模块
 	userManagement.vue : 用户管理
 	roleManagement.vue ：角色管理
 	menuManagement.vue ：菜单管理
-	
---------------------------------------------------------------------	
+
+--------------------------------------------------------------------
 productDesign 产品设计模块
 	management：产品档案管理
 		ProductReview.vue : 产品档案登记复核
@@ -35,46 +35,46 @@ Production : 生产模块
 
 	process：产品生产工序设计
 		Processdesign.vue：产品生产工序设计单审核
-		
-		
+
+
 	ProcessMaterials：工序物料设计管理
 		Processmaterialdesign.vue : 工序物料设计单审核
-		
-		
+
+
 	ProductionPlan：生产计划管理
 		Productionplanreview.vue : 生产计划审核
-		
-		
+
+
 	scheduling：生产调度管理
 		Workorder.vue : 生产派工单审核
-	
+
 	internal:内部生产管理
 		Productionregister.vue : 生产登记复核
---------------------------------------------------------------------	
-	
-	
+--------------------------------------------------------------------
+
+
 inventory：库存管理模块
 	SafetyStock:安全库存配置管理
 		Safestock.vue : 安全库存配置单复核
-		
+
 	enterRequest:入库申请管理
 		Joinregister.vue : 入库申请登记审核
-		
+
 	comeoutRequest：出库申请管理
 		Outregister.vue : 出库申请登记审核
-		
+
 	dispatch：出入库调度管理
-		
-		
+
+
 	enterAdmin:入库管理
 		Joinbankregister.vue : 入库登记复核
-		
+
 	comeoutAdmin：出库管理
 		Outbankregister.vue : 出库登记复核
-		
+
 	dynamic：动态库存管理
-		
-		
+
+
 --------------------------------------------------------------------
 
 
@@ -88,5 +88,5 @@ procurement: 采购模块
 		purchaseOrder-Audit:采购执行单审核
 		purchaseOrder-Audit-info:采购执行单审核
 		purchaseOrderSelect:采购执行单查询
-    
-  recommend：产品供应商推荐管理
+
+  recommend：产品供应商推荐管理 
