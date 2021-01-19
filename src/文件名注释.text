@@ -88,5 +88,4 @@ procurement: 采购模块
 		purchaseOrder-Audit:采购执行单审核
 		purchaseOrder-Audit-info:采购执行单审核
 		purchaseOrderSelect:采购执行单查询
-
-  recommend：产品供应商推荐管理 
+  recommend：  产品供应商推荐管理
