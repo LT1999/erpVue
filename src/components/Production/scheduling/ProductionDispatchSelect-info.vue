@@ -276,7 +276,7 @@
 				width: "1000px",
 				dialogFormVisible: false,
 				dialogTableVisible: false,
-dialogFormVisible2: false,
+				dialogFormVisible2: false,
 				dialogTableVisible2: false,
 				//表单
 				form: {
@@ -331,47 +331,47 @@ dialogFormVisible2: false,
 		margin: 0 auto;
 		padding-bottom: 23px;
 	}
-	
+
 	#buttons {
 		float: right;
 		margin-bottom: 8px;
 	}
-	
+
 	input {
 		outline: none;
 		border: none;
 		border-bottom: 1px solid #000;
 	}
-	
+
 	#box>>>.el-form-item {
 		margin-bottom: 0px;
 	}
-	
+
 	#box>>>.el-form-item__label {
 		line-height: 35px;
 	}
-	
+
 	.el-row {
 		margin: 10px;
 	}
-	
+
 	h3 {
 		text-align: center;
 	}
-	
+
 	table {
 		margin-left: 3%;
 	}
-	
+
 	table td {
 		margin-left: 50px;
 		display: inline-block;
 	}
-	
+
 	#box>>>.el-form-item__content {
 		line-height: 35px;
 	}
-	
+
 	#box>>>.el-table td,
 	.el-table th {
 		padding: 0px 0;
