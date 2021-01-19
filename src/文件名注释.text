@@ -80,3 +80,6 @@ inventory：库存管理模块
 
 procurement: 采购模块
 	scheduling：采购调度管理
+  
+  recommend：产品供应商推荐管理
+  
