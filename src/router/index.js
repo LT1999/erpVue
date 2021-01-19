@@ -617,6 +617,11 @@ export default new Router({
 					path: '/purchaseOrderAuditinfo',
 					name: 'purchaseOrderAuditinfo',
 					component: purchaseOrderAuditinfo => require(['@/components/procurement/scheduling/purchaseOrder-Audit-info.vue'], purchaseOrderAuditinfo)
+				},
+				{ /*采购执行单查询 */
+					path: '/purchaseOrderSelect',
+					name: 'purchaseOrderSelect',
+					component: purchaseOrderSelect => require(['@/components/procurement/scheduling/purchaseOrderSelect.vue'], purchaseOrderSelect)
 				}
 			]
 		}

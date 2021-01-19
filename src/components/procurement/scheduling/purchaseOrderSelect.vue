@@ -139,7 +139,7 @@
 		methods: {
 			//查看
 			back() {
-				alert(this.$refs.http)
+				alert(this.$api)
 				/* location.href = "#/purchaseOrderInfo" */
 			},
 			//分页
