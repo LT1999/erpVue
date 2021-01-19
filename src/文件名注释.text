@@ -80,3 +80,6 @@ inventory：库存管理模块
 
 procurement: 采购模块
 	scheduling：采购调度管理
+		purchaseOrder:制定采购执行单
+			purchaseOrder-info:制定采购执行单
+		purchaseOrder-Audit:采购执行单审核
