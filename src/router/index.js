@@ -652,8 +652,8 @@ export default new Router({
 					path: '/DataReportExcel',
 					name: 'DataReportExcel',
 					component: DataReportExcel => require(['@/components/procurement/DataReport/DataReportExcel.vue'], DataReportExcel)
-				}，
-                { /*制定采购执行单 */
+				},
+				{ /*制定采购执行单 */
 					path: '/purchaseOrder',
 					name: 'purchaseOrder',
 					component: purchaseOrder => require(['@/components/procurement/scheduling/purchaseOrder.vue'], purchaseOrder)
