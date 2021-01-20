@@ -652,6 +652,31 @@ export default new Router({
 					path: '/DataReportExcel',
 					name: 'DataReportExcel',
 					component: DataReportExcel => require(['@/components/procurement/DataReport/DataReportExcel.vue'], DataReportExcel)
+				}，
+                { /*制定采购执行单 */
+					path: '/purchaseOrder',
+					name: 'purchaseOrder',
+					component: purchaseOrder => require(['@/components/procurement/scheduling/purchaseOrder.vue'], purchaseOrder)
+				},
+				{ /*制定采购执行单 */
+					path: '/purchaseOrderInfo',
+					name: 'purchaseOrderInfo',
+					component: purchaseOrderInfo => require(['@/components/procurement/scheduling/purchaseOrder-info.vue'], purchaseOrderInfo)
+				},
+				{ /*采购执行单审核 */
+					path: '/purchaseOrderAudit',
+					name: 'purchaseOrderAudit',
+					component: purchaseOrderAudit => require(['@/components/procurement/scheduling/purchaseOrder-Audit.vue'], purchaseOrderAudit)
+				},
+				{ /*采购执行单审核 */
+					path: '/purchaseOrderAuditinfo',
+					name: 'purchaseOrderAuditinfo',
+					component: purchaseOrderAuditinfo => require(['@/components/procurement/scheduling/purchaseOrder-Audit-info.vue'], purchaseOrderAuditinfo)
+				},
+				{ /*采购执行单查询 */
+					path: '/purchaseOrderSelect',
+					name: 'purchaseOrderSelect',
+					component: purchaseOrderSelect => require(['@/components/procurement/scheduling/purchaseOrderSelect.vue'], purchaseOrderSelect)
 				}
 			]
 		}

@@ -14,6 +14,8 @@ Vue.prototype.$http = axios
 import qs from 'qs'
 Vue.prototype.$qs = qs
 
+import api from "./interface/index.js"
+Vue.prototype.$api=api.commonUrl
 Vue.use(ElementUI)
 
 
