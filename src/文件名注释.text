@@ -79,3 +79,11 @@ inventory：库存管理模块
 
 
 procurement 采购模块
+
+    SupplierApplication:供应商申请审批管理
+      ApplyForRegistration:申请登记
+	  VerificationRequest:申请登记审核
+	  RequestForChanges :申请查询-变更
+	  RequestDispose:申请处理
+    DataReport:数据报表
+	  DataReportExcel:报表
