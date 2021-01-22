@@ -27,19 +27,19 @@
 			</el-form>
 			<div>
 				<el-table :data="tableData" style="text-align: center;" border>
-					<el-table-column prop="1" label="供应商编号" width="200px">
+					<el-table-column prop="supplierNo" label="供应商编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="2" label="供应商名称">
+					<el-table-column prop="supplierName" label="供应商名称">
 					</el-table-column>
-					<el-table-column prop="3" label="优质级别">
+					<el-table-column prop="supplierQualityRank" label="优质级别">
 					</el-table-column>
-					<el-table-column prop="4" label="I级产品">
+					<el-table-column prop="firstKindName" label="I级产品">
 					</el-table-column>
-					<el-table-column prop="5" label="II级产品">
+					<el-table-column prop="secondKindName" label="II级产品">
 					</el-table-column>
-					<el-table-column prop="6" label="III级产品">
+					<el-table-column prop="threeKindName" label="III级产品">
 					</el-table-column>
-					<el-table-column prop="7" label="所在区域">
+					<el-table-column prop="supplierArea" label="所在区域">
 					</el-table-column>
 					<el-table-column prop="review" label="操作" width="200px">
 						<template slot-scope="scope">
@@ -129,9 +129,7 @@
 				//级联选择器
 				options: [],
 				//表格
-				tableData: [{
-					1:"1",2:"2",3:"3",4:"4",5:"5",6:"6",7:"7"
-				}],
+				tableData: [],
 				currentPage: 10
 			}
 		},
@@ -182,9 +180,8 @@
 					}); */
 			},
 			selectAll(){
-				this.$http.post(this.$api+"/procurement/supplierfiles/findCheck.do")
+				this.$http.post(this.$api+"/supplierfiles/findCheck")
 					.then(res => {
-						console.log(res.data);
 						this.tableData = res.data;
 					})
 					.catch(err => {

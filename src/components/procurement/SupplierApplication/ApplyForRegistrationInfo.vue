@@ -26,20 +26,19 @@
 										<tr>
 											<td>
 												<el-form-item label="档案编号">
-													<el-input style="width:350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:350px;" v-model="form.supplierNo" disabled></el-input>
 												</el-form-item>
 											</td>
-
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="供应商名称">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierName" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="地址">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierAddress" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -47,25 +46,25 @@
 										<tr>
 											<td>
 												<el-form-item label="产品类别">
-													<el-input disabled style="width:350px;" :options="options"></el-input>
+													<el-input disabled style="width:350px;" v-model="form.classify" :options="options"></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="所在区域">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierArea" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="供应商曾用名">
-													<el-input style="width:  350px;" disabled clearable>
+													<el-input style="width:  350px;" v-model="form.supplierUsedname" disabled clearable>
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="开户银行">
-													<el-input style="width:  350px;" disabled clearable>
+													<el-input style="width:  350px;" v-model="form.supplierOpenAccount" disabled clearable>
 													</el-input>
 												</el-form-item>
 											</td>
@@ -74,12 +73,12 @@
 										<tr>
 											<td>
 												<el-form-item label="银行账号">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierBankaccount" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="网址">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierUrl" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -88,13 +87,13 @@
 											<td>
 												<el-form-item label="优质级别">
 													<template>
-														<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+														<el-input style="width:  350px;" v-model="form.supplierQualityRank" readonly="readonly" disabled></el-input>
 													</template>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -102,13 +101,13 @@
 											<td>
 												<el-form-item label="传真">
 													<template>
-														<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+														<el-input style="width:  350px;" v-model="form.supplierFax" readonly="readonly" disabled></el-input>
 													</template>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="邮政编码">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierPostalcode" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -125,105 +124,84 @@
 						<el-header>联系人信息</el-header>
 						<el-main>
 							<div style="padding-top: 20px;">
-								<el-form ref="form" :model="form" label-width="150px">
+								<el-form ref="form" :model="form1" label-width="150px">
 									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第一联系人">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanName" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanSector" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanPost" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
-											<td>
-												<el-form-item label="办公电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="家庭电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;">
+													<el-input disabled style="width:  350px;" v-model="form1.linkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" disabled v-model="form1.linkmanSex"></el-input>
 												</el-form-item>
 											</td>
 										</tr>
-
+									</table>
+								</el-form>
+								<el-form ref="form" :model="form2" label-width="150px">
+									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第二联系人">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" disabled v-model="form2.linkmanName"></el-input>
 												</el-form-item>
 											</td>
 											<td>
 
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
 												</el-form-item>
 											</td>
-											<td>
-												<el-form-item label="办公电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="家庭电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;">
+													<el-input disabled style="width:  350px;" v-model="form2.linkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanSex" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -242,113 +220,21 @@
 									<table align="center">
 										<tr>
 											<td>
-												<el-form-item label="可供应产品集合">
-													<el-input type="textarea" readonly="readonly" disabled :autosize="{ minRows: 3, maxRows: 6}">
-													</el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="开票信息">
-													<el-input type="textarea" readonly="readonly" disabled :autosize="{ minRows: 3, maxRows: 6}">
-													</el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="交易次数累计">
-													<el-input style="width:  350px;" readonly="readonly" disabled v-model="form.productName" clearable></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="退货次数累计">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.factoryName" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-
-										<tr>
-											<td>
-												<el-form-item label="供货额累计">
-													<el-input v-model="form.classify" disabled style="width:350px;" :options="options"></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="退货额累计">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.productNick" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="平均供货周期">
-													<el-input v-model="form.type" disabled style="width:  350px;" clearable>
-													</el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="档案变更累计">
-													<el-input disabled v-model="form.productClass" style="width:  350px;" clearable>
-													</el-input>
-												</el-form-item>
-											</td>
-										</tr>
-
-										<tr>
-											<td>
-												<el-form-item label="联络次数累计">
-													<el-input style="width:  350px;" v-model="form.personalUnit" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="档案附件">
-													<el-input style="width:  350px;" v-model="form.personalValue" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="推荐供应产品集合  ">
-													<el-input type="textarea" readonly="readonly" disabled :autosize="{ minRows: 3, maxRows: 6}">
-													</el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="最近交易时间">
-													<el-input style="width:  350px;" readonly="readonly" disabled v-model="form.productName" clearable></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="最近联络时间">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.factoryName" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-
-										<tr>
-											<td>
-												<el-form-item label="最近变更时间">
-													<el-input v-model="form.classify" disabled style="width:350px;" :options="options"></el-input>
-												</el-form-item>
-											</td>
-											<td>
 												<el-form-item label="登记时间">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.productNick" disabled></el-input>
+													<el-input style="width:  350px;" readonly="readonly" v-model="form.supplierRegistrationtime" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="采购人">
-													<el-input v-model="form.type" disabled style="width:  350px;" clearable>
+													<el-input v-model="form.supplierBuyer" disabled style="width:  350px;" clearable>
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="登记人">
-													<el-input disabled v-model="form.productClass" style="width:  350px;" clearable>
+													<el-input disabled v-model="form.supplierRegistrant" style="width:  350px;" clearable>
 													</el-input>
 												</el-form-item>
 											</td>
@@ -357,12 +243,12 @@
 										<tr>
 											<td>
 												<el-form-item label="复核人">
-													<el-input style="width:  350px;" v-model="form.personalUnit" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.auditor" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="复核时间">
-													<el-input style="width:  350px;" v-model="form.personalValue" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.auditorTime" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -383,24 +269,19 @@
 										<tr>
 											<td>
 												<el-form-item label="档案编号">
-													<el-input style="width:350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="邮政编码">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:350px;" v-model="form.supplierNo" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="供应商名称">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierName" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="地址">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierAddress" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -408,25 +289,25 @@
 										<tr>
 											<td>
 												<el-form-item label="产品类别">
-													<el-input disabled style="width:350px;" :options="options"></el-input>
+													<el-input disabled style="width:350px;" v-model="form.classify" :options="options"></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="所在区域">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierArea" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="供应商曾用名">
-													<el-input style="width:  350px;" disabled clearable>
+													<el-input style="width:  350px;" v-model="form.supplierUsedname" disabled clearable>
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="开户银行">
-													<el-input style="width:  350px;" disabled clearable>
+													<el-input style="width:  350px;" v-model="form.supplierOpenAccount" disabled clearable>
 													</el-input>
 												</el-form-item>
 											</td>
@@ -435,12 +316,12 @@
 										<tr>
 											<td>
 												<el-form-item label="银行账号">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierBankaccount" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="网址">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierUrl" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -449,13 +330,13 @@
 											<td>
 												<el-form-item label="优质级别">
 													<template>
-														<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+														<el-input style="width:  350px;" v-model="form.supplierQualityRank" readonly="readonly" disabled></el-input>
 													</template>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -463,8 +344,13 @@
 											<td>
 												<el-form-item label="传真">
 													<template>
-														<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+														<el-input style="width:  350px;" v-model="form.supplierFax" readonly="readonly" disabled></el-input>
 													</template>
+												</el-form-item>
+											</td>
+											<td>
+												<el-form-item label="邮政编码">
+													<el-input style="width:  350px;" v-model="form.supplierPostalcode" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -477,105 +363,84 @@
 						<el-header>联系人信息</el-header>
 						<el-main>
 							<div style="padding-top: 20px;">
-								<el-form ref="form" :model="form" label-width="150px">
+								<el-form ref="form" :model="form1" label-width="150px">
 									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第一联系人">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanName" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanSector" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanPost" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
-											<td>
-												<el-form-item label="办公电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="家庭电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form1.linkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;">
+													<el-input disabled style="width:  350px;" v-model="form1.linkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" disabled v-model="form1.linkmanSex"></el-input>
 												</el-form-item>
 											</td>
 										</tr>
-
+									</table>
+								</el-form>
+								<el-form ref="form" :model="form2" label-width="150px">
+									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第二联系人">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" disabled v-model="form2.linkmanName"></el-input>
 												</el-form-item>
 											</td>
 											<td>
 
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
 												</el-form-item>
 											</td>
-											<td>
-												<el-form-item label="办公电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="家庭电话">
-													<el-input style="width:  350px;" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;">
+													<el-input disabled style="width:  350px;" v-model="form2.linkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form2.linkmanSex" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -592,113 +457,21 @@
 									<table align="center">
 										<tr>
 											<td>
-												<el-form-item label="可供应产品集合">
-													<el-input type="textarea" readonly="readonly" disabled :autosize="{ minRows: 3, maxRows: 6}">
-													</el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="开票信息">
-													<el-input type="textarea" readonly="readonly" disabled :autosize="{ minRows: 3, maxRows: 6}">
-													</el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="交易次数累计">
-													<el-input style="width:  350px;" readonly="readonly" disabled v-model="form.productName" clearable></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="退货次数累计">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.factoryName" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-
-										<tr>
-											<td>
-												<el-form-item label="供货额累计">
-													<el-input v-model="form.classify" disabled style="width:350px;" :options="options"></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="退货额累计">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.productNick" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="平均供货周期">
-													<el-input v-model="form.type" disabled style="width:  350px;" clearable>
-													</el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="档案变更累计">
-													<el-input disabled v-model="form.productClass" style="width:  350px;" clearable>
-													</el-input>
-												</el-form-item>
-											</td>
-										</tr>
-
-										<tr>
-											<td>
-												<el-form-item label="联络次数累计">
-													<el-input style="width:  350px;" v-model="form.personalUnit" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="档案附件">
-													<el-input style="width:  350px;" v-model="form.personalValue" readonly="readonly" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="推荐供应产品集合  ">
-													<el-input type="textarea" readonly="readonly" disabled :autosize="{ minRows: 3, maxRows: 6}">
-													</el-input>
-												</el-form-item>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<el-form-item label="最近交易时间">
-													<el-input style="width:  350px;" readonly="readonly" disabled v-model="form.productName" clearable></el-input>
-												</el-form-item>
-											</td>
-											<td>
-												<el-form-item label="最近联络时间">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.factoryName" disabled></el-input>
-												</el-form-item>
-											</td>
-										</tr>
-
-										<tr>
-											<td>
-												<el-form-item label="最近变更时间">
-													<el-input v-model="form.classify" disabled style="width:350px;" :options="options"></el-input>
-												</el-form-item>
-											</td>
-											<td>
 												<el-form-item label="登记时间">
-													<el-input style="width:  350px;" readonly="readonly" v-model="form.productNick" disabled></el-input>
+													<el-input style="width:  350px;" readonly="readonly" v-model="form.supplierRegistrationtime" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="采购人">
-													<el-input v-model="form.type" disabled style="width:  350px;" clearable>
+													<el-input v-model="form.supplierBuyer" disabled style="width:  350px;" clearable>
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="登记人">
-													<el-input disabled v-model="form.productClass" style="width:  350px;" clearable>
+													<el-input disabled v-model="form.supplierRegistrant" style="width:  350px;" clearable>
 													</el-input>
 												</el-form-item>
 											</td>
@@ -707,12 +480,12 @@
 										<tr>
 											<td>
 												<el-form-item label="复核人">
-													<el-input style="width:  350px;" v-model="form.personalUnit" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.auditor" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="复核时间">
-													<el-input style="width:  350px;" v-model="form.personalValue" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.auditorTime" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -735,18 +508,40 @@
 				//分类
 				options: [],
 				//表单
-				form: {}
+				form: {},
+				form1: {},
+				form2: {},
+				id1: '',
+				id2: ''
 			}
 		},
 		methods: {
+			selectLinkman() {
+				this.$http.post(this.$api + "/linkman/selectByPrimaryKey" + "?id=" + this.id1)
+					.then(res => {
+						this.form1 = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					})
+				this.$http.post(this.$api + "/linkman/selectByPrimaryKey" + "?id=" + this.id2)
+					.then(res => {
+						this.form2 = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			},
 			back() {
 				location.href = "#/ApplyForRegistration"
 			}
 		},
 		created() {
-			/* this.form = this.$route.query.arr;
-			this.form.classify=this.form.firstKindName+'/'+this.form.secondKindName+'/'+this.form.thirdKindName; */
-
+			this.form = this.$route.query.arr;
+			this.id1 = this.form.supplierFirstcontact;
+			this.id2 = this.form.supplierSecondcontact;
+			this.form.classify = this.form.firstKindName + '/' + this.form.secondKindName + '/' + this.form.thirdKindName;
+			this.selectLinkman();
 		}
 	}
 </script>
