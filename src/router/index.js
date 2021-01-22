@@ -622,7 +622,17 @@ export default new Router({
 					path: '/purchaseOrderSelect',
 					name: 'purchaseOrderSelect',
 					component: purchaseOrderSelect => require(['@/components/procurement/scheduling/purchaseOrderSelect.vue'], purchaseOrderSelect)
-				}
+				},
+        { /*产品供应商推荐登记 */
+        	path: '/supplierRegistration',
+        	name: 'supplierRegistration',
+        	component: supplierRegistration => require(['@/components/procurement/recommend/supplierRegistration.vue'], supplierRegistration)
+        },
+        { /*产品供应商推荐登记 */
+        	path: '/supplierRegistration2',
+        	name: 'supplierRegistration2',
+        	component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'], supplierRegistration2)
+        }
 			]
 		}
 	]
