@@ -632,7 +632,87 @@ export default new Router({
         	path: '/supplierRegistration2',
         	name: 'supplierRegistration2',
         	component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'], supplierRegistration2)
-        }
+        },
+        { /*产品供应商档案登记 */
+        	path: '/Infostration',
+        	name: 'Infostration',
+        	component: Infostration => require(['@/components/procurement/supplierprofile/Infostration.vue'], Infostration)
+        },
+		{ /*供应商档案登记 */
+		          path: '/infostration',
+		          name: 'infostration',
+		          component: infostration => require(['@/components/procurement/supplierprofile/infostration.vue'], infostration)
+		        },
+		        { /*供应商档案登记复核列表 */
+		          path: '/Infostrationreview',
+		          name: 'Infostrationreview',
+		          component: Infostrationreview => require(['@/components/procurement/supplierprofile/Infostrationreview.vue'],
+		            Infostrationreview)
+		        },
+		        { /*供应商档案登记复核页面*/
+		          path: '/Infostrationreview2',
+		          name: 'Infostrationreview2',
+		          component: Infostrationreview2 => require(['@/components/procurement/supplierprofile/Infostrationreview2.vue'],
+		            Infostrationreview2)
+		        },
+		        { /*供应商档案查询、删除、变更页面*/
+		          path: '/InfoChange',
+		          name: 'InfoChange',
+		          component: InfoChange => require(['@/components/procurement/supplierprofile/InfoChange.vue'], InfoChange)
+		        },
+		        { /*供应商档案变更页面*/
+		          path: '/InfoChange2',
+		          name: 'InfoChange2',
+		          component: InfoChange2 => require(['@/components/procurement/supplierprofile/InfoChange2.vue'], InfoChange2)
+		        },
+		        { /*供应商档案信息详情页面*/
+		          path: '/InfoChangeinfo',
+		          name: 'InfoChangeinfo',
+		          component: InfoChangeinfo => require(['@/components/procurement/supplierprofile/InfoChange-info.vue'],
+		            InfoChangeinfo)
+		        },
+		        { /*供应商档案永久删除与恢复页面*/
+		          path: '/InfoDelete',
+		          name: 'InfoDelete',
+		          component: InfoDelete => require(['@/components/procurement/supplierprofile/InfoDelete.vue'], InfoDelete)
+		        },
+		        // { /*发票信息登记列表*/
+		        //   path: '/Invoicestration',
+		        //   name: 'Invoicestration',
+		        //   component: Invoicestration => require(['@/components/invoicemanagement/Invoicestration.vue'],
+		        //     Invoicestration)
+		        // },
+		        // { /*发票信息登记*/
+		        //   path: '/Invoicestration2',
+		        //   name: 'Invoicestration2',
+		        //   component: Invoicestration2 => require(['@/components/invoicemanagement/Invoicestration2.vue'],
+		        //     Invoicestration2)
+		        // },
+		        // { /*发票信息登记复核列表*/
+		        //   path: '/Invoicestrationreview',
+		        //   name: 'Invoicestrationreview',
+		        //   component: Invoicestrationreview => require([
+		        //     '@/components/invoicemanagement/Invoicestrationreview.vue'
+		        //   ], Invoicestrationreview)
+		        // },
+		        // { /*发票信息登记复核*/
+		        //   path: '/Invoicestrationreview2',
+		        //   name: 'Invoicestrationreview2',
+		        //   component: Invoicestrationreview2 => require([
+		        //     '@/components/invoicemanagement/Invoicestrationreview2.vue'
+		        //   ], Invoicestrationreview2)
+		        // },
+		        // { /*发票信息查询*/
+		        //   path: '/Invoicequery',
+		        //   name: 'Invoicequery',
+		        //   component: Invoicequery => require(['@/components/invoicemanagement/Invoicequery.vue'], Invoicequery)
+		        // },
+		        // { /*发票详细信息查询*/
+		        //   path: '/Invoicequery2',
+		        //   name: 'Invoicequery2',
+		        //   component: Invoicequery2 => require(['@/components/invoicemanagement/Invoicequery2.vue'],
+		        //     Invoicequery2)
+		        // },
 			]
 		}
 	]
