@@ -123,7 +123,7 @@
 				},
 				tableData: [],
 				purchaseDto: {
-					purchaseqplanId:''
+					planDetailId:''
 				}
 
 			};
@@ -188,7 +188,7 @@
 				this.form.productName = row.productName;
 				this.form.productNo = row.productNo;
 				this.form.purchaseQuantity = row.quantity;
-				this.purchaseDto.purchaseqplanId = row.purchaseqplan.id;
+				this.purchaseDto.planDetailId = row.id;
 				var aData = new Date();
 				this.form.purchaseRegistranttime =
 					aData.getFullYear() + "-" +
