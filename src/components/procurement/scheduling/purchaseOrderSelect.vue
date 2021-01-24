@@ -16,23 +16,25 @@
 			</div> -->
 
 			<el-table :data="tableData" border>
-				<el-table-column prop="designorderid" label="执行单编号">
+				<el-table-column prop="purchaseqNo" label="执行单编号">
 				</el-table-column>
-				<el-table-column prop="productid" label="产品编号">
+				<el-table-column prop="productNo" label="产品编号">
 				</el-table-column>
-				<el-table-column prop="productname" label="产品名称">
+				<el-table-column prop="productName" label="产品名称">
 				</el-table-column>
-				<el-table-column prop="newtime" label="采购数量">
+				<el-table-column prop="purchaseQuantity" label="采购数量" width="90px">
 				</el-table-column>
-				<el-table-column prop="money" label="审核时间">
+				<el-table-column prop="purchaseMoney" label="采购金额" width="90px">
 				</el-table-column>
-				<el-table-column prop="money" label="状态">
+				<el-table-column prop="auditorTime" label="审核时间">
+				</el-table-column>
+				<el-table-column prop="checkMark" label="状态">
 				</el-table-column>
 				
 				<el-table-column prop="assembletable" label="操作">
 					<template slot-scope="scope">
 						<el-button type="text">
-							<el-button type="text" @click="back">生成执行计划单</el-button>
+							<el-button type="text" @click="back(scope.row)">详细</el-button>
 						</el-button>
 					</template>
 				</el-table-column>
@@ -51,96 +53,21 @@
 	export default {
 		data() {
 			return {
-				//抽屉
-				size: "800px",
-				drawer: false,
-				//数据统计
-				num1: 1,
-				num2: 2,
-				num3: 3,
-				//商品
-				commodity: [{
-					value: '1',
-					label: '黄金糕'
-				}, {
-					value: '2',
-					label: '双皮奶'
-				}, {
-					value: '3',
-					label: '蚵仔煎'
-				}, {
-					value: '4',
-					label: '龙须面'
-				}, {
-					value: '5',
-					label: '北京烤鸭'
-				}],
-				//时间
-				pickerOptions: {
-					disabledDate(time) {
-						return time.getTime() > Date.now();
-					},
-					shortcuts: [{
-						text: '今天',
-						onClick(picker) {
-							picker.$emit('pick', new Date());
-						}
-					}, {
-						text: '昨天',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24);
-							picker.$emit('pick', date);
-						}
-					}, {
-						text: '一周前',
-						onClick(picker) {
-							const date = new Date();
-							date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-							picker.$emit('pick', date);
-						}
-					}]
-				},
-				//时间
-				value2: '',
-				value3: '',
-				//表格2
-				tableData2: [{
-
-				}],
+				
 				//表格1
-				tableData: [{
-						designorderid: '231232',
-						productid: '电脑',
-						productname: '商品',
-						designorderstate: '01/电子',
-						auditstate: '01/计算机',
-						man: "11", //设计人
-						newtime: "", //登记时间
-						money: "" //物料总成本
-					},
-					{
-						designorderid: '020200021',
-						productid: '电脑',
-						productname: '商品',
-						designorderstate: '01/电子',
-						auditstate: '01/计算机',
-						man: "11", //设计人
-						newtime: "", //登记时间
-						money: "" //物料总成本
-					}
-				],
-				//商品
-				select1: "",
-				//设计单状态
-				select2: ""
+				tableData: [],
+				currentPage4:3
 			}
 		},
 		methods: {
-			//查看
-			back() {
-				alert(this.$api)
-				/* location.href = "#/purchaseOrderInfo" */
+			//详细
+			back(row) {
+				this.$router.push({
+				 	path: '/purchaseOrderAuditinfo',
+				 	query: {
+				 		row: row
+				 	}
+				 });
 			},
 			//分页
 			handleSizeChange(val) {
@@ -149,16 +76,23 @@
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
 			},
-			handleEdit(index, row) {
-				this.$message(index + "-" + row);
-			},
-			handleDelete(index, row) {
-				this.$message(index + "-" + row);
-			},
-			//查询按钮
-			open() {
-				this.$message("哦吼，你完了")
+			//初始化
+			initialize() {
+				this.$http.post(this.$api + "/purchase/selectAll")
+					.then(res => {
+						if (res.data != null) {
+							this.tableData = res.data;
+						} else {
+							console.log('错误');
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
 			}
+		},
+		mounted() {
+			this.initialize();
 		}
 	}
 </script>

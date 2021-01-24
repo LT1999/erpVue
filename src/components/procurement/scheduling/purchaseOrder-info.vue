@@ -9,7 +9,7 @@
 		<el-form ref="form" :model="form" label-width="130px">
 			<div id="buttons">
 				<el-button type="primary" @click="" size="small">PDF打印</el-button>
-				<el-button type="primary" @click="" size="small">提交</el-button>
+				<el-button type="primary" @click="submit" size="small">提交</el-button>
 				<el-button type="primary" @click="back()" size="small">返回</el-button>
 			</div>
 			<el-card class="box-card">
@@ -18,42 +18,46 @@
 				<el-row>
 					<el-col :span="8" :push='1'>
 						<el-form-item label="产品名称">
-							<span>{{form.productname}}</span>
+							<span>{{form.productName}}</span>
 						</el-form-item>
 					</el-col>
 
 					<el-col :span="8" :push='6'>
 						<el-form-item label="产品编号">
-							<span>{{form.productnumber}}</span>
+							<span>{{form.productNo}}</span>
 						</el-form-item>
 					</el-col>
 				</el-row>
 
 				<el-row>
 					<template>
-						<el-table :data="tableData" style="margin-left: 8%; width: 80%;" border>
-							<el-table-column prop="materialno" label="供应商编号">
+						<el-table :data="tableData" style="margin-left: 5%; width: 90%;" border>
+							<el-table-column prop="supplierNo" label="供应商编号">
 							</el-table-column>
-							<el-table-column prop="materialname" label="供应商名称">
+							<el-table-column prop="supplierName" label="供应商名称">
+							</el-table-column>
+							<el-table-column prop="supplierQualityRank" label="优质级别">
 							</el-table-column>
 							<el-table-column prop="materialtype" label="采购数量">
 								<template slot-scope="scope">
-									<el-input v-model="scope.row.quantity" clearable :style="{width: '100%'}">
+									<el-input v-model="scope.row.quantity" @blur="scope.row.subtotal=scope.row.quantity*scope.row.price" clearable
+									 :style="{width: '100%'}">
 									</el-input>
 								</template>
 							</el-table-column>
 							<el-table-column prop="materialdescribe" label="单价（元）">
 								<template slot-scope="scope">
-									<el-input v-model="scope.row.price" clearable :style="{width: '100%'}">
+									<el-input v-model="scope.row.price" @blur="scope.row.subtotal=scope.row.quantity*scope.row.price" clearable
+									 :style="{width: '100%'}">
 									</el-input>
 								</template>
 							</el-table-column>
-							<el-table-column prop="ss" label="小计（元）">
+							<el-table-column prop="subtotal" label="小计（元）">
 							</el-table-column>
-							<el-table-column prop="materialsubtotal" label="付款时间">
+							<el-table-column  label="供货时间">
 								<template slot-scope="scope">
-									<el-date-picker v-model="scope.row.paymentTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :style="{width: '100%'}"
-									clearable></el-date-picker>
+									<el-date-picker v-model="scope.row.paymenttime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}"
+									 clearable></el-date-picker>
 								</template>
 							</el-table-column>
 						</el-table>
@@ -62,19 +66,20 @@
 				<el-row style="margin-top: 50PX;">
 					<el-col :span="8" :push='1'>
 						<el-form-item label="采购总数量:">
-							<span>{{form.materialcost}}</span>
+							<span>{{form.purchaseQuantity}}</span>
 						</el-form-item>
 					</el-col>
 				</el-row>
 				<el-row>
 					<el-col :span="8" :push='1'>
 						<el-form-item label="登记人:">
-							<span>{{form.auditor}}</span>
+							<el-input size="small" v-model="form.purchaseRegistrant" clearable :style="{width: '100%'}">
+							</el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :span="8" :push='7'>
 						<el-form-item label="登记时间:">
-							<span>{{form.reviewtime}}</span>
+							<span>{{form.purchaseRegistranttime}}</span>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -89,54 +94,133 @@
 	export default {
 		data() {
 			return {
-				//对话框
-				width: "1000px",
-				dialogFormVisible: false,
-				dialogTableVisible: false,
-				dialogFormVisible2: false,
-				dialogTableVisible2: false,
 				//表单
 				form: {
-
-					yijian: "", //审核意见
-					wmoney: "32132", //物料总成本
-					state: "通过", //审核状态
-					designnumber: '02040020201113100001', //设计单编号
-					designman: '', //设计人
-					productname: 'Test', //产品名称
-					productnumber: '02020001010100100008', //产品编号
-					materialcost: '100.00', //物料总成本
-					reviewmen: 'Newer', //审核人
-					reviewtime: '2020-11-16 15:30:51', //审核时间
-					designrequire: '' //设计要求
+					/**
+					 * 产品编号
+					 */
+					productNo: '',
+					/**
+					 * 产品名称
+					 */
+					productName: '',
+					/**
+					 * 采购总数量
+					 */
+					purchaseQuantity: '',
+					/**
+					 * 采购总金额
+					 */
+					purchaseMoney: 0,
+					/**
+					 * 登记人
+					 */
+					purchaseRegistrant: '',
+					/**
+					 * 登记时间
+					 */
+					purchaseRegistranttime: ''
 				},
-				tableData: [{
-					ss: "22",
-					sss: "333",
-					materialno: '1', //序号
-					materialname: '纸箱', //物料名称
-					materialtype: '物料', //用途类型
-					materialdescribe: '', //描述
-					materialcount: '1.00', //数量
-					materialunit: '', //单位
-					materialprice: '100.00', //单价
-					materialsubtotal: '100.00' //小计
-				}]
+				tableData: [],
+				purchaseDto: {
+					planDetailId:''
+				}
+
 			};
 		},
 		methods: {
-			//查看
-			chakan(row) {
-				this.dialogFormVisible = true;
-			},
-			//查看2
-			chakan2(row) {
-				this.dialogFormVisible2 = true;
-			},
 			//返回
 			back() {
-				location.href = "#/ProductionDispatchSelect"
+				location.href = "#/purchaseOrder"
+			},
+			//提交
+			submit() {
+				var amount = 0;
+				this.form.purchaseMoney = 0;
+				for (var i = 0; i < this.tableData.length; i++) {
+					if (this.tableData[i].quantity < 1) {
+						this.tableData.splice(i, 1);
+						continue;
+					}
+					this.$delete(this.tableData[i], 'id');
+					this.$delete(this.tableData[i], 'linkmanId');
+					this.$delete(this.tableData[i], 'offerId');
+					this.$delete(this.tableData[i], 'parentId');
+					this.$delete(this.tableData[i], 'supplierArea');
+					this.$delete(this.tableData[i], 'supplierId');
+					this.$delete(this.tableData[i], 'supplierPhone');
+					this.$delete(this.tableData[i],'supplierQualityRank');
+					this.form.purchaseMoney += this.tableData[i].subtotal;
+					amount += this.tableData[i].quantity;
+				}
+				if (this.form.purchaseQuantity == amount) {
+					this.$set(this.purchaseDto, 'purchasedetailList', this.tableData);
+					this.$set(this.purchaseDto, 'purchase', this.form);
+					this.$http.post(this.$api+"/purchase/insert", this.$qs.stringify(this.purchaseDto, {
+							arrayFormat: 'purchasedetailList',
+							allowDots: true
+						}))
+						.then(res => {
+							if (res.data > 0) {
+								location.href = "#/purchaseOrder";
+								this.$message({
+									message: '采购执行单制定成功',
+									type: 'success'
+								});
+
+							} else {
+								this.$message.error({
+									message: '采购执行单制定失败'
+								});
+							}
+
+						})
+						.catch(err => {
+							console.log(err)
+						})
+				} else {
+					this.$message.error({
+						message: '采购数量与采购总数量不符'
+					});
+				}
+			},
+			initializeData(row) {
+				this.form.productName = row.productName;
+				this.form.productNo = row.productNo;
+				this.form.purchaseQuantity = row.quantity;
+				this.purchaseDto.planDetailId = row.id;
+				var aData = new Date();
+				this.form.purchaseRegistranttime =
+					aData.getFullYear() + "-" +
+					(aData.getMonth() + 1) + "-" +
+					aData.getDate() + " " +
+					aData.getHours() + ":" +
+					aData.getMinutes() + ":" +
+					aData.getSeconds();
+
+				this.$http.post(this.$api + "/recommenddetail/selectByProductNo", "productNo=" + row.productNo)
+					.then(res => {
+						if (res.data != null) {
+							this.tableData = res.data;
+							this.tableData.forEach(item => {
+								this.$set(item, 'quantity', 0);
+								this.$set(item, 'price', 0);
+								this.$set(item, 'subtotal', item.quantity * item.price);
+								this.$set(item, "paymenttime");
+							})
+
+							console.log(this.tableData);
+						} else {
+							console.log('selUsers错误');
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
 			}
+		},
+		mounted() {
+			this.initializeData(this.$route.query.row);
 		}
 	}
 </script>

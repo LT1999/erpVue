@@ -37,7 +37,9 @@
 						</el-select>
 					</el-form-item>
 					<el-form-item label="分类" prop="classify">
-						<el-cascader v-model="ruleForm.classify" clearable ref="cascader" :options="options" :props="SetKesDept" @change="handleChange"></el-cascader>
+						<el-cascader v-model="ruleForm.classify" 
+						clearable ref="cascader" :options="options" 
+						:props="SetKesDept" @change="handleChange"></el-cascader>
 					</el-form-item>
 
 					<el-form-item label="产品简介">
