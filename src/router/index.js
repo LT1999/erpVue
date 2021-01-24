@@ -639,6 +639,18 @@ export default new Router({
 					name: 'supplierRegistration2',
 					component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'],
 						supplierRegistration2)
+				},
+				{ /*产品供应商推荐登记 */
+					path: '/audit',
+					name: 'audit',
+					component: audit => require(['@/components/procurement/recommend/audit.vue'],
+						audit)
+				},
+				{ /*产品供应商推荐登记 */
+					path: '/audit2',
+					name: 'audit2',
+					component: audit2 => require(['@/components/procurement/recommend/audit2.vue'],
+						audit2)
 				}
 			]
 		}
