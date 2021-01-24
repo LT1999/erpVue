@@ -19,72 +19,45 @@
 					<el-row>
 						<el-col :span="8" :push='1'>
 							<el-form-item label="报价单编号">
-								<!-- <span>{{form.designId}} </span> -->
+								<span>{{form.offerNo}} </span>
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-row>
-						<el-col :span="8" :push='1'>
-							<el-form-item label="供应商名称">
-								<!-- <span>{{form.designId}}</span> -->
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="供应商编号">
-								<!-- <span>{{form.designer}}</span> -->
-							</el-form-item>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="8" :push='1'>
-							<el-form-item label="电话">
-								<input v-model="input"></input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="拟供货时间">
-								<input v-model="input"></input>
-							</el-form-item>
-						</el-col>
-					</el-row>
+					<el-form ref="form2" :rules="rules" :model="form2" label-width="130px">
+						<el-row>
+							<el-col :span="8" :push='1'>
+								<el-form-item label="供应商名称">
+									<span>{{form2.supplierName}}</span>
+								</el-form-item>
+							</el-col>
+							<el-col :span="8" :push='6'>
+								<el-form-item label="供应商编号">
+									<span>{{form2.supplierNo}}</span>
+								</el-form-item>
+							</el-col>
+						</el-row>
+					</el-form>
 					<el-row>
 						<template>
 							<el-table :data="tableData" style="margin-left: 8%; width: 85%;" border>
-								<el-table-column prop="1" label="序号">
+								<el-table-column prop="id" label="序号">
 								</el-table-column>
-								<el-table-column prop="2" label="商品名称">
+								<el-table-column prop="goodsName" label="商品名称">
 								</el-table-column>
-								<el-table-column prop="1" label="商品编号">
+								<el-table-column prop="goodsNo" label="商品编号">
 								</el-table-column>
-								<el-table-column prop="3" label="描述 ">
+								<el-table-column prop="goodsDescribe" label="描述 ">
 								</el-table-column>
-								<el-table-column prop="4" label="数量 ">
-									<input v-model="tableData.yi" style="border: none;"></input>
+								<el-table-column prop="goodsPrice" label="单价(元) ">
+									<input v-model="tableData.goodsPrice" style="border: none;"></input>
 								</el-table-column>
-								<el-table-column prop="5" label="单位 ">
+								<el-table-column prop="goodsSubtotal" label="小计(元) ">
 								</el-table-column>
-								<el-table-column prop="6" label="单价(元) ">
-									<input v-model="tableData.yi" style="border: none;"></input>
-								</el-table-column>
-								<el-table-column prop="7" label="小计(元) ">
-								</el-table-column>
-								<el-table-column prop="7" label="折扣(%) ">
-									<input v-model="tableData.yi" style="border: none;"></input>
+								<el-table-column prop="goodsDiscount" label="折扣(%) ">
+									<input v-model="tableData.goodsDiscount" style="border: none;"></input>
 								</el-table-column>
 							</el-table>
 						</template>
-					</el-row>
-					<el-row>
-						<el-col :span="8" :push='1'>
-							<el-form-item label="总计">
-								<!-- <span>{{}}</span> -->
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="报价单附件">
-								<!-- <span>{{}}</span> -->
-							</el-form-item>
-						</el-col>
 					</el-row>
 					<el-row>
 						<el-col :span="8" :push='1'>
@@ -98,15 +71,6 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<br />
-					<el-row>
-						<el-col :span="21" :push='1'>
-							<el-form-item label="备注" style="width: 100%;">
-								<el-input style="width: 100%;" type="textarea" :autosize="{ minRows: 4, maxRows: 6}">
-								</el-input>
-							</el-form-item>
-						</el-col>
-					</el-row>
 				</el-card>
 			</el-form>
 		</div>
@@ -117,21 +81,10 @@
 	export default {
 		data() {
 			return {
-				form: {
-					changer: '1',
-					changerid: '1'
-				},
+				form: {},
+				form2: {},
 				input: '',
-				tableData: [{
-					1: "1",
-					2: "2",
-					3: "3",
-					4: "4",
-					5: "5",
-					6: "6",
-					7: "7",
-					yi: "pop"
-				}],
+				tableData: [],
 				rules: {
 					changer: [{
 						required: true,
@@ -150,18 +103,35 @@
 			back() {
 				location.href = "#/RequestForChanges"
 			},
+			selsup() {
+				this.$http.post(this.$api + "/supplierfiles/selectByPrimaryKey", "?id=" + this.form.supplierId)
+					.then(res => {
+						this.form2 = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					});
+			},
 			submit() {
 				this.$confirm('确认变更?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-
-					this.$message({
-						message: '已变更',
-						type: 'success'
-					});
-
+					this.form.checkMark="未审核";
+					this.form.goodsPrice=this.tableData[0].goodsPrice;
+					this.form.goodsDiscount=this.tableData[0].goodsDiscount;
+					this.form.goodsSubtotal=this.tableData[0].goodsSubtotal;
+					this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
+						.then(res => {
+							this.$message({
+								message: '已变更',
+								type: 'success'
+							});
+						})
+						.catch(err => {
+							console.log(err)
+						});
 				}).catch(() => {
 					this.$message({
 						type: 'info',
@@ -182,6 +152,8 @@
 		},
 		created() {
 			this.form = this.$route.query.arr;
+			this.tableData.push(this.form);
+			this.selsup();
 			/*this.id = this.form.id; */
 		}
 	}

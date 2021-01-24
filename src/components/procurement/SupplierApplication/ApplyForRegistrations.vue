@@ -44,9 +44,10 @@
 								</el-table-column>
 								<el-table-column prop="goodsPrice" label="单价(元) ">
 								</el-table-column>
-								<el-table-column prop="goodsSubtotal" label="小计(元) ">
+								<el-table-column prop="goodsPrice" label="小计(元) ">
 								</el-table-column>
-								<el-table-column prop="goodsDiscount" label="折扣(%) ">
+								<el-table-column prop="goodsDiscount" label="折扣(%)">
+									<span>100</span>
 								</el-table-column>
 								<el-table-column prop="caozuo" label="操作">
 									<template slot-scope="scope">
@@ -71,14 +72,14 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-form ref="dto" :rules="rules" :model="dto" label-width="130px">
-					<el-row>
-						<el-col :span="7" :push='1'>
-							<el-form-item label="登记人:" prop="registrar">
-								<input v-model="dto.registrar"></input>
-							</el-form-item>
-						</el-col>
-					</el-row>
+					<el-form ref="reg" :rules="rules" :model="reg" label-width="130px">
+						<el-row>
+							<el-col :span="7" :push='1'>
+								<el-form-item label="登记人:" prop="registrar">
+									<input v-model="reg.registrar"></input>
+								</el-form-item>
+							</el-col>
+						</el-row>
 					</el-form>
 					<br />
 				</el-card>
@@ -88,21 +89,21 @@
 			<el-form :inline="true" :model="formInline" class="demo-form-inline">
 				<center>
 					<el-form-item label="请选择产品分类">
-						<!-- <el-cascader v-model="formInline.queryClassifyId" :props="SetKesDept" ref="cascader" :options="options"></el-cascader> -->
+						<el-cascader @change="handleChange" v-model="formInline.queryClassifyId" ref="cascader" :options="options" :props="SetKesDept"></el-cascader>
 					</el-form-item>
 					<el-form-item label="">
-						<el-button type="primary" @click="onSubmit">搜索</el-button>
+						<el-button type="primary" @click="onSubmit()">搜索</el-button>
 						<el-button type="success" @click="qb()">展示全部</el-button>
 					</el-form-item>
 				</center>
 			</el-form>
 			<br />
 			<el-table :data="gridData" style="margin-left:5px;">
-				<el-table-column prop="goodsNo" label="产品编号"></el-table-column>
-				<el-table-column prop="goodsName" label="产品名称"></el-table-column>
-				<el-table-column prop="goodsDiscount" label="商品折扣"></el-table-column>
-				<el-table-column prop="goodsDescribe" label="商品描述"></el-table-column>
-				<el-table-column prop="goodsPrice" label="市场单价(元)"></el-table-column>
+				<el-table-column prop="productId" label="产品编号"></el-table-column>
+				<el-table-column prop="productName" label="产品名称"></el-table-column>
+				<el-table-column label="商品折扣(%)"><span>100</span></el-table-column>
+				<el-table-column prop="productDescribe" label="商品描述"></el-table-column>
+				<el-table-column prop="realCostPrice" label="单价(元)"></el-table-column>
 				<el-table-column label="添加">
 					<template slot-scope="scope">
 						<el-button @click.native.prevent="add(scope.$index, table)" type="text" size="small">添加</el-button>
@@ -118,7 +119,7 @@
 		data() {
 			let that = this;
 			return {
-				/* SetKesDept: { //联动菜单配置
+				SetKesDept: { //联动菜单配置
 					value: 'id',
 					label: 'kindName',
 					lazy: true,
@@ -141,9 +142,10 @@
 							resolve(temp);
 						}
 					}
-				}, */
+				},
+				options: [],
 				formInline: {
-					queryClassifyId: ''
+					queryClassifyId: []
 				},
 				rules: {
 					registrar: [{
@@ -152,44 +154,26 @@
 						trigger: 'blur'
 					}]
 				},
-				//级联选择器
-				value: [],
-				options: [],
 				table: false,
 				index: -1,
 				form: {},
 				gridData: [],
-				dto: {
-					offers: [],
+				reg: {
 					//登记人
-					registrar:'',
-					//登记时间
-					registrartime:'',
-					//供应商主键
-					supplierId:0
+					registrar: ''
 				},
+				//登记时间
+				registrartime: '',
+				//供应商主键
+				supplierId: 0,
+				dto: {
+					offers: []
+				},
+				shuzu: []
 			};
 		},
 		methods: {
-			onSubmit() {
-				/* this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfilewl.do")
-					.then(res => {
-						this.gridData = res.data;
-					})
-					.catch(err => {
-						console.log(err)
-					}); */
-			},
-			selectsp() {
-				this.$http.post(this.$api + "/offer/findSupplierId" + "?supplierId=" + this.supplierId)
-					.then(res => {
-						this.dto.offers = res.data;
-					})
-					.catch(err => {
-						console.log(err)
-					});
-			},
-			/* async getSta(id) { //懒加载联动数据
+			async getSta(id) { //懒加载联动数据
 				const data = await this.$http.post("http://localhost:8080/Erp-web/config-file-kind/selectAllConfigFileKind.do",
 						"pId=" + id)
 					.then((res) => {
@@ -199,48 +183,6 @@
 						console.log(res)
 					})
 				return data;
-			}, */
-			submit() {
-				var aData = new Date();
-				this.dto.registrartime = aData.getFullYear() + "-" + (aData.getMonth() + 1) + "-" + aData.getDate();
-				this.$refs.dto.validate((valid) => {
-					if (valid) {
-						 this.$http.post(this.$api+"/offer/delSupplierId"+"?supplierId="+this.supplierId)
-							.then(res => {  
-								console.log(this.dto.offers);
-								
-								this.$http.post(this.$api+"/offer/insert", this.$qs.stringify(this.dto))
-									.then(res => {
-										this.$message({
-											message: '已提交！',
-											type: 'success'
-										});
-									})
-									.catch(err => {
-										console.log(err)
-									});
-							})
-							.catch(err => {
-								console.log(err)
-							}); 
-					} else {
-						return false;
-					}
-				}); 
-			},
-			add(index) {
-				this.index = index;
-				this.gridData[this.index].id=null;
-				this.gridData[this.index].goodsSubtotal=this.gridData[this.index].goodsPrice* this.gridData[this.index].goodsDiscount;
-				//把数据添加到数组末尾
-				this.dto.offers.push(this.gridData[this.index]);
-				//关闭所有模态框
-				this.num = 1;
-				this.table = false,
-					this.innerVisible = false,
-					this.dto.offers.forEach(item => {
-						this.form.costPriceSum += item.subtotal;
-					});
 			},
 			selectOptions() { //页面加载执行的获取联动数据的一级分类
 				this.$http.post("http://localhost:8080/Erp-web/config-file-kind/selectAllConfigFileKind.do")
@@ -251,6 +193,74 @@
 						console.log(err)
 					})
 			},
+			onSubmit() {
+				this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfilewl.do")
+					.then(res => {
+						this.gridData = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					});
+			},
+			submit() {
+				var aData = new Date();
+				this.registrartime = aData.getFullYear() + "-" +
+					(aData.getMonth() + 1) + "-" +
+					aData.getDate() + " " +
+					aData.getHours() + ":" +
+					aData.getMinutes() + ":" +
+					aData.getSeconds();
+				this.dto.offers.forEach(item => {
+					item.registrartime = this.registrartime;
+					item.registrar = this.reg.registrar;
+					item.supplierId = this.supplierId;
+					item.goodsDiscount = 100;
+					item.goodsDescribe = '暂无';
+					item.checkMark="未审核";
+				});
+				this.$refs.reg.validate((valid) => {
+					if (valid) {
+						this.$http.post(this.$api + "/offer/delSupplierId" + "?supplierId=" + this.supplierId)
+							.then(res => {
+								console.log(this.dto.offers);
+								this.$http.post(this.$api + "/offer/insert", this.$qs.stringify(this.dto, {
+										arrayFormat: 'offers',
+										allowDots: true
+									}))
+									.then(res => {
+										if (res.data > 0) {
+											this.$message({
+												message: '已提交！',
+												type: 'success'
+											});
+										}
+									})
+									.catch(err => {
+										console.log(err)
+									});
+							})
+							.catch(err => {
+								console.log(err)
+							});
+					} else {
+						return false;
+					}
+				});
+			},
+			add(index) {
+				this.index = index;
+				this.shuzu.goodsNo = this.gridData[this.index].productId;
+				this.shuzu.goodsName = this.gridData[this.index].productName
+				this.shuzu.goodsDescribe = this.gridData[this.index].productDescribe
+				this.shuzu.goodsPrice = this.gridData[this.index].realCostPrice
+				//把数据添加到数组末尾
+				this.dto.offers.push(this.shuzu);
+				this.shuzu = [];
+				//关闭所有模态框
+				this.num = 1;
+				this.table = false,
+					this.innerVisible = false
+			},
 			//删除
 			del(row) {
 				this.$confirm('是否删除该商品?', '提示', {
@@ -259,9 +269,8 @@
 					type: 'warning'
 				}).then(() => {
 					this.dto.offers = this.dto.offers.filter((items) => {
-						return items.id != row.id;
+						return items.goodsNo != row.goodsNo;
 					});
-					this.form.costPriceSum -= row.subtotal;
 				}).catch(() => {
 					this.$message({
 						type: 'info',
@@ -270,7 +279,7 @@
 				});
 			},
 			qb() {
-				this.$http.post(this.$api + "/offer/findsp")
+				this.$http.post("http://localhost:8080/Erp-web/productfile/findwl.do")
 					.then(res => {
 						this.gridData = res.data;
 					})
@@ -296,24 +305,15 @@
 			ins() {
 				this.dialogVisible = false;
 				this.value = [];
+			},
+			handleChange() {
+
 			}
-		},
-		mounted() {
-			/* this.selectsp();
-			this.selectOptions();
-			this.$http.post("http://localhost:8080/Erp-web/module-details/findwlById.do", "id=" + this.id)
-				.then(res => {
-					this.offers = res.data;
-				})
-				.catch(err => {
-					console.log(err)
-				});
-				this.dto.parentid=this.form.productId; */
 		},
 		created() {
 			this.form = this.$route.query.arr;
 			this.supplierId = this.form.id;
-			this.selectsp();
+			this.selectOptions();
 			this.qb();
 		}
 	}

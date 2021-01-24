@@ -68,7 +68,7 @@
 		data() {
 			let that = this;
 			return {
-				/* SetKesDept: { //联动菜单配置
+				 SetKesDept: { //联动菜单配置
 					value: 'id',
 					label: 'kindName',
 					lazy: true,
@@ -91,7 +91,7 @@
 							resolve(temp);
 						}
 					}
-				}, */
+				}, 
 				//时间
 				pickerOptions: {
 					shortcuts: [{
@@ -134,7 +134,7 @@
 			}
 		},
 		methods: {
-			/* async getSta(id) { //懒加载联动数据
+			 async getSta(id) { //懒加载联动数据
 				const data = await this.$http.post("http://localhost:8080/Erp-web/config-file-kind/selectAllConfigFileKind.do",
 						"pId=" + id)
 					.then((res) => {
@@ -153,7 +153,7 @@
 					.catch(err => {
 						console.log(err)
 					})
-			}, */
+			}, 
 			//分页
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
@@ -205,7 +205,7 @@
 		},
 		mounted() {
 			this.selectAll();
-			/* this.selectOptions(); */
+			this.selectOptions(); 
 		}
 	}
 </script>

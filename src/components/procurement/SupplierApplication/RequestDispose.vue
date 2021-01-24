@@ -10,15 +10,13 @@
 			<div>
 				<span style="font-size: 12px; color: #C6C6C9;float: left;">当前等待审核的报价单总数 :{{number}}例 </span>
 				<el-table :data="tableData" style="text-align: center;" border>
-					<el-table-column prop="1" label="报价单编号" width="200px">
+					<el-table-column prop="offerNo" label="报价单编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="2" label="供应商名称">
+					<el-table-column prop="supplierId" label="供应商序号">
 					</el-table-column>
-					<el-table-column prop="3" label="电话">
+					<el-table-column prop="goodsName" label="商品名称">
 					</el-table-column>
-					<el-table-column prop="4" label="拟供货时间">
-					</el-table-column>
-					<el-table-column prop="5" label="报价总额">
+					<el-table-column prop="goodsSubtotal" label="报价总额">
 					</el-table-column>
 					<el-table-column prop="review" label="操作">
 						<template slot-scope="scope">
@@ -45,20 +43,29 @@
 		data() {
 			return {
 				//表格
-				tableData: [{1:"1",2:"2",3:"3",4:"4",5:"5"}],
+				tableData: [],
 				currentPage: 10,
 				number:''
 			}
 		},
 		methods: {
 			selectAll() {
-				/* this.$http.post("http://localhost:8080/Erp-web/productfile/findAllProductfile.do")
+				this.$http.post(this.$api+"/offer/selectwei")
 					.then(res => {
 						this.tableData = res.data;
 					})
 					.catch(err => {
 						console.log(err)
-					}); */
+					});
+			},
+			countwei() {
+				this.$http.post(this.$api+"/offer/countwei")
+					.then(res => {
+						this.number = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					});
 			},
 			//分页
 			handleSizeChange(val) {
@@ -86,7 +93,8 @@
 			}
 		},
 		mounted() {
-			/* this.selectAll(); */
+			this.selectAll();
+			this.countwei();
 		}
 	}
 </script>

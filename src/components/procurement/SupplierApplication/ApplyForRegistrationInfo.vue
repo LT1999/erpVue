@@ -511,8 +511,8 @@
 				form: {},
 				form1: {},
 				form2: {},
-				id1: '',
-				id2: ''
+				id1:0,
+				id2:0
 			}
 		},
 		methods: {

@@ -9,9 +9,9 @@
 		</div>
 
 		<div id="card">
-			<el-form ref="form" :rules="rules" :model="form" label-width="130px">
+			<el-form ref="form" :model="form" label-width="130px">
 				<div id="buttons">
-					<el-button type="success">打印</el-button>
+					<el-button type="success" @click="dayin()">打印</el-button>
 					<el-button type="primary" @click="back()">返回</el-button>
 				</div>
 				<el-card class="box-card">
@@ -19,98 +19,67 @@
 					<el-row>
 						<el-col :span="8" :push='1'>
 							<el-form-item label="报价单编号">
-								<!-- <span>{{form.designId}} </span> -->
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="报价单附件">
-								<!-- <span>{{form.designer}}</span> -->
+								<span>{{form.offerNo}} </span>
 							</el-form-item>
 						</el-col>
 					</el-row>
+					<el-form ref="form2" :model="form2" label-width="130px">
 					<el-row>
 						<el-col :span="8" :push='1'>
 							<el-form-item label="供应商名称">
-								<!-- <span>{{form.designId}}</span> -->
+								<span>{{form2.supplierName}}</span>
 							</el-form-item>
 						</el-col>
 						<el-col :span="8" :push='6'>
 							<el-form-item label="供应商编号">
-								<!-- <span>{{form.designer}}</span> -->
+								<span>{{form2.supplierNo}}</span>
 							</el-form-item>
 						</el-col>
 					</el-row>
+					</el-form>
 					<el-row>
 						<template>
 							<el-table :data="tableData" style="margin-left: 8%; width: 85%;" border>
-								<el-table-column prop="1" label="序号">
+								<el-table-column prop="id" label="序号">
 								</el-table-column>
-								<el-table-column prop="2" label="商品名称">
+								<el-table-column prop="goodsName" label="商品名称">
 								</el-table-column>
-								<el-table-column prop="1" label="商品编号">
+								<el-table-column prop="goodsNo" label="商品编号">
 								</el-table-column>
-								<el-table-column prop="3" label="描述 ">
+								<el-table-column prop="goodsDescribe" label="描述 ">
 								</el-table-column>
-								<el-table-column prop="4" label="数量 ">
+								<el-table-column label="数量 ">1
 								</el-table-column>
-								<el-table-column prop="5" label="单位 ">
+								<el-table-column prop="goodsPrice" label="单价(元) ">
 								</el-table-column>
-								<el-table-column prop="6" label="单价(元) ">
+								<el-table-column prop="goodsPrice" label="小计(元) ">
 								</el-table-column>
-								<el-table-column prop="7" label="小计(元) ">
-								</el-table-column>
-								<el-table-column prop="8" label="折扣(%) ">
-								</el-table-column>
-								<el-table-column prop="8" label="推荐状态 ">
+								<el-table-column prop="goodsDiscount" label="折扣(%)">
 								</el-table-column>
 							</el-table>
 						</template>
 					</el-row>
 					<el-row>
 						<el-col :span="8" :push='1'>
-							<el-form-item label="审核状态" >
-								<!-- <span>{{}}</span> -->
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="处理状态">
-								<!-- <span>{{}}</span> -->
-							</el-form-item>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="8" :push='1'>
 							<el-form-item label="登记人" >
-								<!-- <span>{{}}</span> -->
+								<span>{{form.registrar}}</span>
 							</el-form-item>
 						</el-col>
 						<el-col :span="8" :push='6'>
 							<el-form-item label="登记时间">
-								<!-- <span>{{}}</span> -->
+								<span>{{form.registrartime}}</span>
 							</el-form-item>
 						</el-col>
 					</el-row>
 					<el-row>
 						<el-col :span="8" :push='1'>
-							<el-form-item label="电话">
-								<!-- <span>{{}}</span> -->
+							<el-form-item label="审核人">
+								<span>{{form.auditor}} </span> 
 							</el-form-item>
 						</el-col>
 						<el-col :span="8" :push='6'>
-							<el-form-item label="拟供货时间">
-								<!-- <span>{{}}</span> -->
-							</el-form-item>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="8" :push='1'>
-							<el-form-item label="总计">
-								<!-- <span>{{}}</span> -->
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="备注">
-								<!-- <span>{{}}</span> -->
+							<el-form-item label="审核时间" prop="auditor">
+								<span>{{form.auditorTime}} </span> 
 							</el-form-item>
 						</el-col>
 					</el-row>
@@ -125,27 +94,33 @@
 		data() {
 			return {
 				form: {},
-				tableData: []
+				form2:{},
+				tableData: [],
+				supplierId:0
 			};
 		},
 		methods: {
-			back() {
-					location.href = "#/RequestForChanges"
-			}
-		},
-		mounted() {
-			/* 
-			this.$http.post("http://localhost:8080/Erp-web/module-details/findwlById.do", "id=" + this.id)
+			selectsupId(){
+				this.$http.post(this.$api+"/supplierfiles/selectByPrimaryKey", "?id=" + this.form.supplierId)
 				.then(res => {
-					this.tableData = res.data;
+					this.form2 = res.data;
 				})
 				.catch(err => {
 					console.log(err)
-				}); */
+				}); 
+			},
+			back() {
+					location.href = "#/RequestForChanges"
+			},
+			dayin(){
+				
+			}
 		},
 		created() {
 			this.form = this.$route.query.arr;
-			/*this.id = this.form.id; */
+			this.tableData.push(this.form);
+			this.supplierId = this.form.supplierId;
+			this.selectsupId();
 		}
 	}
 </script>

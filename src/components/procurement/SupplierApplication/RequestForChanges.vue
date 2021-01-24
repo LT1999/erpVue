@@ -7,49 +7,38 @@
 		</el-breadcrumb>
 		<el-card shadow="always" style="padding: 20px;">
 
-			<el-form ref="searchFrom" :model="searchFrom" label-position="left" inline>
-				<el-col :span="11">
+			<el-form ref="searchFrom" :model="searchFrom" label-position="left" inline style="margin-top:10px;">
+				<el-col :span="15" :push="4">
 					<el-form-item label="请输入登记时间">
-						<el-date-picker  v-model="searchFrom.queryTime" type="daterange" value-format="yyyy-MM-dd"
-						      range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"> </el-date-picker>
+						<el-date-picker v-model="searchFrom.queryTime" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+						 start-placeholder="开始日期" end-placeholder="结束日期"> </el-date-picker>
 					</el-form-item>
 				</el-col>
-
-				<el-col :span="10" style="margin-left: 1.25rem;">
-					<el-form-item label="请选择供应商所供产品分类">
-						<el-cascader v-model="searchFrom.queryClassifyId" :props="SetKesDept" ref="cascader" :options="options"></el-cascader>
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="1">
+				<el-col :span="5">
 					<el-button @click="open" type="primary" plain style="font-size: 13px;">查询</el-button>
 				</el-col>
 			</el-form>
 			<div>
-				<span style="font-size: 12px; color: #C6C6C9;float: left;">符合条件的报价单总数 :{{number}}例 </span>
-				<span style="font-size: 12px; color: #C6C6C9;float: left;margin-left: 1.25rem;">其中等待审核的报价单总数:{{number}}例 </span>
-				<span style="font-size: 12px; color: #C6C6C9;float: left;margin-left: 1.25rem;">其中已审核的报价单总数:{{number}}例 </span>
-				<span style="font-size: 12px; color: #C6C6C9;float: left;margin-left: 1.25rem;">其中处理完成的报价单总数:{{number}}例 </span>
-				<span style="font-size: 12px; color: #C6C6C9;float: left;margin-left: 1.25rem;">当前可变更的报价单总数:{{number}}例 </span>
+				<div style="margin-top:80px">
+				<span style="font-size: 12px; color: #C6C6C9;float: left;">其中等待审核的报价单总数:{{number1}}例 </span>
+				<span style="font-size: 12px; color: #C6C6C9;float: left;margin-left: 1.25rem;">其中已审核的报价单总数:{{number2}}例 </span>
+				<span style="font-size: 12px; color: #C6C6C9;float: left;margin-left: 1.25rem;">其中处理完成的报价单总数:{{number3}}例 </span>
 				<br />
+				</div> 
 				<el-table :data="tableData" style="text-align: center;" border>
-					<el-table-column prop="1" label="报价单编号" width="200px">
+					<el-table-column prop="offerNo" label="报价单编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="2" label="供应商名称">
+					<el-table-column prop="supplierId" label="供应商序号">
 					</el-table-column>
-					<el-table-column prop="3" label="报价单状态">
+					<el-table-column prop="goodsName" label="商品名称">
 					</el-table-column>
-					<el-table-column prop="3" label="拟供货时间">
+					<el-table-column prop="goodsSubtotal" label="报价总额">
 					</el-table-column>
-					<el-table-column prop="3" label="电话">
-					</el-table-column>
-					<el-table-column prop="6" label="报价总额">
-					</el-table-column>
-					<el-table-column prop="7" label="审核状态">
+					<el-table-column prop="checkMark" label="审核状态">
 					</el-table-column>
 					<el-table-column prop="review" label="操作" width="150px">
 						<template slot-scope="scope">
-						    <el-button size="mini" type="success" plain @click="RequestForChangeslook(scope.row)">
+							<el-button size="mini" type="success" plain @click="RequestForChangeslook(scope.row)">
 								查看
 							</el-button>
 							<el-button size="mini" @click.prevent="RequestForChangesInfo(scope.row)" type="warning" plain>
@@ -60,7 +49,7 @@
 				</el-table>
 			</div>
 			<div class="block">
-				
+
 				<el-pagination style="margin-top: 10px;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
 				 :current-page="currentPage" :page-sizes="[5, 7, 9]" :page-size="3" layout="total, sizes, prev, pager, next, jumper"
 				 :total="10">
@@ -73,32 +62,8 @@
 <script>
 	export default {
 		data() {
-			let that = this;
 			return {
-				/* SetKesDept: { //联动菜单配置
-					value: 'id',
-					label: 'kindName',
-					lazy: true,
-					async lazyLoad(node, resolve) {
-						const {
-							level,
-							data
-						} = node;
-						let id;
-						if (data) {
-							id = data.id;
-						}
-						if (data) {
-							const temp = await that.getSta(id);
-							temp.forEach(item => {
-								item.value = item.id;
-								item.label = item.kindName;
-								item.leaf = level >= 2;
-							})
-							resolve(temp);
-						}
-					}
-				}, */
+				
 				//时间
 				pickerOptions: {
 					shortcuts: [{
@@ -129,40 +94,50 @@
 				},
 				/* 搜索框 */
 				searchFrom: {
-					queryClassifyId: null,
 					queryTime: null
 				},
-				number:'',
-				//级联选择器
-				options: [],
 				//表格
-				tableData: [{
-					1:"1",2:"2",3:"3",4:"4",5:"5",6:"6",7:"7"
-				}],
-				currentPage: 10
+				tableData: [],
+				currentPage: 10,
+				number1: 0,
+				number2: 0,
+				number3: 0
 			}
 		},
 		methods: {
-			/* async getSta(id) { //懒加载联动数据
-				const data = await this.$http.post("http://localhost:8080/Erp-web/config-file-kind/selectAllConfigFileKind.do",
-						"pId=" + id)
-					.then((res) => {
-						return res.data;
-					})
-					.catch((res) => {
-						console.log(res)
-					})
-				return data;
-			},
-			selectOptions() { //页面加载执行的获取联动数据的一级分类
-				this.$http.post("http://localhost:8080/Erp-web/config-file-kind/selectAllConfigFileKind.do")
+			
+			count() { //页面加载执行的获取联动数据的一级分类
+				this.$http.post(this.$api + "/offer/count1")
 					.then(res => {
-						this.options = res.data;
+						this.number1 = res.data;
 					})
 					.catch(err => {
 						console.log(err)
 					})
-			}, */
+				this.$http.post(this.$api + "/offer/count2")
+					.then(res => {
+						this.number2 = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					})
+				this.$http.post(this.$api + "/offer/count3")
+					.then(res => {
+						this.number3 = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			},
+			selectAll() {
+				this.$http.post(this.$api + "/offer/selectAll")
+					.then(res => {
+						this.tableData = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			},
 			//分页
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
@@ -178,7 +153,6 @@
 			},
 			//查询按钮
 			open() {
-				console.log(this.searchFrom);
 				/* this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfileCondition.do", this.$qs.stringify(this.searchFrom))
 					.then(res => {
 						console.log(res.data);
@@ -192,7 +166,12 @@
 
 			},
 			RequestForChangeslook(row) {
-				this.$router.push({path: '/RequestForChangeslook',query:{arr:row}}); 
+				this.$router.push({
+					path: '/RequestForChangeslook',
+					query: {
+						arr: row
+					}
+				});
 			},
 			RequestForChangesInfo(row) {
 				this.$router.push({
@@ -200,12 +179,12 @@
 					query: {
 						arr: row
 					}
-				}); 
+				});
 			}
 		},
 		mounted() {
-			/* this.selectAll();
-			this.selectOptions(); */
+			this.selectAll();
+			this.count();
 		}
 	}
 </script>
