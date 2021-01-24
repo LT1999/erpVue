@@ -81,9 +81,6 @@ inventory：库存管理模块
 procurement 采购模块
 
 	scheduling：采购调度管理
-    purchaseOrder:制定采购执行单
-		purchaseOrder-info:制定采购执行单
-		purchaseOrder-Audit:采购执行单审核
 		purchaseOrder:制定采购执行单
 		purchaseOrder-info:制定采购执行单
 		purchaseOrder-Audit:采购执行单审核
@@ -111,3 +108,17 @@ procurement 采购模块
 	  RequestDispose:申请处理
     DataReport:数据报表
 	  DataReportExcel:报表
+    recommend:产品供应商推荐管理
+		supplierRegistration:产品供应商推荐登记
+		supplierRegistration2:产品供应商推荐登记
+		audit:产品供应商推荐登记审核
+		audit2:产品供应商推荐登记审核
+		query:产品供应商推荐查询
+		changes:产品供应商推荐变更
+		changes2:产品供应商推荐变更
+    quality:采购质量控制管理
+		qualitydJ:质检结果登记
+		qualitydJ2:质检结果登记
+		qualitysh:质检结果登记复核
+		qualitysh2:质检结果登记复核
+		qualitycx:质检结果查询

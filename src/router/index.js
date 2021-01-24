@@ -661,33 +661,40 @@ export default new Router({
 				{ /*制定采购执行单 */
 					path: '/purchaseOrderInfo',
 					name: 'purchaseOrderInfo',
-					component: purchaseOrderInfo => require(['@/components/procurement/scheduling/purchaseOrder-info.vue'], purchaseOrderInfo)
+					component: purchaseOrderInfo => require(['@/components/procurement/scheduling/purchaseOrder-info.vue'],
+						purchaseOrderInfo)
 				},
 				{ /*采购执行单审核 */
 					path: '/purchaseOrderAudit',
 					name: 'purchaseOrderAudit',
-					component: purchaseOrderAudit => require(['@/components/procurement/scheduling/purchaseOrder-Audit.vue'], purchaseOrderAudit)
+					component: purchaseOrderAudit => require(['@/components/procurement/scheduling/purchaseOrder-Audit.vue'],
+						purchaseOrderAudit)
 				},
 				{ /*采购执行单审核 */
 					path: '/purchaseOrderAuditinfo',
 					name: 'purchaseOrderAuditinfo',
-					component: purchaseOrderAuditinfo => require(['@/components/procurement/scheduling/purchaseOrder-Audit-info.vue'], purchaseOrderAuditinfo)
+					component: purchaseOrderAuditinfo => require([
+						'@/components/procurement/scheduling/purchaseOrder-Audit-info.vue'
+					], purchaseOrderAuditinfo)
 				},
 				{ /*采购执行单查询 */
 					path: '/purchaseOrderSelect',
 					name: 'purchaseOrderSelect',
-					component: purchaseOrderSelect => require(['@/components/procurement/scheduling/purchaseOrderSelect.vue'], purchaseOrderSelect)
+					component: purchaseOrderSelect => require(['@/components/procurement/scheduling/purchaseOrderSelect.vue'],
+						purchaseOrderSelect)
 				},
-        { /*产品供应商推荐登记 */
-        	path: '/supplierRegistration',
-        	name: 'supplierRegistration',
-        	component: supplierRegistration => require(['@/components/procurement/recommend/supplierRegistration.vue'], supplierRegistration)
-        },
-        { /*产品供应商推荐登记 */
-        	path: '/supplierRegistration2',
-        	name: 'supplierRegistration2',
-        	component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'], supplierRegistration2)
-        }
+				{ /*产品供应商推荐登记 */
+					path: '/supplierRegistration',
+					name: 'supplierRegistration',
+					component: supplierRegistration => require(['@/components/procurement/recommend/supplierRegistration.vue'],
+						supplierRegistration)
+				},
+				{ /*产品供应商推荐登记 */
+					path: '/supplierRegistration2',
+					name: 'supplierRegistration2',
+					component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'],
+						supplierRegistration2)
+				}
 			]
 		}
 	]

@@ -58,8 +58,6 @@
 		methods: {
 			//制定采购执行单
 			back(row) {
-				console.log(row);
-				 /* location.href = "#/purchaseOrderInfo" ; */
 				 this.$router.push({
 				 	path: '/purchaseOrderinfo',
 				 	query: {

@@ -8,46 +8,46 @@
 
 		<el-form ref="form" :model="form" label-width="130px">
 			<div id="buttons">
-				<el-button type="primary" @click="" size="small">审核不通过</el-button>
-				<el-button type="primary" @click="" size="small">审核通过</el-button>
+				<el-button v-if="show" type="primary" @click="form.checkMark='审核未通过';submit()" size="small">审核不通过</el-button>
+				<el-button v-if="show" type="primary" @click="form.checkMark='已审核';submit()" size="small">审核通过</el-button>
 				<el-button type="primary" @click="back()" size="small">返回</el-button>
 			</div>
 			<el-card class="box-card">
 				<h3>采购执行单</h3>
 
 				<el-row>
-					<el-col :span="8" :push='1'>
+					<el-col :span="8" :push='2'>
 						<el-form-item label="执行单编号">
-							<span>{{form.productnumber}}</span>
+							<span>{{form.purchaseqNo}}</span>
 						</el-form-item>
 					</el-col>
-					<el-col :span="5" :push='1'>
+					<el-col :span="6" :push='2'>
 						<el-form-item label="产品名称">
-							<span>{{form.productname}}</span>
+							<span>{{form.productName}}</span>
 						</el-form-item>
 					</el-col>
 
-					<el-col :span="8" :push='1'>
+					<el-col :span="8" :push='2'>
 						<el-form-item label="产品编号">
-							<span>{{form.productnumber}}</span>
+							<span>{{form.productNo}}</span>
 						</el-form-item>
 					</el-col>
 				</el-row>
 
 				<el-row>
 					<template>
-						<el-table :data="tableData" style="margin-left: 8%; width: 80%;" border>
-							<el-table-column prop="materialno" label="供应商编号">
+						<el-table :data="tableData" style="margin-left: 9%; width: 83%;" border>
+							<el-table-column prop="supplierNo" label="供应商编号">
 							</el-table-column>
-							<el-table-column prop="materialname" label="供应商名称">
+							<el-table-column prop="supplierName" label="供应商名称">
 							</el-table-column>
-							<el-table-column prop="materialtype" label="采购数量">
+							<el-table-column prop="quantity" label="采购数量">
 							</el-table-column>
-							<el-table-column prop="materialdescribe" label="单价（元）">
+							<el-table-column prop="price" label="单价（元）">
 							</el-table-column>
-							<el-table-column prop="ss" label="小计（元）">
+							<el-table-column prop="subtotal" label="小计（元）">
 							</el-table-column>
-							<el-table-column prop="materialsubtotal" label="供货时间">
+							<el-table-column prop="paymenttime" label="供货时间">
 							</el-table-column>
 							<!-- <el-table-column prop="assembletable" label="操作">
 								<template slot-scope="scope">
@@ -60,37 +60,45 @@
 					</template>
 				</el-row>
 				<el-row style="margin-top: 50PX;">
-					<el-col :span="8" :push='1'>
+					<el-col :span="8" :push='2'>
 						<el-form-item label="采购总数量:">
-							<span>{{form.materialcost}}</span>
+							<span>{{form.purchaseQuantity}}</span>
+						</el-form-item>
+					</el-col>
+					<el-col :span="8" :push='7'>
+						<el-form-item label="采购总金额:">
+							<span>{{form.purchaseMoney}}</span>
 						</el-form-item>
 					</el-col>
 				</el-row>
 				<el-row>
-					<el-col :span="8" :push='1'>
+					<el-col :span="8" :push='2'>
 						<el-form-item label="登记人:">
-							<span>{{form.auditor}}</span>
+							<span>{{form.purchaseRegistrant}}</span>
 						</el-form-item>
 					</el-col>
 					<el-col :span="8" :push='7'>
 						<el-form-item label="登记时间:">
-							<span>{{form.reviewtime}}</span>
+							<span>{{form.purchaseRegistranttime}}</span>
 						</el-form-item>
 					</el-col>
 				</el-row>
 				<el-row>
-					<el-col :span="8" :push='1'>
+					<el-col :span="8" :push='2'>
 						<el-form-item label="审核人:">
-							<span>{{form.auditor}}</span>
+
+							<el-input v-if="show" size="small" v-model="form.auditor" clearable :style="{width: '80%'}">
+							</el-input>
+							<span v-else>{{form.auditor}}</span>
 						</el-form-item>
 					</el-col>
 					<el-col :span="8" :push='7'>
 						<el-form-item label="审核时间:">
-							<span>{{form.reviewtime}}</span>
+							<span>{{form.auditorTime}}</span>
 						</el-form-item>
 					</el-col>
 				</el-row>
-				<el-row :gutter="15">
+				<!-- <el-row :gutter="15">
 					
 						<el-col :span="20" :push='1'>
 							<el-form-item label="审核意见">
@@ -99,7 +107,7 @@
 							</el-form-item>
 						</el-col>
 						
-				</el-row>
+				</el-row> -->
 			</el-card>
 		</el-form>
 
@@ -110,55 +118,82 @@
 	export default {
 		data() {
 			return {
-				//对话框
-				width: "1000px",
-				dialogFormVisible: false,
-				dialogTableVisible: false,
-				dialogFormVisible2: false,
-				dialogTableVisible2: false,
 				//表单
-				form: {
-
-					yijian: "", //审核意见
-					wmoney: "32132", //物料总成本
-					state: "通过", //审核状态
-					designnumber: '02040020201113100001', //设计单编号
-					designman: '', //设计人
-					productname: 'Test', //产品名称
-					productnumber: '02020001010100100008', //产品编号
-					materialcost: '100.00', //物料总成本
-					reviewmen: 'Newer', //审核人
-					reviewtime: '2020-11-16 15:30:51', //审核时间
-					designrequire: '' //设计要求
-				},
-				tableData: [{
-					ss: "22",
-					sss: "333",
-					materialno: '1', //序号
-					materialname: '纸箱', //物料名称
-					materialtype: '物料', //用途类型
-					materialdescribe: '', //描述
-					materialcount: '1.00', //数量
-					materialunit: '', //单位
-					materialprice: '100.00', //单价
-					materialsubtotal: '100.00' //小计
-				}]
+				form: {},
+				tableData: [],
+				show:true
 			};
 		},
 		methods: {
-			//查看
-			chakan(row) {
-				this.dialogFormVisible = true;
-			},
-			//查看2
-			chakan2(row) {
-				this.dialogFormVisible2 = true;
+			//提交
+			submit() {
+				this.$http.post(this.$api + "/purchase/updateByPrimaryKey", this.$qs.stringify(this.form))
+					.then(res => {
+						if (res.data > 0) {
+							location.href = "#/purchaseOrderAudit";
+							this.$message({
+								message: '审核成功',
+								type: 'success'
+							});
+
+						} else {
+							this.$message.error({
+								message: '审核失败'
+							});
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
 			},
 			//返回
 			back() {
-				location.href = "#/ProductionDispatchSelect"
+				this.$router.go(-1); //返回上一层
+			},
+			//初始化
+			initializeData(row) {
+				this.form = row;
+				var aData = new Date();
+				this.form.auditorTime =
+					aData.getFullYear() + "-" +
+					(aData.getMonth() + 1) + "-" +
+					aData.getDate() + " " +
+					aData.getHours() + ":" +
+					aData.getMinutes() + ":" +
+					aData.getSeconds();
+				this.$http.post(this.$api + "/purchasedetail/selectByParentId", 'parentId=' + row.id)
+					.then(res => {
+						if (res.data != null) {
+							this.tableData = res.data;
+						} else {
+							console.log('错误');
+						}
+					})
+					.catch(err => {
+						console.log(err)
+					})
+
+			},
+			isShow(url){
+				if (url == "/purchaseOrderSelect") {
+					this.show = false;
+				} else {
+					this.show = true;
+				}
 			}
-		}
+		},
+		mounted() {
+			this.initializeData(this.$route.query.row);
+		} ,
+		beforeRouteEnter(to, from, next) {
+			/* next(vm => { */
+				
+			/* }) */
+			/* next(); */
+			  next((vm) => {
+			      vm.isShow(from.path);
+			    });
+		} 
 	}
 </script>
 
