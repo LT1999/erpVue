@@ -14,7 +14,7 @@
   		<div>
   			<el-form :inline="true" :model="formInline" class="demo-form-inline">
   				<el-form-item label="请选择供应商所供产品类别">
-  					<el-cascader v-model="formInline.classification" :options="options" @change="handleChange"></el-cascader>
+  					<el-cascader v-model="formInline.classification" :options="options"></el-cascader>
   				</el-form-item>
   				<el-form-item label="请输入登记时间">
   					<el-date-picker v-model="formInline.time" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
@@ -34,15 +34,15 @@
   	<el-card class="box-card">
   		<el-table :data="tableData" stripe style="width: 100%">
   		<el-table-column prop="productId" label="产品编号" width="150"></el-table-column>
-  		  <el-table-column prop="productName" label="产品名称" width="150"></el-table-column>
-  		  <el-table-column prop="type" label="用途类型" width="150"></el-table-column>
-  		  <el-table-column prop="productClass" label="档次级别" width="150"></el-table-column>
-  		  <el-table-column prop="firstKindName" label="Ⅰ级分类" width="150"></el-table-column>
-  		  <el-table-column prop="secondKindName" label="Ⅱ级分类" width="150"></el-table-column>
-  		  <el-table-column prop="thirdKindName" label="Ⅲ级分类" width="150"></el-table-column>
+  		  <el-table-column prop="productName" label="产品名称"></el-table-column>
+  		  <el-table-column prop="type" label="用途类型" ></el-table-column>
+  		  <el-table-column prop="productClass" label="档次级别" ></el-table-column>
+  		  <el-table-column prop="firstKindName" label="Ⅰ级分类" ></el-table-column>
+  		  <el-table-column prop="secondKindName" label="Ⅱ级分类"></el-table-column>
+  		  <el-table-column prop="thirdKindName" label="Ⅲ级分类" ></el-table-column>
   		<el-table-column label="推荐供应商">
   			<template slot-scope="scope">
-  				<el-button size="mini" @click="">推荐供应商</el-button>
+  				<el-button size="mini" @click="handleEdit(scope.$index,scope.row)">推荐供应商</el-button>
   			</template>
   		</el-table-column>
   	</el-table>
@@ -54,7 +54,7 @@
 <script>
   export default {
     created() {
-
+      this.selectProduct();
     },
     data() {
       return {
@@ -97,9 +97,9 @@
     methods: {
       onSubmit() {
         console.log('submit!');
-      }
-      /* selectPayTag(){
-        this.$http.post("http://localhost:8080/Erp-web/pay/selectPayTag.do")
+      },
+      selectProduct(){
+        this.$http.post("http://localhost:8080/Erp-web/productfile/findwl.do")
         	.then( res => {
         	//alert("a");
                     this.tableData = res.data;
@@ -107,13 +107,12 @@
         	.catch(err =>{
         		console.log(err)
         	})
-      }, */
-     /* handleEdit(index,row){
+      },
+      handleEdit(index,row){
           this.$router.push({
-          	path: '/chuku2',query:{id:row.id,payId:row.payId,storer:row.storer,register:row.register,reasonexact:row.reasonexact,
-            reason:row.reason,amountSum:row.amountSum,paidAmountSum:row.paidAmountSum}
+          	path: '/supplierRegistration2',query:{id:row.id,productId:row.productId,productName:row.productName,type:row.type,productClass:row.productClass}
           });
-      } */
+      }
     }
   }
 </script>

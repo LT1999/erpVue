@@ -11,7 +11,7 @@
       <el-divider></el-divider>
 
       <div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline2" class="demo-form-inline">
           <div id="butt">
             <el-form-item>
               <div id="butt2">
@@ -23,43 +23,42 @@
               </div>
             </el-form-item>
           </div>
-
           <center>
             <div id="kp">
               <el-card class="box-card">
                 <h4>供应商推荐单</h4>
                 <br />
                 <div>
-                <label class="sp1">出库单编号：xxxx<!-- {{this.$route.query.payId}} --></label><label>产品编号：xxxxxx<!-- {{this.$route.query.productId}} --></label>
+                <label class="sp1">产品编号：{{this.$route.query.productId}}</label><label>产品名称：{{this.$route.query.productName}}</label>
                 </div>
-
+                <br />
                 <el-table :data="tableData" border style="width: 100%">
                   <el-table-column label="点选" width="60">
                     <template slot-scope="scope">
                       <el-checkbox v-model="checked" size="mini"></el-checkbox>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="productName" label="供应商编号" width="150"></el-table-column>
-                  <el-table-column prop="productId" label="供应商名称" width="200"></el-table-column>
-                  <el-table-column prop="productDescribe" label="所在地" width="110"></el-table-column>
-                  <el-table-column prop="amount" label="优质级别" width="150"></el-table-column>
-                  <el-table-column prop="amountUnit" label="电话" width="80"></el-table-column>
-                  <el-table-column prop="costPrice" label="联系人" width="120"></el-table-column>
-                  <el-table-column prop="subtotal" label="网址"></el-table-column>
+                  <el-table-column prop="supplierfiles.supplierNo" label="供应商编号" ></el-table-column>
+                  <el-table-column prop="supplierfiles.supplierName" label="供应商名称" ></el-table-column>
+                  <el-table-column prop="supplierfiles.supplierAddress" label="所在地" ></el-table-column>
+                  <el-table-column prop="supplierfiles.supplierArea" label="所在区域" ></el-table-column>
+                  <el-table-column prop="supplierfiles.supplierPhone" label="电话"></el-table-column>
+                  <el-table-column prop="linkmen.linkmanName" label="联系人" ></el-table-column>
+                  <el-table-column prop="supplierfiles.supplierUrl" label="网址"></el-table-column>
                 </el-table>
                 <br />
                 <div>
                   <el-form-item label="登记人:">
-                    <el-input class="inp2" type="text" v-model="formInline.register"></el-input>
+                    <el-input class="inp2" type="text" v-model="formInline2.registrar"></el-input>
                   </el-form-item>
                   <el-form-item label="登记时间:">
-                    <el-input class="inp2" :disabled="true" type="text" v-model="formInline.registerTime"></el-input>
+                    <el-input class="inp2" :disabled="true" type="text" v-model="formInline2.registrartime"></el-input>
                   </el-form-item>
                 </div>
                 <br />
                 <div class="sp1">
                   <el-form-item label="推荐要求:">
-                    <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}" placeholder="请输入内容" v-model="formInline.remark"></el-input>
+                    <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}" placeholder="请输入内容" v-model="formInline.remark2"></el-input>
                   </el-form-item>
                 </div>
 
@@ -79,7 +78,7 @@
               <el-cascader v-model="formInline.classification" :options="options" @change="handleChange"></el-cascader>
             </el-form-item>
             <el-form-item label="请输入采购人编号">
-              <el-input  type="text" v-model="formInline.registerTime"></el-input>
+              <el-input  type="text" v-model="formInline.bianhao"></el-input>
             </el-form-item>
             <el-button type="primary" @click="onSubmit">搜索</el-button>
             </el-form-item>
@@ -87,13 +86,12 @@
         </div>
         <br />
         <el-table :data="gridData">
-          <el-table-column prop="productId" label="供应商编号" width="100"></el-table-column>
-          <el-table-column prop="productName" label="供应商名称" width="100"></el-table-column>
-          <el-table-column prop="type" label="级别" width="70"></el-table-column>
-          <el-table-column prop="personalUnit" label="Ⅰ级分类" width="100"></el-table-column>
-          <el-table-column prop="costPrice" label="Ⅱ级分类" width="100"></el-table-column>
-          <el-table-column prop="costPrice" label="Ⅲ级分类" width="100"></el-table-column>
-          <el-table-column prop="costPrice" label="所在区域" width="100"></el-table-column>
+          <el-table-column prop="supplierfiles.supplierNo" label="供应商编号" width="100"></el-table-column>
+          <el-table-column prop="supplierfiles.supplierName" label="供应商名称" width="100"></el-table-column>
+          <el-table-column prop="supplierfiles.firstKindName" label="Ⅰ级分类" width="100"></el-table-column>
+          <el-table-column prop="supplierfiles.secondKindName" label="Ⅱ级分类" width="100"></el-table-column>
+          <el-table-column prop="supplierfiles.threeKindName" label="Ⅲ级分类" width="100"></el-table-column>
+          <el-table-column prop="supplierfiles.supplierArea" label="所在区域" width="100"></el-table-column>
           <el-table-column label="添加">
             <template slot-scope="scope">
               <el-button @click.native.prevent="add(scope.$index, table)" type="text" size="small">添加</el-button>
@@ -108,7 +106,12 @@
 <script>
   export default {
     created() {
-      //this.selectGatherDetails();
+      this.formInline2.productId=this.$route.query.id;//产品主键
+      this.formInline2.productNo=this.$route.query.productId;//产品编号
+      this.formInline2.productName=this.$route.query.productName;//产品名称
+      this.formInline2.productType=this.$route.query.type;//用途类型
+      this.formInline2.productGrade=this.$route.query.productClass;//档次级别
+      this.selectAlloffer();
       this.shijian();
     },
     data() {
@@ -134,37 +137,36 @@
         ], //联动菜单
         gridData: [],
         formInline: {
-          payId:'',//出库单编号
-          storer:'',//出库人
-          reason:'',//出库理由
-          reasonexact:'',//出库详细理由
-          amountSum:0,// 总件数
-          costPriceSum:0,//总金额
-          paidAmountSum:0,//确认出库总件数
-          remark:'',//备注
-          register:'',//登记人
-          registerTime:'',//登记时间
-          checker:'',//复核人
-          checkTime:'2020-09-09',//复核时间
-          checkTag:'等待审核',//审核标志
-          attemper:'',//调度人
-          attemperTime:'2020-09-09',//调度时间
-          storeTag:'已申请'//库存标志
+          classification:'',
+          bianhao:''
+        },
+        formInline2: {
+          productId:'',//产品主键
+          productNo:'',//产品编号
+          productName:'',//产品名称
+          productType:'',//用途类型
+          productGrade:'',//档次级别
+          registrar:'',//登记人
+          registrartime:'',//登记时间
+          auditor:'',//审核人
+          auditorTime:'',//审核时间
+          checkMark:'未审核'//审核标志
         },
         tableData: [],
+        tableData2:[],
         datas:{}
       }
     },
     methods: {
       onSubmit() {
-        this.$set(this.datas,'pay',this.formInline);
-        this.$set(this.datas,'payDetails',this.tableData);
-        this.$http.post("http://localhost:8080/Erp-web/pay/addPay.do",this.$qs.stringify(this.datas,{arrayFormat:'payDetails', allowDots: true}))
+        this.$set(this.datas,'recommend',this.formInline2);
+        this.$set(this.datas,'recommenddetails',this.tableData2);
+        this.$http.post(this.$api+"/recommend/InsertRecommend",this.$qs.stringify(this.datas,{arrayFormat:'recommenddetails', allowDots: true}))
         	.then( res => {
-            console.log(this.formInline.productName);
+            //console.log(this.formInline.productName);
                    if(res.status==200){
                    			this.$message({ message: '提交成功！',type: 'success',duration:1000});
-                        this.$router.go(0);
+                        this.$router.go(-1);
                    	}
                  })
         	.catch(err =>{
@@ -178,22 +180,24 @@
       add(index) {
         this.index = index;
         //把数据添加到数组末尾
-       this.tableData.push({
-       productName:this.gridData[this.index].productName,//产品名称
-       productId:this.gridData[this.index].productId,//产品id
-       productDescribe:this.gridData[this.index].productDescribe,//描述
-       amountUnit:this.gridData[this.index].amountUnit,//单位
-       costPrice:this.gridData[this.index].realCostPrice,//单价
-       amount:0,//数量
-       subtotal:0//小计
+       this.tableData.push(this.gridData[this.index]);
+       this.tableData2.push({
+         supplierId:this.gridData[this.index].supplierfiles.id, //供应商主键
+         supplierNo:this.gridData[this.index].supplierfiles.supplierNo,//供应商编号
+         supplierName:this.gridData[this.index].supplierfiles.supplierName,//供应商名称
+         supplierArea:this.gridData[this.index].supplierfiles.supplierArea,//供应商区域
+         supplierQualityRank:this.gridData[this.index].supplierfiles.supplierQualityRank,//优质级别
+         supplierPhone:this.gridData[this.index].supplierfiles.supplierPhone,//电话
+         linkmanId:this.gridData[this.index].supplierfiles.supplierFirstcontact,//联系人主键
+         offerId:this.gridData[this.index].offer.id//报价表id
        });
-       this.formInline.amountSum+=this.tableData[this.index].amount;
-       this.formInline.costPriceSum+=parseInt(this.tableData[this.index].subtotal);
         //关闭所有模态框
         this.table = false
       },
-      selectGatherDetails() {
-        this.$http.post("http://localhost:8080/Erp-web/productfile/selectAllDESIGN.do")
+      selectAlloffer() {
+        var demo = new URLSearchParams()
+        demo.append("goodsNo", this.$route.query.productId);
+        this.$http.post(this.$api+"/offer/selectAlloffer",demo)
           .then(res => {
             //alert("a");
             this.gridData = res.data;
@@ -212,7 +216,7 @@
         if (date < 10) date = "0" + date;
         var time = "";
         time = year + "-" + month + "-" + date+ " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-        this.formInline.registerTime=time;
+        this.formInline2.registrartime=time;
       },
       sumlll(amount,index){
         this.tableData[index].subtotal=this.tableData[index].costPrice*parseInt(amount);
