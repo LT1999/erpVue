@@ -5,7 +5,6 @@ import register from '@/components/login/register'
 import updatePassword from '@/components/login/updatePassword'
 import ForgetPassword from '@/components/login/ForgetPassword'
 import main from '@/components/main/main'
-
 Vue.use(Router)
 
 export default new Router({
@@ -597,6 +596,61 @@ export default new Router({
 					path: '/cku2',
 					name: 'cku2',
 					component: cku2 => require(['@/components/inventory/comeoutAdmin/cku2.vue'], cku2)
+				},
+				{ /*供应商申请审批登记 */
+					path: '/ApplyForRegistration',
+					name: 'ApplyForRegistration',
+					component: ApplyForRegistration => require(['@/components/procurement/SupplierApplication/ApplyForRegistration.vue'], ApplyForRegistration)
+				},
+				{ /*供应商申请审批登记-info */
+					path: '/ApplyForRegistrationInfo',
+					name: 'ApplyForRegistrationInfo',
+					component: ApplyForRegistrationInfo => require(['@/components/procurement/SupplierApplication/ApplyForRegistrationInfo.vue'], ApplyForRegistrationInfo)
+				},
+				{ /*供应商申请审批登记-s */
+					path: '/ApplyForRegistrations',
+					name: 'ApplyForRegistrations',
+					component: ApplyForRegistrations => require(['@/components/procurement/SupplierApplication/ApplyForRegistrations.vue'], ApplyForRegistrations)
+				},
+				{ /*供应商申请审批登记审核*/
+					path: '/VerificationRequest',
+					name: 'VerificationRequest',
+					component: VerificationRequest => require(['@/components/procurement/SupplierApplication/VerificationRequest.vue'], VerificationRequest)
+				},
+				{ /*供应商申请审批登记审核-s*/
+					path: '/VerificationRequests',
+					name: 'VerificationRequests',
+					component: VerificationRequests => require(['@/components/procurement/SupplierApplication/VerificationRequests.vue'], VerificationRequests)
+				},
+				{ /*供应商申请查询-变更*/
+					path: '/RequestForChanges',
+					name: 'RequestForChanges',
+					component: RequestForChanges => require(['@/components/procurement/SupplierApplication/RequestForChanges.vue'], RequestForChanges)
+				},
+				{ /*供应商申请查询-变更-查看*/
+					path: '/RequestForChangeslook',
+					name: 'RequestForChangeslook',
+					component: RequestForChangeslook => require(['@/components/procurement/SupplierApplication/RequestForChangeslook.vue'], RequestForChangeslook)
+				},
+				{ /*供应商申请查询-变更-变更*/
+					path: '/RequestForChangesInfo',
+					name: 'RequestForChangesInfo',
+					component: RequestForChangesInfo => require(['@/components/procurement/SupplierApplication/RequestForChangesInfo.vue'], RequestForChangesInfo)
+				},
+				{ /*供应商申请查询-处理*/
+					path: '/RequestDispose',
+					name: 'RequestDispose',
+					component: RequestDispose => require(['@/components/procurement/SupplierApplication/RequestDispose.vue'], RequestDispose)
+				},
+				{ /*供应商申请查询-处理-s*/
+					path: '/RequestDisposes',
+					name: 'RequestDisposes',
+					component: RequestDisposes => require(['@/components/procurement/SupplierApplication/RequestDisposes.vue'], RequestDisposes)
+				},
+				{ /*数据报表excel*/
+					path: '/DataReportExcel',
+					name: 'DataReportExcel',
+					component: DataReportExcel => require(['@/components/procurement/DataReport/DataReportExcel.vue'], DataReportExcel)
 				},
 				{ /*制定采购执行单 */
 					path: '/purchaseOrder',
