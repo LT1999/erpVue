@@ -43,7 +43,7 @@
                   <el-table-column prop="supplierfiles.supplierAddress" label="所在地" ></el-table-column>
                   <el-table-column prop="supplierfiles.supplierArea" label="所在区域" ></el-table-column>
                   <el-table-column prop="supplierfiles.supplierPhone" label="电话"></el-table-column>
-                  <el-table-column prop="linkmen.linkmanName" label="联系人" ></el-table-column>
+                  <el-table-column prop="supplierfiles.supplierFirstlinkmanName" label="联系人" ></el-table-column>
                   <el-table-column prop="supplierfiles.supplierUrl" label="网址"></el-table-column>
                 </el-table>
                 <br />
@@ -188,7 +188,7 @@
          supplierArea:this.gridData[this.index].supplierfiles.supplierArea,//供应商区域
          supplierQualityRank:this.gridData[this.index].supplierfiles.supplierQualityRank,//优质级别
          supplierPhone:this.gridData[this.index].supplierfiles.supplierPhone,//电话
-         linkmanId:this.gridData[this.index].supplierfiles.supplierFirstcontact,//联系人主键
+         supplierFirstlinkmanName:this.gridData[this.index].supplierfiles.supplierFirstlinkmanName,//联系人主键
          offerId:this.gridData[this.index].offer.id//报价表id
        });
         //关闭所有模态框
