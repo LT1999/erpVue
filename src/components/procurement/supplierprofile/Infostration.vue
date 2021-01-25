@@ -62,7 +62,6 @@
 					<el-form-item label="邮政编码">
 						<el-input v-model="ruleForm.supplierPostalcode"></el-input>
 					</el-form-item>
-
 				</el-card>
 				<br />
 				
