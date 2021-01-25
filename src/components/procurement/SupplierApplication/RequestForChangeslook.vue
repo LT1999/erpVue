@@ -94,14 +94,14 @@
 		data() {
 			return {
 				form: {},
-				form2:{},
+				form2:{supplierName:'暂无',supplierNo:'暂无'},
 				tableData: [],
 				supplierId:0
 			};
 		},
 		methods: {
 			selectsupId(){
-				this.$http.post(this.$api+"/supplierfiles/selectByPrimaryKey", "?id=" + this.form.supplierId)
+				this.$http.post(this.$api+"/supplierfiles/selectByPrimaryKey", "id=" + this.form.supplierId)
 				.then(res => {
 					this.form2 = res.data;
 				})

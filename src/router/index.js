@@ -5,7 +5,6 @@ import register from '@/components/login/register'
 import updatePassword from '@/components/login/updatePassword'
 import ForgetPassword from '@/components/login/ForgetPassword'
 import main from '@/components/main/main'
-
 Vue.use(Router)
 
 export default new Router({

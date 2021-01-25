@@ -44,7 +44,7 @@
 								</el-table-column>
 								<el-table-column prop="goodsPrice" label="单价(元) ">
 								</el-table-column>
-								<el-table-column prop="goodsPrice" label="小计(元) ">
+								<el-table-column prop="goodsSubtotal" label="小计(元) ">
 								</el-table-column>
 								<el-table-column prop="goodsDiscount" label="折扣(%)">
 									<span>100</span>
@@ -165,11 +165,12 @@
 				//登记时间
 				registrartime: '',
 				//供应商主键
-				supplierId: 0,
+				supplierNo:'',
 				dto: {
-					offers: []
+					offers: [],
+					dd:{}
 				},
-				shuzu: []
+				shuzu: {}
 			};
 		},
 		methods: {
@@ -210,34 +211,30 @@
 					aData.getHours() + ":" +
 					aData.getMinutes() + ":" +
 					aData.getSeconds();
+					
 				this.dto.offers.forEach(item => {
 					item.registrartime = this.registrartime;
+					item.supplierNo = this.supplierNo;
 					item.registrar = this.reg.registrar;
 					item.supplierId = this.supplierId;
 					item.goodsDiscount = 100;
 					item.goodsDescribe = '暂无';
 					item.checkMark="未审核";
 				});
+				console.log(this.dto)
 				this.$refs.reg.validate((valid) => {
 					if (valid) {
-						this.$http.post(this.$api + "/offer/delSupplierId" + "?supplierId=" + this.supplierId)
+						this.$http.post(this.$api + "/offer/insert", this.$qs.stringify(this.dto, {
+								arrayFormat: 'offers',
+								allowDots: true
+							}))
 							.then(res => {
-								console.log(this.dto.offers);
-								this.$http.post(this.$api + "/offer/insert", this.$qs.stringify(this.dto, {
-										arrayFormat: 'offers',
-										allowDots: true
-									}))
-									.then(res => {
-										if (res.data > 0) {
-											this.$message({
-												message: '已提交！',
-												type: 'success'
-											});
-										}
-									})
-									.catch(err => {
-										console.log(err)
+								if (res.data > 0) {
+									this.$message({
+										message: '已提交！',
+										type: 'success'
 									});
+								}
 							})
 							.catch(err => {
 								console.log(err)
@@ -249,10 +246,12 @@
 			},
 			add(index) {
 				this.index = index;
+				
 				this.shuzu.goodsNo = this.gridData[this.index].productId;
-				this.shuzu.goodsName = this.gridData[this.index].productName
-				this.shuzu.goodsDescribe = this.gridData[this.index].productDescribe
-				this.shuzu.goodsPrice = this.gridData[this.index].realCostPrice
+				this.shuzu.goodsName = this.gridData[this.index].productName;
+				this.shuzu.goodsDescribe = this.gridData[this.index].productDescribe;
+				this.shuzu.goodsPrice = this.gridData[this.index].realCostPrice;
+				this.shuzu.goodsSubtotal = this.gridData[this.index].realCostPrice;
 				//把数据添加到数组末尾
 				this.dto.offers.push(this.shuzu);
 				this.shuzu = [];
@@ -312,7 +311,7 @@
 		},
 		created() {
 			this.form = this.$route.query.arr;
-			this.supplierId = this.form.id;
+			this.supplierNo = this.form.supplierNo;
 			this.selectOptions();
 			this.qb();
 		}

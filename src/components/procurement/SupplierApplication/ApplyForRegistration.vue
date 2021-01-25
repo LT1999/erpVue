@@ -22,7 +22,7 @@
 				</el-col>
 
 				<el-col :span="2">
-					<el-button @click="open" type="primary" plain style="margin-top: 50px; margin-left: 20px;font-size: 13px;">查询</el-button>
+					<el-button @click="open()" type="primary" plain style="margin-top: 50px; margin-left: 20px;font-size: 13px;">查询</el-button>
 				</el-col>
 			</el-form>
 			<div>
@@ -122,8 +122,15 @@
 				},
 				/* 搜索框 */
 				searchFrom: {
-					queryClassifyId: null,
-					queryTime: null
+					queryClassifyId: [],
+					queryTime: []
+				},
+				dto:{
+					time1:null,
+					time2:null,
+					fl1:0,
+					fl2:0,
+					fl3:0
 				},
 				number:'',
 				//级联选择器
@@ -169,15 +176,19 @@
 			},
 			//查询按钮
 			open() {
-				console.log(this.searchFrom);
-				/* this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfileCondition.do", this.$qs.stringify(this.searchFrom))
-					.then(res => {
-						console.log(res.data);
-						this.tableData = res.data;
-					})
-					.catch(err => {
-						console.log(err)
-					}); */
+					this.dto.time1=this.searchFrom.queryTime[0];
+					this.dto.time2=this.searchFrom.queryTime[1];
+					this.dto.fl1=this.searchFrom.queryClassifyId[0];
+					this.dto.fl2=this.searchFrom.queryClassifyId[1];
+					this.dto.fl3=this.searchFrom.queryClassifyId[2];
+					this.$http.post(this.$api+"/supplierfiles/findss", this.$qs.stringify(this.dto))
+						.then(res => {
+							console.log(res.data);
+							this.tableData = res.data;
+						})
+						.catch(err => {
+							console.log(err)
+						});
 			},
 			selectAll(){
 				this.$http.post(this.$api+"/supplierfiles/findCheck")

@@ -12,7 +12,7 @@
 				<el-table :data="tableData" style="text-align: center;" border>
 					<el-table-column prop="offerNo" label="报价单编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="supplierId" label="供应商序号">
+					<el-table-column prop="supplierNo" label="供应商编号">
 					</el-table-column>
 					<el-table-column prop="goodsName" label="商品名称">
 					</el-table-column>

@@ -20,7 +20,7 @@
 							</el-option>
 						</el-select>
 					</el-form-item>
-					<el-button @click="open" type="primary" plain style=" margin-left: 20px;font-size: 13px;">导出</el-button>
+					<el-button @click="exportClick" type="primary" plain style=" margin-left: 20px;font-size: 13px;">导出</el-button>
 				</el-col>
 			</el-form>
 			<div class="hello">
@@ -64,14 +64,20 @@
 					label: 'xml'
 				}],
 				value2: '',
-				legendData:'',
-				seriesData:'',
-				selected:'',
-				name:'',
+				legendData: '',
+				seriesData: '',
+				selected: '',
+				name: '',
 				nameList: [
-				    '赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许', '何', '吕', '施', '张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章', '云', '苏', '潘', '葛', '奚', '范', '彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳', '酆', '鲍', '史', '唐', '费', '廉', '岑', '薛', '雷', '贺', '倪', '汤', '滕', '殷', '罗', '毕', '郝', '邬', '安', '常', '乐', '于', '时', '傅', '皮', '卞', '齐', '康', '伍', '余', '元', '卜', '顾', '孟', '平', '黄', '和', '穆', '萧', '尹', '姚', '邵', '湛', '汪', '祁', '毛', '禹', '狄', '米', '贝', '明', '臧', '计', '伏', '成', '戴', '谈', '宋', '茅', '庞', '熊', '纪', '舒', '屈', '项', '祝', '董', '梁', '杜', '阮', '蓝', '闵', '席', '季', '麻', '强', '贾', '路', '娄', '危'
+					'赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许', '何', '吕', '施',
+					'张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章', '云', '苏', '潘', '葛', '奚', '范',
+					'彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳', '酆', '鲍', '史', '唐', '费', '廉', '岑', '薛', '雷',
+					'贺', '倪', '汤', '滕', '殷', '罗', '毕', '郝', '邬', '安', '常', '乐', '于', '时', '傅', '皮', '卞', '齐', '康', '伍', '余', '元', '卜',
+					'顾', '孟', '平', '黄', '和', '穆', '萧', '尹', '姚', '邵', '湛', '汪', '祁', '毛', '禹', '狄', '米', '贝', '明', '臧', '计', '伏', '成',
+					'戴', '谈', '宋', '茅', '庞', '熊', '纪', '舒', '屈', '项', '祝', '董', '梁', '杜', '阮', '蓝', '闵', '席', '季', '麻', '强', '贾', '路',
+					'娄', '危'
 				],
-				nameLen:''
+				nameLen: ''
 			}
 		},
 		methods: {
@@ -80,81 +86,88 @@
 				var bing = echarts.init(document.getElementById('diagram'));
 				//绘制饼图
 				var option = {
-				    title: {
-				        text: '同名数量统计',
-				        subtext: '纯属虚构',
-				        left: 'center'
-				    },
-				    tooltip: {
-				        trigger: 'item',
-				        formatter: '{a} <br/>{b} : {c} ({d}%)'
-				    },
-				    legend: {
-				        type: 'scroll',
-				        orient: 'vertical',
-				        right: 10,
-				        top: 20,
-				        bottom: 20,
-				        data: data.legendData,
-				
-				        selected: data.selected
-				    },
-				    series: [
-				        {
-				            name: '姓名',
-				            type: 'pie',
-				            radius: '55%',
-				            center: ['40%', '50%'],
-				            data: data.seriesData,
-				            emphasis: {
-				                itemStyle: {
-				                    shadowBlur: 10,
-				                    shadowOffsetX: 0,
-				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-				                }
-				            }
-				        }
-				    ]
+					title: {
+						text: '同名数量统计',
+						subtext: '纯属虚构',
+						left: 'center'
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: '{a} <br/>{b} : {c} ({d}%)'
+					},
+					legend: {
+						type: 'scroll',
+						orient: 'vertical',
+						right: 10,
+						top: 20,
+						bottom: 20,
+						data: data.legendData,
+
+						selected: data.selected
+					},
+					series: [{
+						name: '姓名',
+						type: 'pie',
+						radius: '55%',
+						center: ['40%', '50%'],
+						data: data.seriesData,
+						emphasis: {
+							itemStyle: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
 				};
 				bing.setOption(option);
 			},
 			genData(count) {
-			    for (var i = 0; i < count; i++) {
-			        this.name = Math.random() > 0.65
-			            ? this.makeWord(4, 1) + '·' + this.makeWord(3, 0)
-			            : this.makeWord(2, 1);
-			        this.legendData.push(name);
-			        this.seriesData.push({
-			            name: name,
-			            value: Math.round(Math.random() * 100000)
-			        });
-			        this.selected[name] = i < 6;
-			    }
+				for (var i = 0; i < count; i++) {
+					this.name = Math.random() > 0.65 ?
+						this.makeWord(4, 1) + '·' + this.makeWord(3, 0) :
+						this.makeWord(2, 1);
+					this.legendData.push(name);
+					this.seriesData.push({
+						name: name,
+						value: Math.round(Math.random() * 100000)
+					});
+					this.selected[name] = i < 6;
+				}
 			},
 			makeWord(max, min) {
-			    this.nameLen = Math.ceil(Math.random() * max + min);
-			    for (var i = 0; i < this.nameLen; i++) {
-			        this.name.push(this.nameList[Math.round(Math.random() * this.nameList.length - 1)]);
-			    }
+				this.nameLen = Math.ceil(Math.random() * max + min);
+				for (var i = 0; i < this.nameLen; i++) {
+					this.name.push(this.nameList[Math.round(Math.random() * this.nameList.length - 1)]);
+				}
 				console.log(this.name);
 			},
-			open() {
-				console.log(this.searchFrom);
-				/* this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfileCondition.do", this.$qs.stringify(this.searchFrom))
+			exportClick() {
+				this.$axios.post("/freceipt/export", this.$qs.stringify(this.checkform), {
+						responseType: 'arraybuffer'
+					})
 					.then(res => {
 						console.log(res.data);
-						this.tableData = res.data;
+						if (res) {
+							// _this.loading = false;
+							const aLink = document.createElement("a");
+							let blob = new Blob([res.data], {
+								type: "application/vnd.ms-excel"
+							})
+							aLink.href = URL.createObjectURL(blob)
+							aLink.setAttribute('download', '保单信息' + '.xlsx') // 设置下载文件名称
+							aLink.click()
+							this.$refs.loadElement.appendChild(aLink)
+						}
 					})
-					.catch(err => {
-						console.log(err)
-					}); */
-			},
-			mounted() {
-				this.bing();
-				/* this.selectAll();
-				this.selectOptions(); */
+					.catch(error => {
+						console.log(error);
+					})
 			}
 		},
+		mounted() {
+			this.bing();
+		}
 	}
 </script>
 

@@ -50,28 +50,34 @@
 								<el-table-column prop="goodsDescribe" label="描述 ">
 								</el-table-column>
 								<el-table-column prop="goodsPrice" label="单价(元) ">
-									<input v-model="tableData.goodsPrice" style="border: none;"></input>
+									<template slot-scope="scope">
+										<input v-model="scope.row.goodsPrice" @change="bianhua()" style="border: none;"></input>
+									</template>
 								</el-table-column>
 								<el-table-column prop="goodsSubtotal" label="小计(元) ">
 								</el-table-column>
 								<el-table-column prop="goodsDiscount" label="折扣(%) ">
-									<input v-model="tableData.goodsDiscount" style="border: none;"></input>
+									<template slot-scope="scope">
+										<input v-model="scope.row.goodsDiscount" @change="bianhua()" style="border: none;"></input>
+									</template>
 								</el-table-column>
 							</el-table>
 						</template>
 					</el-row>
-					<el-row>
-						<el-col :span="8" :push='1'>
-							<el-form-item label="处理人" prop="changer">
-								<input v-model="input"></input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="处理人编号" prop="changerid">
-								<input v-model="input"></input>
-							</el-form-item>
-						</el-col>
-					</el-row>
+					<el-form ref="forminfo" :rules="rules" :model="forminfo" label-width="130px">
+						<el-row>
+							<el-col :span="8" :push='1'>
+								<el-form-item label="处理人" prop="changer">
+									<input v-model="forminfo.changer"></input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="8" :push='6'>
+								<el-form-item label="处理人编号" prop="changerid">
+									<input v-model="forminfo.changerid"></input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+					</el-form>
 				</el-card>
 			</el-form>
 		</div>
@@ -84,7 +90,10 @@
 			return {
 				form: {},
 				form2: {},
-				input: '',
+				forminfo: {
+					changer: '',
+					changerid: ''
+				},
 				tableData: [],
 				rules: {
 					changer: [{
@@ -116,7 +125,7 @@
 				});
 			},
 			selsup() {
-				this.$http.post(this.$api + "/supplierfiles/selectByPrimaryKey", "?id=" + this.form.supplierId)
+				this.$http.post(this.$api + "/supplierfiles/selectByPrimaryKey", "id=" + this.form.supplierId)
 					.then(res => {
 						this.form2 = res.data;
 					})
@@ -124,40 +133,55 @@
 						console.log(err)
 					});
 			},
+			bianhua(){
+				this.tableData[0].goodsSubtotal=this.tableData[0].goodsPrice*this.tableData[0].goodsDiscount*0.01;
+			},
 			submit() {
-				this.$confirm('确认变更?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.form.checkMark = "未审核";
-					this.form.goodsPrice = this.tableData[0].goodsPrice;
-					this.form.goodsDiscount = this.tableData[0].goodsDiscount;
-					this.form.goodsSubtotal = this.tableData[0].goodsSubtotal;
-					this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
-						.then(res => {
-							this.$message({
-								message: '已变更',
-								type: 'success'
-							});
-						})
-						.catch(err => {
-							console.log(err)
+				this.$refs.forminfo.validate((valid) => {
+					if (valid) {
+						this.$refs.forminfo.validate((valid) => {
+							if (valid) {
+								this.$confirm('确认变更?', '提示', {
+									confirmButtonText: '确定',
+									cancelButtonText: '取消',
+									type: 'warning'
+								}).then(() => {
+									this.form.checkMark = "未审核";
+									this.form.goodsPrice = this.tableData[0].goodsPrice;
+									this.form.goodsDiscount = this.tableData[0].goodsDiscount;
+									this.form.goodsSubtotal = this.tableData[0].goodsSubtotal;
+									this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
+										.then(res => {
+											this.$message({
+												message: '已变更',
+												type: 'success'
+											});
+										})
+										.catch(err => {
+											console.log(err)
+										});
+								}).catch(() => {
+									this.$message({
+										type: 'info',
+										message: '已取消'
+									});
+								});
+							} else {
+								return false;
+							}
 						});
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消'
-					});
+					} else {
+						return false;
+					}
 				});
 			},
 			del() {
-				this.$confirm('确认变更?', '提示', {
+				this.$confirm('确认处理结果?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					this.$http.post(this.$api + "/offer/deleteByPrimaryKey", "?id=" + this.form.id)
+					this.$http.post(this.$api + "/offer/deleteByPrimaryKey", "id=" + this.form.id)
 						.then(res => {
 							this.$message({
 								message: '已删除',

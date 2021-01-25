@@ -7,15 +7,15 @@
 		</el-breadcrumb>
 		<el-card shadow="always" style="padding: 20px;">
 
-			<el-form ref="searchFrom" :model="searchFrom" label-position="left" inline style="margin-top:10px;">
+			<el-form  label-position="left" inline style="margin-top:10px;">
 				<el-col :span="15" :push="4">
 					<el-form-item label="请输入登记时间">
-						<el-date-picker v-model="searchFrom.queryTime" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+						<el-date-picker v-model="queryTime" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
 						 start-placeholder="开始日期" end-placeholder="结束日期"> </el-date-picker>
 					</el-form-item>
 				</el-col>
 				<el-col :span="5">
-					<el-button @click="open" type="primary" plain style="font-size: 13px;">查询</el-button>
+					<el-button @click="open()" type="primary" plain style="font-size: 13px;">查询</el-button>
 				</el-col>
 			</el-form>
 			<div>
@@ -28,7 +28,7 @@
 				<el-table :data="tableData" style="text-align: center;" border>
 					<el-table-column prop="offerNo" label="报价单编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="supplierId" label="供应商序号">
+					<el-table-column prop="supplierNo" label="供应商序号">
 					</el-table-column>
 					<el-table-column prop="goodsName" label="商品名称">
 					</el-table-column>
@@ -93,9 +93,11 @@
 					}]
 				},
 				/* 搜索框 */
-				searchFrom: {
-					queryTime: null
+				dto: {
+					time1: null,
+					time2:null
 				},
+				queryTime:[],
 				//表格
 				tableData: [],
 				currentPage: 10,
@@ -153,14 +155,15 @@
 			},
 			//查询按钮
 			open() {
-				/* this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfileCondition.do", this.$qs.stringify(this.searchFrom))
+				this.dto.time1=this.queryTime[0];
+				this.dto.time2=this.queryTime[1];
+				this.$http.post(this.$api+"/offer/findtime", this.$qs.stringify(this.dto))
 					.then(res => {
-						console.log(res.data);
 						this.tableData = res.data;
 					})
 					.catch(err => {
 						console.log(err)
-					}); */
+					}); 
 			},
 			handleChange() {
 

@@ -18,18 +18,18 @@
 				<el-card class="box-card">
 					<h3>供应商报价单</h3><br />
 					<el-form ref="form2" :rules="rules" :model="form2" label-width="130px">
-					<el-row>
-						<el-col :span="8" :push='1'>
-							<el-form-item label="供应商名称">
-								<span>{{form2.supplierName}}</span>
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='6'>
-							<el-form-item label="供应商编号">
-								<span>{{form2.supplierNo}}</span>
-							</el-form-item>
-						</el-col>
-					</el-row>
+						<el-row>
+							<el-col :span="8" :push='1'>
+								<el-form-item label="供应商名称">
+									<span>{{form2.supplierName}}</span>
+								</el-form-item>
+							</el-col>
+							<el-col :span="8" :push='6'>
+								<el-form-item label="供应商编号">
+									<span>{{form2.supplierNo}}</span>
+								</el-form-item>
+							</el-col>
+						</el-row>
 					</el-form>
 					<br />
 					<el-row>
@@ -53,7 +53,7 @@
 					<el-row>
 						<el-col :span="8" :push='1'>
 							<el-form-item label="报价单编号">
-								<span>{{form.offerNo}} </span> 
+								<span>{{form.offerNo}} </span>
 							</el-form-item>
 						</el-col>
 						<el-col :span="8" :push='6'>
@@ -62,7 +62,7 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					
+
 				</el-card>
 			</el-form>
 		</div>
@@ -80,10 +80,10 @@
 						trigger: 'blur'
 					}]
 				},
-				form:{},
-				form2:{},
-				tableData:[]
-				
+				form: {},
+				form2: {},
+				tableData: []
+
 			};
 		},
 		methods: {
@@ -94,22 +94,26 @@
 					type: 'warning'
 				}).then(() => {
 					var aData = new Date();
-					this.form.auditorTime= aData.getFullYear() + "-" +
+					this.form.auditorTime = aData.getFullYear() + "-" +
 						(aData.getMonth() + 1) + "-" +
 						aData.getDate() + " " +
 						aData.getHours() + ":" +
 						aData.getMinutes() + ":" +
 						aData.getSeconds();
-						this.form.checkMark=check;
-						this.$http.post(this.$api+"/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
+					this.form.checkMark = check;
+					this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
 						.then(res => {
-							if(res.data>0){
-							location.href = "#/VerificationRequest";
+							if (res.data > 0) {
+								this.$message({
+									message: '审核成功！',
+									type: 'success'
+								});
+								location.href = "#/VerificationRequest";
 							}
 						})
 						.catch(err => {
 							console.log(err)
-						}); 
+						});
 				}).catch(() => {
 					this.$message({
 						type: 'info',
@@ -131,17 +135,17 @@
 					});
 				});
 			},
-			selsup(){
-				this.$http.post(this.$api+"/supplierfiles/selectByPrimaryKey", "?id=" + this.form.supplierId)
-				.then(res => {
-					this.form2 = res.data;
-				})
-				.catch(err => {
-					console.log(err)
-				}); 
+			selsup() {
+				this.$http.post(this.$api + "/supplierfiles/selectByPrimaryKey", "id=" + this.form.supplierId)
+					.then(res => {
+						this.form2 = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					});
 			}
 		},
-		mounted(){
+		mounted() {
 			this.tableData.push(this.form);
 		},
 		created() {
@@ -153,9 +157,9 @@
 			this.form.offerNo=this.$route.query.arr.offerNo;
 			this.form.auditor=this.$route.query.arr.auditor;
 			this.form.id=this.$route.query.arr.id; */
-			this.form=this.$route.query.arr;
-			
-		    this.selsup();
+			this.form = this.$route.query.arr;
+
+			this.selsup();
 		}
 	}
 </script>

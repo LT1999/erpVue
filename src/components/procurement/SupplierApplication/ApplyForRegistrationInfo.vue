@@ -517,14 +517,14 @@
 		},
 		methods: {
 			selectLinkman() {
-				this.$http.post(this.$api + "/linkman/selectByPrimaryKey" + "?id=" + this.id1)
+				this.$http.post(this.$api + "/linkman/selectByPrimaryKey","id=" + this.id1)
 					.then(res => {
 						this.form1 = res.data;
 					})
 					.catch(err => {
 						console.log(err)
 					})
-				this.$http.post(this.$api + "/linkman/selectByPrimaryKey" + "?id=" + this.id2)
+				this.$http.post(this.$api + "/linkman/selectByPrimaryKey" ,"id=" + this.id2)
 					.then(res => {
 						this.form2 = res.data;
 					})
