@@ -651,7 +651,13 @@ export default new Router({
 					name: 'audit2',
 					component: audit2 => require(['@/components/procurement/recommend/audit2.vue'],
 						audit2)
-				}
+				},
+        { /*产品供应商推荐登记--查询 */
+        	path: '/query',
+        	name: 'query',
+        	component: query => require(['@/components/procurement/recommend/query.vue'],
+        		query)
+        }
 			]
 		}
 	]
