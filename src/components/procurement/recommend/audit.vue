@@ -20,19 +20,19 @@
       		</div>
       		<div id="table" style="">
       			<el-table id="" :data="tableData" border stripe style="width: 100%" stripe>
-      				<el-table-column prop="payId" label="推荐单编号" width="200px">
+      				<el-table-column prop="id" label="推荐单编号">
       				</el-table-column>
-      				<el-table-column prop="reason" label="产品编号">
+      				<el-table-column prop="productNo" label="产品编号">
       				</el-table-column>
-      				<el-table-column prop="registerTime" label="产品名称" width="200px">
+      				<el-table-column prop="productName" label="产品名称">
       				</el-table-column>
-      				<el-table-column prop="backtime" label="Ⅰ级分类">
+      				<el-table-column prop="productType" label="用途类型">
       				</el-table-column>
-      				<el-table-column prop="amountSum" label="Ⅱ级分类">
+      				<el-table-column prop="productGrade" label="档次级别">
       				</el-table-column>
-      				<el-table-column prop="costPriceSum" label="Ⅲ级分类">
+      				<el-table-column prop="registrar" label="登记人">
       				</el-table-column>
-              <el-table-column prop="costPriceSum" label="登记时间">
+              <el-table-column prop="registrartime" label="登记时间">
               </el-table-column>
       				<el-table-column label="审核">
       					<template slot-scope="scope">
@@ -55,7 +55,7 @@
 <script>
 	export default {
     created() {
-      //this.selectPay();
+      this.selectAllByCheck();
     },
 		data() {
 			return {
@@ -68,12 +68,12 @@
 		methods: {
 			reviewButton(index,row){
         this.$router.push({
-        	path: '/Outregister-info',query:{id:row.id,payId:row.payId,storer:row.storer,reason:row.reason,
-          amountSum:row.amountSum,costPriceSum:row.costPriceSum,remark:row.remark,register:row.register,registerTime:row.registerTime}
+        	path: '/audit2' ,query:{id:row.id,productNo:row.productNo,productName:row.productName,productId:row.productId,productType:row.productType,
+          productGrade:row.productGrade,registrar:row.registrar,registrartime:row.registrartime}
         });
 			},
-      selectPay(){
-        this.$http.post("http://localhost:8080/Erp-web/pay/selectPay.do")
+      selectAllByCheck(){
+        this.$http.post(this.$api+"/recommend/selectAllByCheck")
         	.then( res => {
         	//alert("a");
                     this.tableData = res.data;

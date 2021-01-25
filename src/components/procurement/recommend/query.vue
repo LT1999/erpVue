@@ -23,7 +23,6 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">搜索</el-button>
-              <el-button type="primary" @click="">开始</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -32,7 +31,7 @@
     <br />
     <div>
     	<span>
-    	等待执行的推荐单总数：{{num1}}例, 正在执行的推荐单总数：{{num2}}例, 完成的推荐单总数：{{num3}}例
+    	当前推荐单总数为：{{num1}}例
     	</span>
     </div>
     <br />
@@ -40,13 +39,17 @@
        <el-card class="box-card">
             <div>
             	<el-table :data="tableData" style="width: 100%">
-            		<el-table-column prop="payId" label="推荐单编号">
+            		<el-table-column prop="id" label="推荐单编号">
             		</el-table-column>
-            		<el-table-column prop="reason" label="产品编号">
+            		<el-table-column prop="productNo" label="产品编号">
             		</el-table-column>
-            		<el-table-column prop="registerTime" label="推荐单状态">
+                <el-table-column prop="productName" label="产品名称">
+                </el-table-column>
+            		<el-table-column prop="registrar" label="登记人">
             		</el-table-column>
-            		<el-table-column prop="amountSum" label="审核状态">
+                <el-table-column prop="registrartime" label="登记时间">
+                </el-table-column>
+            		<el-table-column prop="checkMark" label="审核状态">
             		</el-table-column>
             	</el-table>
             </div>
@@ -58,13 +61,11 @@
 <script>
   export default {
     created() {
-     // this.selectPayTag();
+     this.selectAll();
     },
     data() {
       return {
-        num1:1,
-        num2:2,
-        num3:3,
+        num1:0,
         options: [{
             value: '01/电子',
             label: '01/电子',
@@ -91,11 +92,11 @@
       onSubmit() {
         console.log('submit!');
       },
-      selectPayTag(){
-        this.$http.post("http://localhost:8080/Erp-web/pay/selectPayTag.do")
+      selectAll(){
+        this.$http.post(this.$api+"/recommend/selectAll")
         	.then( res => {
-        	//alert("a");
                     this.tableData = res.data;
+                    this.num1=this.tableData.length;
                  })
         	.catch(err =>{
         		console.log(err)
