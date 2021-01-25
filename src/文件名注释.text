@@ -85,7 +85,7 @@ procurement: 采购模块
 		purchaseOrder-Audit:采购执行单审核
 		purchaseOrder-Audit-info:采购执行单审核
 		purchaseOrderSelect:采购执行单查询
-    recommend:产品供应商推荐管理
+  recommend:产品供应商推荐管理
 		supplierRegistration:产品供应商推荐登记
 		supplierRegistration2:产品供应商推荐登记
 		audit:产品供应商推荐登记审核
@@ -93,9 +93,14 @@ procurement: 采购模块
 		query:产品供应商推荐查询
 		changes:产品供应商推荐变更
 		changes2:产品供应商推荐变更
-    quality:采购质量控制管理
+  quality:采购质量控制管理
 		qualitydJ:质检结果登记
 		qualitydJ2:质检结果登记
 		qualitysh:质检结果登记复核
 		qualitysh2:质检结果登记复核
 		qualitycx:质检结果查询
+  procurementplan:采购计划管理
+    plan:新发生采购计划登记
+    Planquery:采购计划查询
+    review:采购计划审核
+    review2:采购计划审核
