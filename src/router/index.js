@@ -657,6 +657,12 @@ export default new Router({
         	name: 'query',
         	component: query => require(['@/components/procurement/recommend/query.vue'],
         		query)
+        },
+        { /*采购管理--采购计划管理--新发生采购计划登记 */
+        	path: '/plan',
+        	name: 'plan',
+        	component: plan => require(['@/components/procurement/procurementplan/plan.vue'],
+        		plan)
         }
 			]
 		}
