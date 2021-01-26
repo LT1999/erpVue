@@ -639,6 +639,30 @@ export default new Router({
 					name: 'supplierRegistration2',
 					component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'],
 						supplierRegistration2)
+				},
+				{ /*质检结果登记 */
+					path: '/qualitydJ',
+					name: 'qualitydJ',
+					component: qualitydJ => require(['@/components/procurement/quality/qualitydJ.vue'],
+						qualitydJ)
+				},
+				{ /*质检结果登记 */
+					path: '/qualitydj2',
+					name: 'qualitydj2',
+					component: qualitydj2 => require(['@/components/procurement/quality/qualitydj2.vue'],
+						qualitydj2)
+				},
+				{ /*质检结果登记复核 */
+					path: '/qualitysh',
+					name: 'qualitysh',
+					component: qualitysh => require(['@/components/procurement/quality/qualitysh.vue'],
+						qualitysh)
+				},
+				{ /*质检结果登记复核 */
+					path: '/qualitysh2',
+					name: 'qualitysh2',
+					component: qualitysh2 => require(['@/components/procurement/quality/qualitysh2.vue'],
+						qualitysh2)
 				}
 			]
 		}

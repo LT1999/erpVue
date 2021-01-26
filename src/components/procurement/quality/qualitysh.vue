@@ -1,88 +1,89 @@
 <template>
-  <!-- 采购管理--采购质量控制管理--质检结果登记复核-->
-  <div id="box">
-    <div id="head">
-    	<el-breadcrumb separator="/">
-    		<el-breadcrumb-item>采购管理</el-breadcrumb-item>
-    		<el-breadcrumb-item>采购质量控制管理</el-breadcrumb-item>
-    		<el-breadcrumb-item>质检结果登记复核</el-breadcrumb-item>
-    	</el-breadcrumb>
-    </div>
+	<!-- 采购管理--采购质量控制管理--质检结果登记复核-->
+	<div id="box">
+		<div id="head">
+			<el-breadcrumb separator="/">
+				<el-breadcrumb-item>采购管理</el-breadcrumb-item>
+				<el-breadcrumb-item>采购质量控制管理</el-breadcrumb-item>
+				<el-breadcrumb-item>质检结果登记复核</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
 
-    <div id="card">
-    	<el-card class="box-card">
-    		<div style="padding-bottom: 10px; ">
+		<div id="card">
+			<el-card class="box-card">
+				<div style="padding-bottom: 10px; ">
 
-    			<span style="font-size: 20px; color: #6275A6;">质检结果登记复核</span>
+					<span style="font-size: 20px; color: #6275A6;">质检结果登记复核</span>
 
-    			<br />
-    			<span style="font-size: 12px; color: #C6C6C9;">等待质检结果登记复核的采购执行单总数 :({{number}})例</span>
-    		</div>
-    		<div id="table" style="">
-    			<el-table id="" :data="tableData" border stripe style="width: 100%" stripe>
-    				<el-table-column prop="payId" label="采购执行单编号" width="200px">
-    				</el-table-column>
-    				<el-table-column prop="reason" label="产品编号">
-    				</el-table-column>
-    				<el-table-column prop="registerTime" label="产品名称" width="200px">
-    				</el-table-column>
-    				<el-table-column prop="backtime" label="采购数量">
-    				</el-table-column>
-    				<el-table-column prop="amountSum" label="已收合格数量">
-    				</el-table-column>
-    				<el-table-column prop="costPriceSum" label="未收数量">
-    				</el-table-column>
-    				<el-table-column label="复核">
-    					<template slot-scope="scope">
-    						<el-button @click="reviewButton(scope.$index,scope.row)" size="mini" type="success" plain>复核</el-button>
-    					</template>
-    				</el-table-column>
-    			</el-table>
-    		</div>
+					<br />
+					<span style="font-size: 12px; color: #C6C6C9;">等待质检结果登记复核的采购执行单总数 :({{number}})例</span>
+				</div>
+				<div id="table" style="">
+					<el-table id="" :data="tableData" border stripe style="width: 100%" stripe>
+						<el-table-column prop="purchaseqNo" label="采购执行单编号" width="200px">
+						</el-table-column>
+						<el-table-column prop="productNo" label="产品编号">
+						</el-table-column>
+						<el-table-column prop="productName" label="产品名称" width="200px">
+						</el-table-column>
+						<el-table-column prop="purchaseQuantity" label="采购数量">
+						</el-table-column>
+						<el-table-column prop="qualifiedQuantity" label="已收合格数量">
+						</el-table-column>
+						<el-table-column prop="costPriceSum" label="未收数量" :formatter="Unreceived">
+						</el-table-column>
+						<el-table-column label="复核">
+							<template slot-scope="scope">
+								<el-button @click="reviewButton(scope.row)" size="mini" type="success" plain>复核</el-button>
+							</template>
+						</el-table-column>
+					</el-table>
+				</div>
 
-    		<div style="margin: 10px auto; width: 550px;">
-    			<el-pagination background :current-page.sync="currentPage1" :page-size="100" layout="prev, pager, next, jumper" :total="1000">
-    			</el-pagination>
-    		</div>
+				<div style="margin: 10px auto; width: 550px;">
+					<el-pagination background :current-page.sync="currentPage1" :page-size="100" layout="prev, pager, next, jumper"
+					 :total="1000">
+					</el-pagination>
+				</div>
 
-    	</el-card>
-    </div>
+			</el-card>
+		</div>
 
-  </div>
+	</div>
 </template>
 
 <script>
 	export default {
-    created() {
-      //this.selectPay();
-    },
 		data() {
 			return {
-				number:0,
+				number: 0,
 				tableData: [],
-				input: '',
-				currentPage1:1
+				currentPage1: 1
 			}
 		},
 		methods: {
-			reviewButton(index,row){
-        this.$router.push({
-        	path: '/Outregister-info',query:{id:row.id,payId:row.payId,storer:row.storer,reason:row.reason,
-          amountSum:row.amountSum,costPriceSum:row.costPriceSum,remark:row.remark,register:row.register,registerTime:row.registerTime}
-        });
+			reviewButton(row) {
+				this.$router.push({
+					path: '/qualitysh2',
+					query: {row:row}
+				});
 			},
-      selectPay(){
-        this.$http.post("http://localhost:8080/Erp-web/pay/selectPay.do")
-        	.then( res => {
-        	//alert("a");
-                    this.tableData = res.data;
-                    this.number=this.tableData.length;
-                 })
-        	.catch(err =>{
-        		console.log(err)
-        	})
-      }
-
+			initialize() {
+				this.$http.post(this.$api + "/purchase/selectQualityCheck")
+					.then(res => {
+						this.tableData = res.data;
+						this.number = this.tableData.length;
+					})
+					.catch(err => {
+						console.log(err)
+					})
+			},
+			Unreceived(row){
+				return parseInt(row.purchaseQuantity)-parseInt(row.qualifiedQuantity);
+			}
+		},
+		mounted() {
+			this.initialize();
 		}
 	}
 </script>
@@ -100,6 +101,7 @@
 	.text {
 		font-size: 14px;
 	}
+
 	#box>>>.el-table th {
 		text-align: center;
 	}
