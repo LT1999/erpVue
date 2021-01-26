@@ -735,6 +735,18 @@ export default new Router({
         	name: 'Planquery',
         	component: Planquery => require(['@/components/procurement/procurementplan/Planquery.vue'],
         		Planquery)
+        },
+        { /*产品供应商推荐变更 */
+        	path: '/changes',
+        	name: 'changes',
+        	component: changes => require(['@/components/procurement/recommend/changes.vue'],
+        		changes)
+        },
+        { /*产品供应商推荐变更 */
+        	path: '/changes2',
+        	name: 'changes2',
+        	component: changes2 => require(['@/components/procurement/recommend/changes2.vue'],
+        		changes2)
         }
 			]
 		}
