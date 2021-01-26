@@ -50,7 +50,7 @@
             		</el-table-column>
             		<el-table-column  label="变更">
             			<template slot-scope="scope">
-            					<el-button @click="" size="mini" type="success" plain>变更</el-button>
+            					<el-button @click="reviewButton(scope.$index,scope.row)" size="mini" type="success" plain>变更</el-button>
             				</template>
             		</el-table-column>
             	</el-table>
@@ -103,6 +103,11 @@
         	.catch(err =>{
         		console.log(err)
         	})
+      },
+      reviewButton(index,row){
+        this.$router.push({
+        	path: '/changes2' ,query:{row:row}
+        });
       }
     }
   }

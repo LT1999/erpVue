@@ -845,7 +845,7 @@ export default new Router({
         { /*产品供应商推荐登记--变更 */
         	path: '/changes1',
         	name: 'changes1',
-        	component: query => require(['@/components/procurement/recommend/changes1.vue'],
+        	component: changes1 => require(['@/components/procurement/recommend/changes1.vue'],
         		changes1)
         },
         { /*产品供应商推荐登记--变更 */
