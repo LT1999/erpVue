@@ -133,42 +133,36 @@
 						console.log(err)
 					});
 			},
-			bianhua(){
-				this.tableData[0].goodsSubtotal=this.tableData[0].goodsPrice*this.tableData[0].goodsDiscount*0.01;
+			bianhua() {
+				this.tableData[0].goodsSubtotal = this.tableData[0].goodsPrice * this.tableData[0].goodsDiscount * 0.01;
 			},
 			submit() {
 				this.$refs.forminfo.validate((valid) => {
 					if (valid) {
-						this.$refs.forminfo.validate((valid) => {
-							if (valid) {
-								this.$confirm('确认变更?', '提示', {
-									confirmButtonText: '确定',
-									cancelButtonText: '取消',
-									type: 'warning'
-								}).then(() => {
-									this.form.checkMark = "未审核";
-									this.form.goodsPrice = this.tableData[0].goodsPrice;
-									this.form.goodsDiscount = this.tableData[0].goodsDiscount;
-									this.form.goodsSubtotal = this.tableData[0].goodsSubtotal;
-									this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
-										.then(res => {
-											this.$message({
-												message: '已变更',
-												type: 'success'
-											});
-										})
-										.catch(err => {
-											console.log(err)
-										});
-								}).catch(() => {
+						this.$confirm('确认变更?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+							this.form.checkMark = "未审核";
+							this.form.goodsPrice = this.tableData[0].goodsPrice;
+							this.form.goodsDiscount = this.tableData[0].goodsDiscount;
+							this.form.goodsSubtotal = this.tableData[0].goodsSubtotal;
+							this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
+								.then(res => {
 									this.$message({
-										type: 'info',
-										message: '已取消'
+										message: '已变更',
+										type: 'success'
 									});
+								})
+								.catch(err => {
+									console.log(err)
 								});
-							} else {
-								return false;
-							}
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消'
+							});
 						});
 					} else {
 						return false;
@@ -176,29 +170,35 @@
 				});
 			},
 			del() {
-				this.$confirm('确认处理结果?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					this.$http.post(this.$api + "/offer/deleteByPrimaryKey", "id=" + this.form.id)
-						.then(res => {
-							this.$message({
-								message: '已删除',
-								type: 'success'
+				this.$refs.forminfo.validate((valid) => {
+					if (valid) {
+						this.$confirm('确认处理结果?', '提示', {
+								confirmButtonText: '确定',
+								cancelButtonText: '取消',
+								type: 'warning'
+							}).then(() => {
+								this.$http.post(this.$api + "/offer/deleteByPrimaryKey", "id=" + this.form.id)
+									.then(res => {
+										this.$message({
+											message: '已删除',
+											type: 'success'
+										});
+										location.href = "#/RequestDispose"
+									})
+									.catch(err => {
+										console.log(err)
+									});
+							}).catch(() => {
+								this.$message({
+									type: 'info',
+									message: '已取消'
+								});
 							});
-							location.href = "#/RequestDispose"
-						})
-						.catch(err => {
-							console.log(err)
-						});
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消'
-					});
+					} else {
+						return false;
+					}
 				});
-			}
+				}
 		},
 		created() {
 			this.form = this.$route.query.arr;
