@@ -717,6 +717,18 @@ export default new Router({
         	name: 'plan',
         	component: plan => require(['@/components/procurement/procurementplan/plan.vue'],
         		plan)
+        },
+        { /*采购管理--采购计划管理--采购计划审核 */
+        	path: '/review',
+        	name: 'review',
+        	component: review => require(['@/components/procurement/procurementplan/review.vue'],
+        		review)
+        },
+        { /*采购管理--采购计划管理--采购计划审核 */
+        	path: '/review2',
+        	name: 'review2',
+        	component: review2 => require(['@/components/procurement/procurementplan/review2.vue'],
+        		review2)
         }
 			]
 		}
