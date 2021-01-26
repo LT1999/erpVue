@@ -600,57 +600,75 @@ export default new Router({
 				{ /*供应商申请审批登记 */
 					path: '/ApplyForRegistration',
 					name: 'ApplyForRegistration',
-					component: ApplyForRegistration => require(['@/components/procurement/SupplierApplication/ApplyForRegistration.vue'], ApplyForRegistration)
+					component: ApplyForRegistration => require([
+						'@/components/procurement/SupplierApplication/ApplyForRegistration.vue'
+					], ApplyForRegistration)
 				},
 				{ /*供应商申请审批登记-info */
 					path: '/ApplyForRegistrationInfo',
 					name: 'ApplyForRegistrationInfo',
-					component: ApplyForRegistrationInfo => require(['@/components/procurement/SupplierApplication/ApplyForRegistrationInfo.vue'], ApplyForRegistrationInfo)
+					component: ApplyForRegistrationInfo => require([
+						'@/components/procurement/SupplierApplication/ApplyForRegistrationInfo.vue'
+					], ApplyForRegistrationInfo)
 				},
 				{ /*供应商申请审批登记-s */
 					path: '/ApplyForRegistrations',
 					name: 'ApplyForRegistrations',
-					component: ApplyForRegistrations => require(['@/components/procurement/SupplierApplication/ApplyForRegistrations.vue'], ApplyForRegistrations)
+					component: ApplyForRegistrations => require([
+						'@/components/procurement/SupplierApplication/ApplyForRegistrations.vue'
+					], ApplyForRegistrations)
 				},
 				{ /*供应商申请审批登记审核*/
 					path: '/VerificationRequest',
 					name: 'VerificationRequest',
-					component: VerificationRequest => require(['@/components/procurement/SupplierApplication/VerificationRequest.vue'], VerificationRequest)
+					component: VerificationRequest => require([
+						'@/components/procurement/SupplierApplication/VerificationRequest.vue'
+					], VerificationRequest)
 				},
 				{ /*供应商申请审批登记审核-s*/
 					path: '/VerificationRequests',
 					name: 'VerificationRequests',
-					component: VerificationRequests => require(['@/components/procurement/SupplierApplication/VerificationRequests.vue'], VerificationRequests)
+					component: VerificationRequests => require([
+						'@/components/procurement/SupplierApplication/VerificationRequests.vue'
+					], VerificationRequests)
 				},
 				{ /*供应商申请查询-变更*/
 					path: '/RequestForChanges',
 					name: 'RequestForChanges',
-					component: RequestForChanges => require(['@/components/procurement/SupplierApplication/RequestForChanges.vue'], RequestForChanges)
+					component: RequestForChanges => require(['@/components/procurement/SupplierApplication/RequestForChanges.vue'],
+						RequestForChanges)
 				},
 				{ /*供应商申请查询-变更-查看*/
 					path: '/RequestForChangeslook',
 					name: 'RequestForChangeslook',
-					component: RequestForChangeslook => require(['@/components/procurement/SupplierApplication/RequestForChangeslook.vue'], RequestForChangeslook)
+					component: RequestForChangeslook => require([
+						'@/components/procurement/SupplierApplication/RequestForChangeslook.vue'
+					], RequestForChangeslook)
 				},
 				{ /*供应商申请查询-变更-变更*/
 					path: '/RequestForChangesInfo',
 					name: 'RequestForChangesInfo',
-					component: RequestForChangesInfo => require(['@/components/procurement/SupplierApplication/RequestForChangesInfo.vue'], RequestForChangesInfo)
+					component: RequestForChangesInfo => require([
+						'@/components/procurement/SupplierApplication/RequestForChangesInfo.vue'
+					], RequestForChangesInfo)
 				},
 				{ /*供应商申请查询-处理*/
 					path: '/RequestDispose',
 					name: 'RequestDispose',
-					component: RequestDispose => require(['@/components/procurement/SupplierApplication/RequestDispose.vue'], RequestDispose)
+					component: RequestDispose => require(['@/components/procurement/SupplierApplication/RequestDispose.vue'],
+						RequestDispose)
 				},
 				{ /*供应商申请查询-处理-s*/
 					path: '/RequestDisposes',
 					name: 'RequestDisposes',
-					component: RequestDisposes => require(['@/components/procurement/SupplierApplication/RequestDisposes.vue'], RequestDisposes)
+					component: RequestDisposes => require(['@/components/procurement/SupplierApplication/RequestDisposes.vue'],
+						RequestDisposes)
 				},
 				{ /*数据报表excel*/
 					path: '/DataReportExcel',
 					name: 'DataReportExcel',
-					component: DataReportExcel => require(['@/components/procurement/DataReport/DataReportExcel.vue'], DataReportExcel)
+					component: DataReportExcel => require(['@/components/procurement/DataReport/DataReportExcel.vue'],
+						DataReportExcel)
 				},
 				{ /*制定采购执行单 */
 					path: '/purchaseOrder',
@@ -694,6 +712,30 @@ export default new Router({
 					component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'],
 						supplierRegistration2)
 				},
+				{ /*质检结果登记 */
+					path: '/qualitydJ',
+					name: 'qualitydJ',
+					component: qualitydJ => require(['@/components/procurement/quality/qualitydJ.vue'],
+						qualitydJ)
+				},
+				{ /*质检结果登记 */
+					path: '/qualitydj2',
+					name: 'qualitydj2',
+					component: qualitydj2 => require(['@/components/procurement/quality/qualitydj2.vue'],
+						qualitydj2)
+				},
+				{ /*质检结果登记复核 */
+					path: '/qualitysh',
+					name: 'qualitysh',
+					component: qualitysh => require(['@/components/procurement/quality/qualitysh.vue'],
+						qualitysh)
+				},
+				{ /*质检结果登记复核 */
+					path: '/qualitysh2',
+					name: 'qualitysh2',
+					component: qualitysh2 => require(['@/components/procurement/quality/qualitysh2.vue'],
+						qualitysh2)
+				},
 				{ /*产品供应商推荐登记 */
 					path: '/audit',
 					name: 'audit',
@@ -706,12 +748,36 @@ export default new Router({
 					component: audit2 => require(['@/components/procurement/recommend/audit2.vue'],
 						audit2)
 				},
-        { /*产品供应商推荐登记--查询 */
-        	path: '/query',
-        	name: 'query',
-        	component: query => require(['@/components/procurement/recommend/query.vue'],
-        		query)
-        }
+				{ /*产品供应商推荐登记--查询 */
+					path: '/query',
+					name: 'query',
+					component: query => require(['@/components/procurement/recommend/query.vue'],
+						query)
+				},
+				{ /*采购管理--采购计划管理--新发生采购计划登记 */
+					path: '/plan',
+					name: 'plan',
+					component: plan => require(['@/components/procurement/procurementplan/plan.vue'],
+						plan)
+				},
+				{ /*采购管理--采购计划管理--采购计划审核 */
+					path: '/review',
+					name: 'review',
+					component: review => require(['@/components/procurement/procurementplan/review.vue'],
+						review)
+				},
+				{ /*采购管理--采购计划管理--采购计划审核 */
+					path: '/review2',
+					name: 'review2',
+					component: review2 => require(['@/components/procurement/procurementplan/review2.vue'],
+						review2)
+				},
+				{ /*采购管理--采购计划管理--采购计划查询 */
+					path: '/Planquery',
+					name: 'Planquery',
+					component: Planquery => require(['@/components/procurement/procurementplan/Planquery.vue'],
+						Planquery)
+				}
 			]
 		}
 	]

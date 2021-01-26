@@ -186,10 +186,6 @@
 			this.initializeData(this.$route.query.row);
 		} ,
 		beforeRouteEnter(to, from, next) {
-			/* next(vm => { */
-				
-			/* }) */
-			/* next(); */
 			  next((vm) => {
 			      vm.isShow(from.path);
 			    });
