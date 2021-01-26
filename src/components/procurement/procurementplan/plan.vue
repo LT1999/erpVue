@@ -37,7 +37,7 @@
               	</el-col>
               	<el-col :span="8" :push='5'>
               		<el-form-item label="供货时间:">
-              			<el-date-picker v-model="formInline.purchaseqSupplytime" type="date" placeholder="选择日期"></el-date-picker>
+              			<el-date-picker v-model="formInline.purchaseqSupplytime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
               		</el-form-item>
               	</el-col>
               </el-row>
@@ -162,6 +162,9 @@
     },
     methods: {
       onSubmit() {
+        var now = new Date();
+        this.formInline.purchaseqSupplytime+=" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+        //alert(this.formInline.purchaseqSupplytime);
         this.$set(this.datas,'purchaseqplan',this.formInline);
         this.$set(this.datas,'plandetails',this.tableData);
         this.$http.post(this.$api+"/purchaseqplan/insertPruchaseqplan",this.$qs.stringify(this.datas,{arrayFormat:'plandetails', allowDots: true}))
