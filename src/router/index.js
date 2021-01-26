@@ -729,6 +729,12 @@ export default new Router({
         	name: 'review2',
         	component: review2 => require(['@/components/procurement/procurementplan/review2.vue'],
         		review2)
+        },
+        { /*采购管理--采购计划管理--采购计划查询 */
+        	path: '/Planquery',
+        	name: 'Planquery',
+        	component: Planquery => require(['@/components/procurement/procurementplan/Planquery.vue'],
+        		Planquery)
         }
 			]
 		}
