@@ -217,7 +217,9 @@ export default new Router({
 				{ /* 产品生产工序设计单查询-查看*/
 					path: '/ProductProcessChangeInfo',
 					name: 'ProductProcessChangeInfo',
-					component: ProductProcessChangeInfo => require(['@/components/Production/process/ProductProcessChange-info.vue'], ProductProcessChangeInfo)
+					component: ProductProcessChangeInfo => require([
+						'@/components/Production/process/ProductProcessChange-info.vue'
+					], ProductProcessChangeInfo)
 				},
 				{ /* 产品生产工序设计单查询-变更*/
 					path: '/ProductProcessChanges',
@@ -862,6 +864,12 @@ export default new Router({
 					name: 'Planquery',
 					component: Planquery => require(['@/components/procurement/procurementplan/Planquery.vue'],
 						Planquery)
+				},
+				{ /*质检结果查询 */
+					path: '/qualitycx',
+					name: 'qualitycx',
+					component: qualitycx => require(['@/components/procurement/quality/qualitycx.vue'],
+						qualitycx)
 				}
 			]
 		}
