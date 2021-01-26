@@ -8,7 +8,7 @@ import main from '@/components/main/main'
 Vue.use(Router)
 
 export default new Router({
- 
+
 	routes: [{ /* 登录页面 */
 			path: '/',
 			name: 'login',
@@ -843,10 +843,10 @@ export default new Router({
 						query)
 				},
         { /*产品供应商推荐登记--变更 */
-        	path: '/changes',
-        	name: 'changes',
-        	component: query => require(['@/components/procurement/recommend/changes.vue'],
-        		changes)
+        	path: '/changes1',
+        	name: 'changes1',
+        	component: query => require(['@/components/procurement/recommend/changes1.vue'],
+        		changes1)
         },
         { /*产品供应商推荐登记--变更 */
         	path: '/changes2',
