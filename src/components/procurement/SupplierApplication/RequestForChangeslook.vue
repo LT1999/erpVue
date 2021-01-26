@@ -11,7 +11,6 @@
 		<div id="card">
 			<el-form ref="form" :model="form" label-width="130px">
 				<div id="buttons">
-					<el-button type="success" @click="dayin()">打印</el-button>
 					<el-button type="primary" @click="back()">返回</el-button>
 				</div>
 				<el-card class="box-card">
@@ -111,9 +110,6 @@
 			},
 			back() {
 					location.href = "#/RequestForChanges"
-			},
-			dayin(){
-				
 			}
 		},
 		created() {
@@ -142,7 +138,7 @@
 		outline: none;
 		border: none;
 		border-bottom: 1px solid #000;
-		width: 18.75rem;
+		width:6.25rem;
 	}
 
 	#box>>>.el-form-item {

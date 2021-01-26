@@ -166,9 +166,9 @@
 				registrartime: '',
 				//供应商主键
 				supplierNo:'',
+				supplierId:'',
 				dto: {
-					offers: [],
-					dd:{}
+					offers: []
 				},
 				shuzu: {}
 			};
@@ -219,7 +219,7 @@
 					item.supplierId = this.supplierId;
 					item.goodsDiscount = 100;
 					item.goodsDescribe = '暂无';
-					item.checkMark="未审核";
+					item.checkMark='未审核';
 				});
 				console.log(this.dto)
 				this.$refs.reg.validate((valid) => {
@@ -234,6 +234,7 @@
 										message: '已提交！',
 										type: 'success'
 									});
+									this.dto.offers=[];
 								}
 							})
 							.catch(err => {
@@ -254,7 +255,7 @@
 				this.shuzu.goodsSubtotal = this.gridData[this.index].realCostPrice;
 				//把数据添加到数组末尾
 				this.dto.offers.push(this.shuzu);
-				this.shuzu = [];
+				this.shuzu ={};
 				//关闭所有模态框
 				this.num = 1;
 				this.table = false,
@@ -312,6 +313,7 @@
 		created() {
 			this.form = this.$route.query.arr;
 			this.supplierNo = this.form.supplierNo;
+			this.supplierId=this.form.supplierId;
 			this.selectOptions();
 			this.qb();
 		}

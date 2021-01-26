@@ -7,8 +7,7 @@
 		</el-breadcrumb>
 
 		<el-row style="margin-bottom: 10px;">
-			<el-col :span="4" :push="20">
-				<el-button type="warning" size="medium">打印</el-button>
+			<el-col :span="1" :push="22">
 				<el-button type="primary" size="medium" @click="back()">返回</el-button>
 			</el-col>
 		</el-row>
@@ -124,84 +123,84 @@
 						<el-header>联系人信息</el-header>
 						<el-main>
 							<div style="padding-top: 20px;">
-								<el-form ref="form" :model="form1" label-width="150px">
+								<el-form ref="form" :model="form" label-width="150px">
 									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第一联系人">
-													<el-input style="width:  350px;" v-model="form1.linkmanName" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanName" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" v-model="form1.linkmanSector" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanSector" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" v-model="form1.linkmanPost" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanPost" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" v-model="form1.linkmanPhone" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;" v-model="form1.linkmanEmail">
+													<el-input disabled style="width:  350px;" v-model="form.supplierFirstlinkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" disabled v-model="form1.linkmanSex"></el-input>
+													<el-input style="width:  350px;" disabled v-model="form.supplierFirstlinkmanSex"></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 									</table>
 								</el-form>
-								<el-form ref="form" :model="form2" label-width="150px">
+								<el-form ref="form" :model="form" label-width="150px">
 									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第二联系人">
-													<el-input style="width:  350px;" disabled v-model="form2.linkmanName"></el-input>
+													<el-input style="width:  350px;" disabled v-model="form.supplierSecondlinkmanName"></el-input>
 												</el-form-item>
 											</td>
 											<td>
 
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanSector" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanPost" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" v-model="form2.linkmanPhone" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;" v-model="form2.linkmanEmail">
+													<el-input disabled style="width:  350px;" v-model="form.supplierSecondlinkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" v-model="form2.linkmanSex" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanSex" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -363,84 +362,84 @@
 						<el-header>联系人信息</el-header>
 						<el-main>
 							<div style="padding-top: 20px;">
-								<el-form ref="form" :model="form1" label-width="150px">
+								<el-form ref="form" :model="form" label-width="150px">
 									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第一联系人">
-													<el-input style="width:  350px;" v-model="form1.linkmanName" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanName" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" v-model="form1.linkmanSector" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanSector" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" v-model="form1.linkmanPost" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanPost" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" v-model="form1.linkmanPhone" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierFirstlinkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;" v-model="form1.linkmanEmail">
+													<el-input disabled style="width:  350px;" v-model="form.supplierFirstlinkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" disabled v-model="form1.linkmanSex"></el-input>
+													<el-input style="width:  350px;" disabled v-model="form.supplierFirstlinkmanSex"></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 									</table>
 								</el-form>
-								<el-form ref="form" :model="form2" label-width="150px">
+								<el-form ref="form" :model="form" label-width="150px">
 									<table align="center">
 										<tr>
 											<td>
 												<el-form-item label="第二联系人">
-													<el-input style="width:  350px;" disabled v-model="form2.linkmanName"></el-input>
+													<el-input style="width:  350px;" disabled v-model="form.supplierSecondlinkmanName"></el-input>
 												</el-form-item>
 											</td>
 											<td>
 
 												<el-form-item label="部门">
-													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanSector" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="职务">
-													<el-input style="width:  350px;" v-model="form2.linkmanPost" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanPost" disabled></el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="手机">
-													<el-input style="width:  350px;" v-model="form2.linkmanPhone" readonly="readonly" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanPhone" readonly="readonly" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
 										<tr>
 											<td>
 												<el-form-item label="email">
-													<el-input disabled style="width:  350px;" v-model="form2.linkmanEmail">
+													<el-input disabled style="width:  350px;" v-model="form.supplierSecondlinkmanEmail">
 													</el-input>
 												</el-form-item>
 											</td>
 											<td>
 												<el-form-item label="性别">
-													<el-input style="width:  350px;" v-model="form2.linkmanSex" disabled></el-input>
+													<el-input style="width:  350px;" v-model="form.supplierSecondlinkmanSex" disabled></el-input>
 												</el-form-item>
 											</td>
 										</tr>
@@ -508,40 +507,18 @@
 				//分类
 				options: [],
 				//表单
-				form: {},
-				form1: {},
-				form2: {},
-				id1:0,
-				id2:0
+				form: {}
 			}
 		},
 		methods: {
-			selectLinkman() {
-				this.$http.post(this.$api + "/linkman/selectByPrimaryKey","id=" + this.id1)
-					.then(res => {
-						this.form1 = res.data;
-					})
-					.catch(err => {
-						console.log(err)
-					})
-				this.$http.post(this.$api + "/linkman/selectByPrimaryKey" ,"id=" + this.id2)
-					.then(res => {
-						this.form2 = res.data;
-					})
-					.catch(err => {
-						console.log(err)
-					})
-			},
 			back() {
 				location.href = "#/ApplyForRegistration"
 			}
 		},
 		created() {
 			this.form = this.$route.query.arr;
-			this.id1 = this.form.supplierFirstcontact;
-			this.id2 = this.form.supplierSecondcontact;
-			this.form.classify = this.form.firstKindName + '/' + this.form.secondKindName + '/' + this.form.thirdKindName;
-			this.selectLinkman();
+			this.form.classify = this.form.firstKindName + '/' + this.form.secondKindName + '/' + this.form.threeKindName;
+			
 		}
 	}
 </script>

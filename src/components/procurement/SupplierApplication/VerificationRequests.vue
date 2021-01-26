@@ -88,37 +88,43 @@
 		},
 		methods: {
 			submit(check) {
-				this.$confirm('确认审核结果?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					var aData = new Date();
-					this.form.auditorTime = aData.getFullYear() + "-" +
-						(aData.getMonth() + 1) + "-" +
-						aData.getDate() + " " +
-						aData.getHours() + ":" +
-						aData.getMinutes() + ":" +
-						aData.getSeconds();
-					this.form.checkMark = check;
-					this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
-						.then(res => {
-							if (res.data > 0) {
-								this.$message({
-									message: '审核成功！',
-									type: 'success'
+				this.$refs.form.validate((valid) => {
+					if (valid) {
+						this.$confirm('确认审核结果?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+							var aData = new Date();
+							this.form.auditorTime = aData.getFullYear() + "-" +
+								(aData.getMonth() + 1) + "-" +
+								aData.getDate() + " " +
+								aData.getHours() + ":" +
+								aData.getMinutes() + ":" +
+								aData.getSeconds();
+							this.form.checkMark = check;
+							this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
+								.then(res => {
+									if (res.data > 0) {
+										this.$message({
+											message: '审核成功！',
+											type: 'success'
+										});
+										location.href = "#/VerificationRequest";
+									}
+								})
+								.catch(err => {
+									console.log(err)
 								});
-								location.href = "#/VerificationRequest";
-							}
-						})
-						.catch(err => {
-							console.log(err)
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消'
+							});
 						});
-				}).catch(() => {
-					this.$message({
-						type: 'info',
-						message: '已取消'
-					});
+					} else {
+						return false;
+					}
 				});
 			},
 			back() {
@@ -158,7 +164,8 @@
 			this.form.auditor=this.$route.query.arr.auditor;
 			this.form.id=this.$route.query.arr.id; */
 			this.form = this.$route.query.arr;
-
+			this.form.auditor = "";
+			s
 			this.selsup();
 		}
 	}
