@@ -842,6 +842,18 @@ export default new Router({
 					component: query => require(['@/components/procurement/recommend/query.vue'],
 						query)
 				},
+        { /*产品供应商推荐登记--变更 */
+        	path: '/changes',
+        	name: 'changes',
+        	component: query => require(['@/components/procurement/recommend/changes.vue'],
+        		changes)
+        },
+        { /*产品供应商推荐登记--变更 */
+        	path: '/changes2',
+        	name: 'changes2',
+        	component: changes2 => require(['@/components/procurement/recommend/changes2.vue'],
+        		changes2)
+        },
 				{ /*采购管理--采购计划管理--新发生采购计划登记 */
 					path: '/plan',
 					name: 'plan',
