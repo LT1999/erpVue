@@ -20,15 +20,17 @@
         		</div>
         		<div id="table" style="">
         			<el-table id="" :data="tableData" border stripe style="width: 100%" stripe>
-        				<el-table-column prop="payId" label="采购计划编号" width="300px">
+        				<el-table-column prop="purchaseqNo" label="采购计划编号">
         				</el-table-column>
-        				<el-table-column prop="reason" label="计划制定人">
+        				<el-table-column prop="purchaseqTotalquantity" label="采购总数">
         				</el-table-column>
-        				<el-table-column prop="registerTime" label="登记人">
+                <el-table-column prop="purchaseqTotalprices" label="采购总价">
+                </el-table-column>
+        				<el-table-column prop="purchaseqRegistrant" label="登记人">
         				</el-table-column>
-        				<el-table-column prop="backtime" label="登记时间">
+        				<el-table-column prop="purchaseqRegistranttime" label="登记时间">
         				</el-table-column>
-        				<el-table-column prop="amountSum" label="备注">
+        				<el-table-column prop="purchaseqRemark" label="备注">
         				</el-table-column>
         				<el-table-column label="审核">
         					<template slot-scope="scope">
@@ -51,7 +53,7 @@
 <script>
   export default {
     created() {
-      //this.selectPay();
+      this.selectAllbycheck();
     },
   	data() {
   		return {
@@ -64,12 +66,11 @@
   	methods: {
   		reviewButton(index,row){
         this.$router.push({
-        	path: '/Outregister-info',query:{id:row.id,payId:row.payId,storer:row.storer,reason:row.reason,
-          amountSum:row.amountSum,costPriceSum:row.costPriceSum,remark:row.remark,register:row.register,registerTime:row.registerTime}
+        	path: '/review2',query:{row:row}
         });
   		},
-      selectPay(){
-        this.$http.post("http://localhost:8080/Erp-web/pay/selectPay.do")
+      selectAllbycheck(){
+        this.$http.post(this.$api+"/purchaseqplan/selectAllbycheck")
         	.then( res => {
         	//alert("a");
                     this.tableData = res.data;

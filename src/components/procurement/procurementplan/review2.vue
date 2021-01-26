@@ -12,7 +12,6 @@
           <div id="card">
           		<el-form ref="form" :model="form" label-width="130px">
           			<div id="buttons">
-          				<el-button size="mini" type="primary" plain @click="notapproved">复核不通过</el-button>
           				<el-button size="mini" type="primary" plain @click="approve">复核通过</el-button>
           				<el-button size="mini" type="primary" plain @click="back()">返回</el-button>
           			</div>
@@ -20,43 +19,52 @@
           				<h3>采购计划单</h3><br />
           				<el-row>
           					<el-col :span="8" :push='1'>
-          						<el-form-item label="计划单编号">
-          							<span>{{this.$route.query.payId}}</span>
+          						<el-form-item label="计划单编号:">
+          							<span>{{this.$route.query.row.purchaseqNo}}</span>
           						</el-form-item>
           					</el-col>
-          					<el-col :span="8" :push='5'>
-          						<el-form-item label="计划制定人">
-          							<span>{{this.$route.query.storer}}</span>
-          						</el-form-item>
           					</el-col>
           				</el-row>
 
           				<template>
-          					<el-table :data="tableData" style="margin-left: 8%; width: 85%;" border>
+          					<el-table :data="tableData" style="width: 100%;" border>
           						<el-table-column prop="id" label="序号">
           						</el-table-column>
-          						<el-table-column prop="productName" label="产品编号">
+          						<el-table-column prop="productNo" label="产品编号">
           						</el-table-column>
-          						<el-table-column prop="productId" label="产品名称">
+          						<el-table-column prop="productName" label="产品名称">
           						</el-table-column>
-          						<el-table-column prop="stockcount" label="描述">
+          						<el-table-column prop="quantity" label="数量">
           						</el-table-column>
-          						<el-table-column prop="amount" label="数量">
-          						</el-table-column>
-          						<el-table-column prop="amountUnit" label="出库单编号">
+                      <el-table-column prop="price" label="单价">
+                      </el-table-column>
+          						<el-table-column prop="subtotal" label="小计">
           						</el-table-column>
           					</el-table>
           				</template>
 
+                  <el-row>
+                  	<el-col :span="8" :push='1'>
+                  		<el-form-item label="采购总数:">
+                  			<span>{{this.$route.query.row.purchaseqTotalquantity}}</span>
+                  		</el-form-item>
+                  	</el-col>
+                  	<el-col :span="8" :push='5'>
+                  		<el-form-item label="采购总价:">
+                  			<span>{{this.$route.query.row.purchaseqTotalprices}}</span>
+                  		</el-form-item>
+                  	</el-col>
+                  </el-row>
+
           				<el-row>
           					<el-col :span="8" :push='1'>
-          						<el-form-item label="审核人">
-          							<input v-model="form.checker" />
+          						<el-form-item label="审核人:">
+          							<input v-model="form.auditor" />
           						</el-form-item>
           					</el-col>
           					<el-col :span="8" :push='5'>
-          						<el-form-item label="审核时间">
-          							<span>{{form.checkTime}}</span>
+          						<el-form-item label="审核时间:">
+          							<span>{{form.auditorTime}}</span>
           						</el-form-item>
           					</el-col>
           				</el-row>
@@ -65,7 +73,7 @@
           				<el-row>
           					<el-col :span="21" :push='1'>
           						<el-form-item label="备注" style="width: 100%;">
-          							<el-input style="width: 100%;" v-model="form.remark" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" placeholder="请输入内容">
+          							<el-input style="width: 100%;" v-model="form.purchaseqRemark" type="textarea" :autosize="{ minRows: 4, maxRows: 6}" placeholder="请输入内容">
           							</el-input>
           						</el-form-item>
           					</el-col>
@@ -80,25 +88,34 @@
 <script>
   export default {
     created() {
-      //this.form.id=this.$route.query.id;
-      //this.form.registrant=this.$route.query.registrant;//登记人
-     // this.form.remark=this.$route.query.remark;//备注
+      this.form.id=this.$route.query.row.id;
+      this.form.purchaseqNo=this.$route.query.row.purchaseqNo;
+      this.form.purchaseqTotalprices=this.$route.query.row.purchaseqTotalprices;
+      this.form.purchaseqTotalquantity=this.$route.query.row.purchaseqTotalquantity;
+      this.form.purchaseqReason=this.$route.query.row.purchaseqReason;
+      this.form.purchaseqSupplytime=this.$route.query.row.purchaseqSupplytime;
+      this.form.purchaseqRegistrant=this.$route.query.row.purchaseqRegistrant;
+      this.form.purchaseqRegistranttime=this.$route.query.row.purchaseqRegistranttime;
       this.shijian();
-      //this.selectPayDetailsAll();
+      this.selectAllByParentId();
 
     },
   	data() {
   		return {
         id:0,
-        thback:1, //是否退回
-        backtime: '', //退回时间
   			form: {
           id:0,
-          registrant:'',
-          remark:'',
-          checker: '', //审核人
-          checkTime: '' ,//审核时间,
-          checkTag:''
+          purchaseqNo:'',//编号
+          purchaseqTotalprices:0,//总价格
+          purchaseqTotalquantity:0,//总数量
+          purchaseqReason:'',//采购理由
+          purchaseqSupplytime:'',//供货时间
+          purchaseqRegistrant:'',//登记人
+          purchaseqRegistranttime:'',//登记时间
+          purchaseqRemark:'',//备注
+          checkMark:'已审核',//审核标志
+          auditor:'',//审核人
+          auditorTime:''//审核时间
   			},
   			tableData: []
   		};
@@ -108,7 +125,7 @@
   			console.log('submit!');
   		},
   		back() {
-  			location.href = "#/outregister"
+  			location.href = "#/review"
   		},
       shijian(){
         var now = new Date();
@@ -119,40 +136,22 @@
         if (month < 10) month = "0" + month;
         if (date < 10) date = "0" + date;
         var time = "";
-        time = year + "-" + month + "-" + date+ " ";
-        this.form.checkTime=time;
+        time = year + "-" + month + "-" + date+ " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();;
+        this.form.auditorTime=time;
       },
-      selectPayDetailsAll(){
-        this.id=this.$route.query.id;
+      selectAllByParentId(){
+        this.id=this.$route.query.row.id;
         var demo = new URLSearchParams()
-        demo.append("prid", this.id);
-        this.$http.post('http://localhost:8080/Erp-web/pay-details/selectPayDetailsAll.do', demo).then((response) => {
+        demo.append("parentId", this.id);
+        this.$http.post(this.$api+'/plandetail/selectAllByParentId', demo).then((response) => {
         						this.tableData = response.data;
                     this.selectCellByPid();
         				}).catch((error) => {
         					console.log(error)
         				})
       },
-      notapproved(){//审核不通过
-       this.form.checkTag="审核不通过";
-       //alert(this.form.changeTag);
-      this.$http.post("http://localhost:8080/Erp-web/pay/updatePay.do",this.$qs.stringify(this.form))
-       	.then( res => {
-                  if(res.status==200){
-                  			this.$message({ message: '审核完成:审核不通过！',type: 'success',duration:1000});
-                       this.back();
-                  	}
-                })
-       	.catch(err =>{
-       		console.log(err)
-       	})
-
-       },
-       approve(){//审核通过
-       this.form.checkTag="审核通过";
-       //alert(this.form.changeTag);
-       console.log(this.form);
-       this.$http.post("http://localhost:8080/Erp-web/pay/updatePay.do",this.$qs.stringify(this.form))
+      approve(){//审核通过
+       this.$http.post(this.$api+"/purchaseqplan/updateByPrimaryKey",this.$qs.stringify(this.form))
        	.then( res => {
                   if(res.status==200){
                   			this.$message({ message: '审核完成:审核已通过！',type: 'success',duration:1000});
@@ -162,19 +161,6 @@
        	.catch(err =>{
        		console.log(err)
        	})
-       },
-       selectCellByPid(){
-         for(var i=0;i<this.tableData.length;i++){
-           var demo = new URLSearchParams()
-           demo.append("prid", this.tableData[i].productId);
-           this.$http.post('http://localhost:8080/Erp-web/cell/selectCellByPid.do', demo).then((response) => {
-                  for(var i=0;i<this.tableData.length;i++){
-                       this.$set(this.tableData[i],'stockcount',response.data);
-                  }
-           				}).catch((error) => {
-           					console.log(error)
-           				})
-         }
        }
   	}
   }

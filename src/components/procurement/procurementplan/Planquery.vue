@@ -40,7 +40,7 @@
       </div>
       <div>
       	<span>
-      	等待执行的推荐单总数：{{num1}}例, 正在执行的推荐单总数：{{num2}}例, 完成的推荐单总数：{{num3}}例
+      	当前推荐单总数：{{num1}}例
       	</span>
       </div>
       <br />
@@ -48,18 +48,20 @@
          <el-card class="box-card">
               <div>
               	<el-table :data="tableData" style="width: 100%">
-              		<el-table-column prop="payId" label="采购计划单编号">
+              		<el-table-column prop="purchaseqNo" label="采购计划编号">
               		</el-table-column>
-              		<el-table-column prop="reason" label="计划制定人">
+              		<el-table-column prop="purchaseqTotalquantity" label="采购总数">
               		</el-table-column>
-                  <el-table-column prop="reason" label="登记人">
+              		<el-table-column prop="purchaseqTotalprices" label="采购总价">
+              		</el-table-column>
+              		<el-table-column prop="purchaseqRegistrant" label="登记人">
+              		</el-table-column>
+              		<el-table-column prop="purchaseqRegistranttime" label="登记时间">
+              		</el-table-column>
+              		<el-table-column prop="purchaseqRemark" label="备注">
+              		</el-table-column>
+                  <el-table-column prop="checkMark" label="审核标志">
                   </el-table-column>
-              		<el-table-column prop="registerTime" label="登记时间">
-              		</el-table-column>
-                  <el-table-column prop="registerTime" label="备注">
-                  </el-table-column>
-              		<el-table-column prop="amountSum" label="计划单编号">
-              		</el-table-column>
               	</el-table>
               </div>
          </el-card>
@@ -71,13 +73,11 @@
 <script>
   export default {
     created() {
-     // this.selectPayTag();
+     this.selectAll();
     },
     data() {
       return {
         num1:1,
-        num2:2,
-        num3:3,
         options: [{
             value: '01/电子',
             label: '01/电子',
@@ -107,11 +107,11 @@
       onSubmit() {
         console.log('submit!');
       },
-      selectPayTag(){
-        this.$http.post("http://localhost:8080/Erp-web/pay/selectPayTag.do")
+      selectAll(){
+        this.$http.post(this.$api+"/purchaseqplan/selectAll")
         	.then( res => {
-        	//alert("a");
                     this.tableData = res.data;
+                    this.num1=this.tableData.length;
                  })
         	.catch(err =>{
         		console.log(err)
