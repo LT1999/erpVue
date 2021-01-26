@@ -11,7 +11,6 @@
 	<div id="card">
 			<el-form ref="form" :model="form" label-width="130px">
 				<div id="buttons">
-					<el-button size="mini" type="primary" plain @click="notapproved">复核不通过</el-button>
 					<el-button size="mini" type="primary" plain @click="approve">复核通过</el-button>
 					<el-button size="mini" type="primary" plain @click="back()">返回</el-button>
 				</div>
@@ -20,12 +19,7 @@
 					<el-row>
 						<el-col :span="8" :push='1'>
 							<el-form-item label="推荐单编号">
-								<span>{{this.$route.query.payId}}</span>
-							</el-form-item>
-						</el-col>
-						<el-col :span="8" :push='5'>
-							<el-form-item label="推荐人">
-								<span>{{this.$route.query.storer}}</span>
+								<span>{{this.$route.query.id}}</span>
 							</el-form-item>
 						</el-col>
 					</el-row>
@@ -33,33 +27,29 @@
 					<el-row>
 						<el-col :span="8" :push='1'>
 							<el-form-item label="产品名称">
-								<span>{{this.$route.query.payId}}</span>
+								<span>{{this.$route.query.productName}}</span>
 							</el-form-item>
 						</el-col>
 						<el-col :span="8" :push='5'>
 							<el-form-item label="产品编号">
-								<span>{{this.$route.query.storer}}</span>
+								<span>{{this.$route.query.productNo}}</span>
 							</el-form-item>
 						</el-col>
 					</el-row>
 
 					<template>
-						<el-table :data="tableData" style="margin-left: 8%; width: 85%;" border>
+						<el-table :data="tableData" style="width: 100%" border>
 							<el-table-column prop="id" label="序号">
 							</el-table-column>
-							<el-table-column prop="productName" label="供应商编号">
+							<el-table-column prop="supplierNo" label="供应商编号">
 							</el-table-column>
-							<el-table-column prop="productId" label="供应商名称" width="200px">
+							<el-table-column prop="supplierName" label="供应商名称">
 							</el-table-column>
-							<el-table-column prop="stockcount" label="所在地区" width="120px">
+							<el-table-column prop="supplierArea" label="所在地区">
 							</el-table-column>
-							<el-table-column prop="amount" label="优质级别">
+							<el-table-column prop="supplierQualityRank" label="优质级别">
 							</el-table-column>
-							<el-table-column prop="amountUnit" label="电话">
-							</el-table-column>
-							<el-table-column prop="costPrice" label="联系人" width="120px">
-							</el-table-column>
-							<el-table-column prop="subtotal" label="网址">
+							<el-table-column prop="supplierPhone" label="电话">
 							</el-table-column>
 						</el-table>
 					</template>
@@ -67,12 +57,12 @@
 					<el-row>
 						<el-col :span="8" :push='1'>
 							<el-form-item label="审核人">
-								<input v-model="form.checker" />
+								<input v-model="form.auditor" />
 							</el-form-item>
 						</el-col>
 						<el-col :span="8" :push='5'>
 							<el-form-item label="审核时间">
-								<span>{{form.checkTime}}</span>
+								<span>{{form.auditorTime}}</span>
 							</el-form-item>
 						</el-col>
 					</el-row>
@@ -97,11 +87,16 @@
 <script>
 	export default {
     created() {
-      //this.form.id=this.$route.query.id;
-      //this.form.registrant=this.$route.query.registrant;//登记人
-     // this.form.remark=this.$route.query.remark;//备注
+      this.form.id=this.$route.query.id;
+      this.form.productId=this.$route.query.productId;
+      this.form.productNo=this.$route.query.productNo;
+      this.form.productName=this.$route.query.productName;
+      this.form.productType=this.$route.query.productType;
+      this.form.productGrade=this.$route.query.productGrade;
+      this.form.registrar=this.$route.query.registrar;
+      this.form.registrartime=this.$route.query.registrartime;
       this.shijian();
-      //this.selectPayDetailsAll();
+      this.selectByParentId();
 
     },
 		data() {
@@ -110,12 +105,17 @@
         thback:1, //是否退回
         backtime: '', //退回时间
 				form: {
-          id:0,
-          registrant:'',
-          remark:'',
-          checker: '', //审核人
-          checkTime: '' ,//审核时间,
-          checkTag:''
+         id:0,
+         productId:'',//产品主键
+         productNo:'',//产品编号
+         productName:'',//产品名称
+         productType:'',//用途类型
+         productGrade:'',//档次级别
+         registrar:'',//登记人
+         registrartime:'',//登记时间
+         auditor:'',//审核人
+         auditorTime:'',//审核时间
+         checkMark:''//审核标志
 				},
 				tableData: []
 			};
@@ -125,51 +125,36 @@
 				console.log('submit!');
 			},
 			back() {
-				location.href = "#/outregister"
+				location.href = "#/audit"
 			},
       shijian(){
         var now = new Date();
         var year = now.getFullYear(); //得到年份
         var month = now.getMonth();//得到月份
         var date = now.getDate();//得到日期
+        var hh = new Date().getHours();
+        var mf = new Date().getMinutes()<10 ? '0'+new Date().getMinutes() : new Date().getMinutes();
+        var ss = new Date().getSeconds()<10 ? '0'+new Date().getSeconds() : new Date().getSeconds();
         month = month + 1;
         if (month < 10) month = "0" + month;
         if (date < 10) date = "0" + date;
         var time = "";
-        time = year + "-" + month + "-" + date+ " ";
-        this.form.checkTime=time;
+        time = year + "-" + month + "-" + date+" "+hh+":"+mf+":"+ss;
+        this.form.auditorTime=time;
       },
-      selectPayDetailsAll(){
+      selectByParentId(){
         this.id=this.$route.query.id;
         var demo = new URLSearchParams()
-        demo.append("prid", this.id);
-        this.$http.post('http://localhost:8080/Erp-web/pay-details/selectPayDetailsAll.do', demo).then((response) => {
+        demo.append("parentId", this.id);
+        this.$http.post(this.$api+'/recommenddetail/selectByParentId', demo).then((response) => {
         						this.tableData = response.data;
-                    this.selectCellByPid();
         				}).catch((error) => {
         					console.log(error)
         				})
       },
-      notapproved(){//审核不通过
-       this.form.checkTag="审核不通过";
-       //alert(this.form.changeTag);
-      this.$http.post("http://localhost:8080/Erp-web/pay/updatePay.do",this.$qs.stringify(this.form))
-       	.then( res => {
-                  if(res.status==200){
-                  			this.$message({ message: '审核完成:审核不通过！',type: 'success',duration:1000});
-                       this.back();
-                  	}
-                })
-       	.catch(err =>{
-       		console.log(err)
-       	})
-
-       },
        approve(){//审核通过
-       this.form.checkTag="审核通过";
-       //alert(this.form.changeTag);
-       console.log(this.form);
-       this.$http.post("http://localhost:8080/Erp-web/pay/updatePay.do",this.$qs.stringify(this.form))
+       this.form.checkMark="已审核";
+       this.$http.post(this.$api+"/recommend/updateByPrimaryKey",this.$qs.stringify(this.form))
        	.then( res => {
                   if(res.status==200){
                   			this.$message({ message: '审核完成:审核已通过！',type: 'success',duration:1000});
@@ -179,7 +164,7 @@
        	.catch(err =>{
        		console.log(err)
        	})
-       },
+       }/* ,
        selectCellByPid(){
          for(var i=0;i<this.tableData.length;i++){
            var demo = new URLSearchParams()
@@ -192,7 +177,7 @@
            					console.log(error)
            				})
          }
-       }
+       } */
 		}
 	}
 </script>

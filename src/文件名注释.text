@@ -78,11 +78,9 @@ inventory：库存管理模块
 --------------------------------------------------------------------
 
 
-procurement: 采购模块
+procurement 采购模块
+
 	scheduling：采购调度管理
-    purchaseOrder:制定采购执行单
-		purchaseOrder-info:制定采购执行单
-		purchaseOrder-Audit:采购执行单审核
 		purchaseOrder:制定采购执行单
 		purchaseOrder-info:制定采购执行单
 		purchaseOrder-Audit:采购执行单审核
@@ -113,4 +111,17 @@ procurement: 采购模块
 		Invoicequery : 发票信息查询
 	procurementcostquery : 采购成本查询
 		Costquery : 采购成本查询
-	
+
+    SupplierApplication:供应商申请审批管理
+      ApplyForRegistration:申请登记
+	  VerificationRequest:申请登记审核
+	  RequestForChanges :申请查询-变更
+	  RequestDispose:申请处理
+    DataReport:数据报表
+	  DataReportExcel:报表
+  procurementplan:采购计划管理
+    plan:新发生采购计划登记
+    Planquery:采购计划查询
+    review:采购计划审核
+    review2:采购计划审核
+   

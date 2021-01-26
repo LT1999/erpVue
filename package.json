@@ -11,8 +11,13 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+<<<<<<< HEAD
     "echarts": "^4.8.0",
     "element-ui": "^2.15.0",
+=======
+    "echarts": "^4.9.0",
+    "element-ui": "^2.14.1",
+>>>>>>> 6c218d7c29b50370efad2f447260f49b08a46d5f
     "less": "^3.12.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
