@@ -76,8 +76,8 @@ export default new Router({
 						ProductFileChange)
 				},
 				{ /* 产品档案查询、更改、删除-查询 */
-					path:'/ProductFileEnquiryInfo',
-					name:'ProductFileEnquiryInfo',
+					path: '/ProductFileEnquiryInfo',
+					name: 'ProductFileEnquiryInfo',
 					component: ProductFileEnquiryInfo => require([
 						'@/components/productDesign/management/ProductFileEnquiry-info.vue'
 					], ProductFileEnquiryInfo)
@@ -218,9 +218,7 @@ export default new Router({
 				{ /* 产品生产工序设计单查询-查看*/
 					path: '/ProductProcessChangeInfo',
 					name: 'ProductProcessChangeInfo',
-					component: ProductProcessChangeInfo => require([
-						'@/components/Production/process/ProductProcessChange-info.vue'
-					], ProductProcessChangeInfo)
+					component: ProductProcessChangeInfo => require(['@/components/Production/process/ProductProcessChange-info.vue'], ProductProcessChangeInfo)
 				},
 				{ /* 产品生产工序设计单查询-变更*/
 					path: '/ProductProcessChanges',
@@ -606,113 +604,127 @@ export default new Router({
 				{ /*制定采购执行单 */
 					path: '/purchaseOrderInfo',
 					name: 'purchaseOrderInfo',
-					component: purchaseOrderInfo => require(['@/components/procurement/scheduling/purchaseOrder-info.vue'], purchaseOrderInfo)
+					component: purchaseOrderInfo => require(['@/components/procurement/scheduling/purchaseOrder-info.vue'],
+						purchaseOrderInfo)
 				},
 				{ /*采购执行单审核 */
 					path: '/purchaseOrderAudit',
 					name: 'purchaseOrderAudit',
-					component: purchaseOrderAudit => require(['@/components/procurement/scheduling/purchaseOrder-Audit.vue'], purchaseOrderAudit)
+					component: purchaseOrderAudit => require(['@/components/procurement/scheduling/purchaseOrder-Audit.vue'],
+						purchaseOrderAudit)
 				},
 				{ /*采购执行单审核 */
 					path: '/purchaseOrderAuditinfo',
 					name: 'purchaseOrderAuditinfo',
-					component: purchaseOrderAuditinfo => require(['@/components/procurement/scheduling/purchaseOrder-Audit-info.vue'], purchaseOrderAuditinfo)
+					component: purchaseOrderAuditinfo => require([
+						'@/components/procurement/scheduling/purchaseOrder-Audit-info.vue'
+					], purchaseOrderAuditinfo)
 				},
 				{ /*采购执行单查询 */
 					path: '/purchaseOrderSelect',
 					name: 'purchaseOrderSelect',
-					component: purchaseOrderSelect => require(['@/components/procurement/scheduling/purchaseOrderSelect.vue'], purchaseOrderSelect)
+					component: purchaseOrderSelect => require(['@/components/procurement/scheduling/purchaseOrderSelect.vue'],
+						purchaseOrderSelect)
 				},
-        { /*产品供应商推荐登记 */
-        	path: '/supplierRegistration',
-        	name: 'supplierRegistration',
-        	component: supplierRegistration => require(['@/components/procurement/recommend/supplierRegistration.vue'], supplierRegistration)
-        },
-        { /*产品供应商推荐登记 */
-        	path: '/supplierRegistration2',
-        	name: 'supplierRegistration2',
-        	component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'], supplierRegistration2)
-        },
-        { /*产品供应商档案登记 */
-        	path: '/Infostration',
-        	name: 'Infostration',
-        	component: Infostration => require(['@/components/procurement/supplierprofile/Infostration.vue'], Infostration)
-        },
-		{ /*供应商档案登记 */
-		          path: '/infostration',
-		          name: 'infostration',
-		          component: infostration => require(['@/components/procurement/supplierprofile/infostration.vue'], infostration)
-		        },
-		        { /*供应商档案登记复核列表 */
-		          path: '/Infostrationreview',
-		          name: 'Infostrationreview',
-		          component: Infostrationreview => require(['@/components/procurement/supplierprofile/Infostrationreview.vue'],
-		            Infostrationreview)
-		        },
-		        { /*供应商档案登记复核页面*/
-		          path: '/Infostrationreview2',
-		          name: 'Infostrationreview2',
-		          component: Infostrationreview2 => require(['@/components/procurement/supplierprofile/Infostrationreview2.vue'],
-		            Infostrationreview2)
-		        },
-		        { /*供应商档案查询、删除、变更页面*/
-		          path: '/InfoChange',
-		          name: 'InfoChange',
-		          component: InfoChange => require(['@/components/procurement/supplierprofile/InfoChange.vue'], InfoChange)
-		        },
-		        { /*供应商档案变更页面*/
-		          path: '/InfoChange2',
-		          name: 'InfoChange2',
-		          component: InfoChange2 => require(['@/components/procurement/supplierprofile/InfoChange2.vue'], InfoChange2)
-		        },
-		        { /*供应商档案信息详情页面*/
-		          path: '/InfoChangeinfo',
-		          name: 'InfoChangeinfo',
-		          component: InfoChangeinfo => require(['@/components/procurement/supplierprofile/InfoChange-info.vue'],
-		            InfoChangeinfo)
-		        },
-		        { /*供应商档案永久删除与恢复页面*/
-		          path: '/InfoDelete',
-		          name: 'InfoDelete',
-		          component: InfoDelete => require(['@/components/procurement/supplierprofile/InfoDelete.vue'], InfoDelete)
-		        },
-		        // { /*发票信息登记列表*/
-		        //   path: '/Invoicestration',
-		        //   name: 'Invoicestration',
-		        //   component: Invoicestration => require(['@/components/invoicemanagement/Invoicestration.vue'],
-		        //     Invoicestration)
-		        // },
-		        // { /*发票信息登记*/
-		        //   path: '/Invoicestration2',
-		        //   name: 'Invoicestration2',
-		        //   component: Invoicestration2 => require(['@/components/invoicemanagement/Invoicestration2.vue'],
-		        //     Invoicestration2)
-		        // },
-		        // { /*发票信息登记复核列表*/
-		        //   path: '/Invoicestrationreview',
-		        //   name: 'Invoicestrationreview',
-		        //   component: Invoicestrationreview => require([
-		        //     '@/components/invoicemanagement/Invoicestrationreview.vue'
-		        //   ], Invoicestrationreview)
-		        // },
-		        // { /*发票信息登记复核*/
-		        //   path: '/Invoicestrationreview2',
-		        //   name: 'Invoicestrationreview2',
-		        //   component: Invoicestrationreview2 => require([
-		        //     '@/components/invoicemanagement/Invoicestrationreview2.vue'
-		        //   ], Invoicestrationreview2)
-		        // },
-		        // { /*发票信息查询*/
-		        //   path: '/Invoicequery',
-		        //   name: 'Invoicequery',
-		        //   component: Invoicequery => require(['@/components/invoicemanagement/Invoicequery.vue'], Invoicequery)
-		        // },
-		        // { /*发票详细信息查询*/
-		        //   path: '/Invoicequery2',
-		        //   name: 'Invoicequery2',
-		        //   component: Invoicequery2 => require(['@/components/invoicemanagement/Invoicequery2.vue'],
-		        //     Invoicequery2)
-		        // },
+				{ /*产品供应商推荐登记 */
+					path: '/supplierRegistration',
+					name: 'supplierRegistration',
+					component: supplierRegistration => require(['@/components/procurement/recommend/supplierRegistration.vue'],
+						supplierRegistration)
+				},
+				{ /*产品供应商推荐登记 */
+					path: '/supplierRegistration2',
+					name: 'supplierRegistration2',
+					component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'],
+						supplierRegistration2)
+				},
+				{ /*产品供应商档案登记 */
+					path: '/Infostration',
+					name: 'Infostration',
+					component: Infostration => require(['@/components/procurement/supplierprofile/Infostration.vue'], Infostration)
+				},
+				{ /*供应商档案登记 */
+					path: '/Infostration',
+					name: 'Infostration',
+					component: Infostration => require(['@/components/procurement/supplierprofile/Infostration.vue'], Infostration)
+				},
+				{ /*供应商档案登记复核列表 */
+					path: '/Infostrationreview',
+					name: 'Infostrationreview',
+					component: Infostrationreview => require(['@/components/procurement/supplierprofile/Infostrationreview.vue'],
+						Infostrationreview)
+				},
+				{ /*供应商档案登记复核页面*/
+					path: '/Infostrationreview2',
+					name: 'Infostrationreview2',
+					component: Infostrationreview2 => require(['@/components/procurement/supplierprofile/Infostrationreview2.vue'],
+						Infostrationreview2)
+				},
+				{ /*供应商档案查询、删除、变更页面*/
+					path: '/InfoChange',
+					name: 'InfoChange',
+					component: InfoChange => require(['@/components/procurement/supplierprofile/InfoChange.vue'], InfoChange)
+				},
+				{ /*供应商档案变更页面*/
+					path: '/InfoChange2',
+					name: 'InfoChange2',
+					component: InfoChange2 => require(['@/components/procurement/supplierprofile/InfoChange2.vue'], InfoChange2)
+				},
+				{ /*供应商档案信息详情页面*/
+					path: '/InfoChangeinfo',
+					name: 'InfoChangeinfo',
+					component: InfoChangeinfo => require(['@/components/procurement/supplierprofile/InfoChange-info.vue'],
+						InfoChangeinfo)
+				},
+				{ /*供应商档案永久删除与恢复页面*/
+					path: '/InfoDelete',
+					name: 'InfoDelete',
+					component: InfoDelete => require(['@/components/procurement/supplierprofile/InfoDelete.vue'], InfoDelete)
+				}, ,
+				{ /*供应商档案永久删除与恢复页面*/
+					path: '/InfoChange-info',
+					name: 'InfoChangeinfo',
+					component: InfoChangeinfo => require(['@/components/procurement/supplierprofile/InfoChange-info.vue'],
+						InfoChangeinfo)
+				},
+				{ /*发票信息登记列表*/
+					path: '/Invoicestration',
+					name: 'Invoicestration',
+					component: Invoicestration => require(['@/components/procurement/invoicemanagement/Invoicestration.vue'],
+						Invoicestration)
+				},
+				{ /*发票信息登记*/
+					path: '/Invoicestration2',
+					name: 'Invoicestration2',
+					component: Invoicestration2 => require(['@/components/procurement/invoicemanagement/Invoicestration2.vue'],
+						Invoicestration2)
+				},
+				{ /*发票信息登记复核列表*/
+					path: '/Invoicestrationreview',
+					name: 'Invoicestrationreview',
+					component: Invoicestrationreview => require([
+						'@/components/procurement/invoicemanagement/Invoicestrationreview.vue'
+					], Invoicestrationreview)
+				},
+				{ /*发票信息登记复核*/
+					path: '/Invoicestrationreview2',
+					name: 'Invoicestrationreview2',
+					component: Invoicestrationreview2 => require([
+						'@/components/procurement/invoicemanagement/Invoicestrationreview2.vue'
+					], Invoicestrationreview2)
+				},
+				{ /*发票信息查询*/
+					path: '/Invoicequery',
+					name: 'Invoicequery',
+					component: Invoicequery => require(['@/components/procurement/invoicemanagement/Invoicequery.vue'],
+						Invoicequery)
+				},
+				{ /*发票详细信息查询*/
+					path: '/Invoicequery2',
+					name: 'Invoicequery2',
+					component: Invoicequery2 => require(['@/components/procurement/invoicemanagement/Invoicequery2.vue'],
+						Invoicequery2)
+				},
 			]
 		}
 	]

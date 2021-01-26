@@ -63,6 +63,7 @@
 						<el-input v-model="ruleForm.supplierPostalcode"></el-input>
 					</el-form-item>
 				</el-card>
+				
 				<br />
 				
 				<el-card class="box-card">
