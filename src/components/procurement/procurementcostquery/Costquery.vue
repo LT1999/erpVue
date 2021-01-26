@@ -2,62 +2,65 @@
 	<div id="ProductFileChange">
 		<el-breadcrumb separator="/" style="margin-bottom: 30px;">
 			<el-breadcrumb-item>采购管理</el-breadcrumb-item>
-			<el-breadcrumb-item>供应商档案管理</el-breadcrumb-item>
-			<el-breadcrumb-item>供应商档案查询、永久删除、变更</el-breadcrumb-item>
+			<el-breadcrumb-item>采购发票管理</el-breadcrumb-item>
+			<el-breadcrumb-item>采购成本查询</el-breadcrumb-item>
 		</el-breadcrumb>
 		<el-card shadow="always" style="padding: 20px;">
 
 			<el-form ref="searchFrom" :model="searchFrom" label-position="top" inline>
+        <el-col :span="4">
+        	<el-form-item label="请输入执行单编号 ">
+        		<el-input v-model="searchFrom.cgr" ></el-input>
+        		</el-select>
+        	</el-form-item>
+        </el-col>
+				<el-col :span="3">
+					<el-form-item label="请输入关键字">
+						<el-input v-model="searchFrom.cgr" ></el-input>
+						</el-select>
+					</el-form-item>
+				</el-col>
 				<el-col :span="9" style="margin-left: 20px;">
-					<el-form-item label="请输入登记时间">
+					<el-form-item label="请输入执行单登记时间">
 						<el-date-picker  v-model="searchFrom.queryTime" type="daterange" value-format="yyyy-MM-dd"
 						      range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"> </el-date-picker>
 					</el-form-item>
 				</el-col>
 
-				<el-col :span="6" style="margin-left: 12px;">
-					<el-form-item label="请选择产品分类">
-						<el-cascader v-model="searchFrom.queryClassifyId" :props="SetKesDept" ref="cascader" :options="options"></el-cascader>
-					</el-form-item>
-				</el-col>
-
-				<el-col :span="5">
-					<el-form-item label="请输入采购人编号">
-						<el-input v-model="searchFrom.type" ></el-input>
+				<el-col :span="4" style="margin-left: 12px;">
+					<el-form-item label="请选择执行单状态">
+						<el-select v-model="searchFrom.statc" placeholder="请选择">
+              <el-option label="收发票完成" value="收发票完成"></el-option>
 						</el-select>
 					</el-form-item>
 				</el-col>
+
+
 				<el-col :span="2">
 					<el-button @click="open" type="primary" plain style="margin-top: 50px; margin-left: 20px;font-size: 13px;">查询</el-button>
 				</el-col>
+        <el-col :span="20" style="margin-bottom: 20px;">
+        <span style="font-size: 12px; color: orange;margin-right: 20px;">符合条件的采购执行单总数 :{{number1}}例 </span>
+        <span style="font-size: 12px; color: green;margin-right: 20px;">市场总价 :{{number2}}元 </span>
+        <span style="font-size: 12px; color: blue;">采购总成本 :{{number3}}元 </span>
+        </el-col>
 			</el-form>
 			<div>
 				<el-table :data="tableData" style="text-align: center;" border>
-					<el-table-column prop="supplierNo" label="供应商编号" width="200px">
+					<el-table-column prop="productId" label="执行单编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="supplierName" label="供应商名称">
+					<el-table-column prop="productName" label="产品编号">
 					</el-table-column>
-					<el-table-column prop="supplierQualityRank" label="优质级别">
+					<el-table-column prop="type" label="产品名称">
 					</el-table-column>
-					<el-table-column prop="firstKindName" label="I级分类">
+					<el-table-column prop="firstKindName" label="产品名称">
 					</el-table-column>
-					<el-table-column prop="secondKindName" label="II级分类">
+					<el-table-column prop="secondKindName" label="执行单状态">
 					</el-table-column>
-					<el-table-column prop="threeKindName" label="III级分类">
+					<el-table-column prop="thirdKindName" label="市场价(元)">
 					</el-table-column>
-          <el-table-column prop="supplierBuyer" label="采购人">
+          <el-table-column prop="responsiblePerson" label="采购成本(元)">
           </el-table-column>
-					<el-table-column prop="review" label="操作" width="266px">
-						<template slot-scope="scope">
-							<el-button size="mini" type="success" plain @click="selInfoChange(scope.row)">
-								查看
-							</el-button>
-							<el-button size="mini" @click.prevent="Changeinfo(scope.row)" type="warning" plain>
-								档案变更
-							</el-button>
-							<el-button size="mini" plain type="danger" @click="del(scope.row)"> 永久删除 </el-button>
-						</template>
-					</el-table-column>
 				</el-table>
 			</div>
 			<div class="block">
@@ -65,6 +68,7 @@
 				 :current-page="currentPage" :page-sizes="[5, 7, 9]" :page-size="3" layout="total, sizes, prev, pager, next, jumper"
 				 :total="10">
 				</el-pagination>
+
 			</div>
 		</el-card>
 	</div>
@@ -168,7 +172,7 @@
 						console.log(err)
 					})
 			},
-			/* selectAll() {
+			selectAll() {
 				this.$http.post("http://localhost:8080/Erp-web/productfile/findAllProductfile.do")
 					.then(res => {
 						this.tableData = res.data;
@@ -176,23 +180,23 @@
 					.catch(err => {
 						console.log(err)
 					});
-			}, */
+			},
 			//删除
 			del(row) {
-				console.log(row.id)
-				this.$confirm('是否删除此供应商档案?', '提示', {
+				this.form.id = row.id;
+				this.form.fileChangeAmount=row.fileChangeAmount;
+				this.$confirm('是否删除该产品档案?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					this.$http.post("http://localhost:8081/supplierfiles/delByid", this.$qs.stringify(row))
+					this.$http.post("http://localhost:8080/Erp-web/productfile/updProductfileById.do", this.$qs.stringify(this.form))
 						.then(res => {
-							this.open();
-								this.$message({
-									type: 'success',
-									message: '删除成功!'
-								});
-								
+							this.selectAll();
+							this.$message({
+								type: 'success',
+								message: '删除成功!'
+							});
 						})
 						.catch(err => {
 							this.$message({
@@ -223,27 +227,25 @@
 			},
 			//查询按钮
 			open() {
-				//console.log(this.searchFrom);
-				this.$http.post("http://localhost:8081/supplierfiles/selectChang", this.$qs.stringify(this.searchFrom))
+				console.log(this.searchFrom);
+				this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfileCondition.do", this.$qs.stringify(this.searchFrom))
 					.then(res => {
-						//console.log(res.data)
+						console.log(res.data);
 						this.tableData = res.data;
 					})
 					.catch(err => {
 						console.log(err)
-					}); 
+					});
 			},
 			handleChange() {
 
 			},
-			Changeinfo(row) {
-				this.$router.push({path: '/InfoChange2',query:{arr:row}});
+			ProductFileChangeInfo(row) {
+				this.$router.push({path: '/ProductFileChangeInfo',query:{arr:row}});
 			},
-			selInfoChange(row) {
-				
-				//console.log(row);
+			ProductFileEnquiryInfo(row) {
 				this.$router.push({
-					path: '/InfoChange-info',
+					path: '/ProductFileEnquiryInfo',
 					query: {
 						arr: row
 					}
@@ -251,7 +253,7 @@
 			}
 		},
 		mounted() {
-			//this.selectAll();
+			this.selectAll();
 			this.selectOptions();
 		}
 	}
