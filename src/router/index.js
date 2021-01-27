@@ -713,11 +713,6 @@ export default new Router({
 					component: supplierRegistration2 => require(['@/components/procurement/recommend/supplierRegistration2.vue'],
 						supplierRegistration2)
 				},
-				{ /*产品供应商档案登记 */
-					path: '/Infostration',
-					name: 'Infostration',
-					component: Infostration => require(['@/components/procurement/supplierprofile/Infostration.vue'], Infostration)
-				},
 				{ /*供应商档案登记 */
 					path: '/Infostration',
 					name: 'Infostration',
@@ -824,13 +819,13 @@ export default new Router({
 					component: qualitysh2 => require(['@/components/procurement/quality/qualitysh2.vue'],
 						qualitysh2)
 				},
-				{ /*产品供应商推荐登记 */
+				{ /*产品供应商推荐审核 */
 					path: '/audit',
 					name: 'audit',
 					component: audit => require(['@/components/procurement/recommend/audit.vue'],
 						audit)
 				},
-				{ /*产品供应商推荐登记 */
+				{ /*产品供应商推荐审核 */
 					path: '/audit2',
 					name: 'audit2',
 					component: audit2 => require(['@/components/procurement/recommend/audit2.vue'],
@@ -845,7 +840,7 @@ export default new Router({
         { /*产品供应商推荐登记--变更 */
         	path: '/changes',
         	name: 'changes',
-        	component: query => require(['@/components/procurement/recommend/changes.vue'],
+        	component: changes => require(['@/components/procurement/recommend/changes.vue'],
         		changes)
         },
         { /*产品供应商推荐登记--变更 */

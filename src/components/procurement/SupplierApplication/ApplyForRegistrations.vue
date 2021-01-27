@@ -211,7 +211,7 @@
 					aData.getHours() + ":" +
 					aData.getMinutes() + ":" +
 					aData.getSeconds();
-					
+					console.log(this.dto.offers)
 				this.dto.offers.forEach(item => {
 					item.registrartime = this.registrartime;
 					item.supplierNo = this.supplierNo;
@@ -254,6 +254,9 @@
 				this.shuzu.goodsPrice = this.gridData[this.index].realCostPrice;
 				this.shuzu.goodsSubtotal = this.gridData[this.index].realCostPrice;
 				//把数据添加到数组末尾
+				this.dto.offers = this.dto.offers.filter((items) => {
+					return items.goodsNo != this.shuzu.goodsNo;
+				});
 				this.dto.offers.push(this.shuzu);
 				this.shuzu ={};
 				//关闭所有模态框
@@ -313,7 +316,7 @@
 		created() {
 			this.form = this.$route.query.arr;
 			this.supplierNo = this.form.supplierNo;
-			this.supplierId=this.form.supplierId;
+			this.supplierId=this.form.id;
 			this.selectOptions();
 			this.qb();
 		}

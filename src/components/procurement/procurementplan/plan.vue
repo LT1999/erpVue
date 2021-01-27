@@ -58,7 +58,7 @@
                 	</template>
                 </el-table-column>
                 <el-table-column prop="unit" label="单位" width="80"></el-table-column>
-                <el-table-column prop="price" label="成本单价(元)" width="120"></el-table-column>
+                <el-table-column prop="price" label="计划成本单价(元)" width="120"></el-table-column>
                 <el-table-column prop="subtotal" label="小计(元)">
                 	<template slot-scope="scope">
                     <el-input :disabled="true"  v-model="scope.row.subtotal" clearable></el-input>
@@ -105,10 +105,10 @@
         <el-table-column prop="productName" label="产品名称"></el-table-column>
         <el-table-column prop="type" label="用途类型"></el-table-column>
         <el-table-column prop="personalUnit" label="单位"></el-table-column>
-        <el-table-column prop="costPrice" label="单价"></el-table-column>
+        <el-table-column prop="costPrice" label="计划成本单价"></el-table-column>
         <el-table-column label="采购">
           <template slot-scope="scope">
-            <el-button @click.native.prevent="add(scope.$index, table)" type="text" size="small">采购</el-button>
+            <el-button @click.native.prevent="add(scope.row)" type="text" size="small">采购</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -167,6 +167,8 @@
         //alert(this.formInline.purchaseqSupplytime);
         this.$set(this.datas,'purchaseqplan',this.formInline);
         this.$set(this.datas,'plandetails',this.tableData);
+				alert("a");
+				console.log(this.datas)
         this.$http.post(this.$api+"/purchaseqplan/insertPruchaseqplan",this.$qs.stringify(this.datas,{arrayFormat:'plandetails', allowDots: true}))
         	.then( res => {
                    if(res.status==200){
@@ -182,21 +184,24 @@
       handleChange(value) {
         console.log(value);
       },
-      add(index) {
-        this.index = index;
+      add(row) {
         //把数据添加到数组末尾
        this.tableData.push({
-       productName:this.gridData[this.index].productName,//产品名称
-       productNo:this.gridData[this.index].productId,//产品id
-       describe:this.gridData[this.index].productDescribe,//描述
-       unit:this.gridData[this.index].amountUnit,//单位
-       price:this.gridData[this.index].realCostPrice,//单价
+       productName:row.productName,//产品名称
+       productNo:row.productId,//产品id
+       describe:row.productDescribe,//描述
+       unit:row.amountUnit,//单位
+       price:row.costPrice,//单价
        quantity:0,//数量
        subtotal:0,//小计
        dispatch:'未调度'
        });
-       this.formInline.purchaseqTotalquantity+=this.tableData[this.index].quantity;
-       this.formInline.purchaseqTotalprices+=parseInt(this.tableData[this.index].subtotal);
+     /*  this.formInline.purchaseqTotalquantity+=row.quantity;
+	   
+	   alert(isNaN(this.formInline.purchaseqTotalprices))
+	   alert(row.subtotal)
+       this.formInline.purchaseqTotalprices=this.formInline.purchaseqTotalprices+parseInt(row.subtotal);
+	   alert(isNaN(this.formInline.purchaseqTotalprices)) */
         //关闭所有模态框
         this.table = false
       },

@@ -151,8 +151,9 @@
 					this.$delete(this.tableData[i], 'supplierPhone');
 					this.$delete(this.tableData[i],'supplierQualityRank');
 					this.form.purchaseMoney += this.tableData[i].subtotal;
-					amount += this.tableData[i].quantity;
+					amount += parseInt(this.tableData[i].quantity);
 				}
+				
 				if (this.form.purchaseQuantity == amount) {
 					this.$set(this.purchaseDto, 'purchasedetailList', this.tableData);
 					this.$set(this.purchaseDto, 'purchase', this.form);
