@@ -34,23 +34,23 @@
        <el-card class="box-card">
             <div>
             	<el-table :data="tableData" style="width: 100%">
-            		<el-table-column prop="payId" label="推荐单编号">
+            		<el-table-column prop="id" label="推荐单编号" width="100px">
+            			</el-table-column>
+            			<el-table-column prop="productNo" label="产品编号" >
+            			</el-table-column>
+            		<el-table-column prop="productName" label="产品名称">
             		</el-table-column>
-            		<el-table-column prop="reason" label="产品编号">
-            		</el-table-column>
-            		<el-table-column prop="registerTime" label="产品名称">
-            		</el-table-column>
-            		<el-table-column prop="amountSum" label="Ⅰ级分类">
-            		</el-table-column>
-            		<el-table-column prop="amountSum" label="Ⅱ级分类">
-            		</el-table-column>
-            		<el-table-column prop="checkTag" label="Ⅲ级分类">
-            		</el-table-column>
-                <el-table-column prop="checkTag" label="登记时间">
+                <el-table-column prop="productType" label="用途类型">
                 </el-table-column>
+                <el-table-column prop="productGrade" label="档次级别">
+                </el-table-column>
+            			<el-table-column prop="registrar" label="登记人">
+            			</el-table-column>
+            		<el-table-column prop="registrartime" label="登记时间">
+            		</el-table-column>
             		<el-table-column  label="变更">
             			<template slot-scope="scope">
-            					<el-button @click="" size="mini" type="success" plain>变更</el-button>
+            					<el-button @click="reviewButton(scope.$index,scope.row)" size="mini" type="success" plain>变更</el-button>
             				</template>
             		</el-table-column>
             	</el-table>
@@ -64,7 +64,7 @@
 <script>
   export default {
     created() {
-     // this.selectPayTag();
+     this.selectAll();
     },
     data() {
       return {
@@ -94,15 +94,20 @@
       onSubmit() {
         console.log('submit!');
       },
-      selectPayTag(){
-        this.$http.post("http://localhost:8080/Erp-web/pay/selectPayTag.do")
+      selectAll(){
+        this.$http.post(this.$api+"/recommend/selectAll")
         	.then( res => {
-        	//alert("a");
                     this.tableData = res.data;
+                    this.num1=this.tableData.length;
                  })
         	.catch(err =>{
         		console.log(err)
         	})
+      },
+      reviewButton(index,row){
+        this.$router.push({
+        	path: '/changes2' ,query:{row:row}
+        });
       }
     }
   }
