@@ -862,7 +862,12 @@ export default new Router({
 					name: 'Planquery',
 					component: Planquery => require(['@/components/procurement/procurementplan/Planquery.vue'],
 						Planquery)
-				}
+				},
+				{ /*供应商档案登记 */
+					path: '/Costquery',
+					name: 'Costquery',
+					component: Costquery => require(['@/components/procurement/procurementcostquery/Costquery.vue'], Costquery)
+				},
 			]
 		}
 	]
