@@ -97,7 +97,7 @@
 			return {
 				
 				form: {
-					id:'',//id
+					id:this.$route.query.arr.purchase.id,//id
 					purchaseqNo:this.$route.query.arr.purchase.purchaseqNo,//采购编号
 					productNo:this.$route.query.arr.purchase.productNo,//产品编号
 					productName:this.$route.query.arr.purchase.productName,//产品名称
