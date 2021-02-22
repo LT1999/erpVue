@@ -167,7 +167,6 @@
         //alert(this.formInline.purchaseqSupplytime);
         this.$set(this.datas,'purchaseqplan',this.formInline);
         this.$set(this.datas,'plandetails',this.tableData);
-				alert("a");
 				console.log(this.datas)
         this.$http.post(this.$api+"/purchaseqplan/insertPruchaseqplan",this.$qs.stringify(this.datas,{arrayFormat:'plandetails', allowDots: true}))
         	.then( res => {
