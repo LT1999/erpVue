@@ -10,8 +10,8 @@
 			<el-form ref="searchFrom" :model="searchFrom" label-position="top" inline>
 				<el-col :span="9" style="margin-left: 20px;">
 					<el-form-item label="请输入登记时间">
-						<el-date-picker  v-model="searchFrom.queryTime" type="daterange" value-format="yyyy-MM-dd"
-						      range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"> </el-date-picker>
+						<el-date-picker v-model="searchFrom.queryTime" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+						 start-placeholder="开始日期" end-placeholder="结束日期"> </el-date-picker>
 					</el-form-item>
 				</el-col>
 
@@ -43,7 +43,7 @@
 					</el-table-column>
 					<el-table-column prop="review" label="操作" width="200px">
 						<template slot-scope="scope">
-						    <el-button size="mini" type="success" plain @click="ApplyForRegistrationInfo(scope.row)">
+							<el-button size="mini" type="success" plain @click="ApplyForRegistrationInfo(scope.row)">
 								查看
 							</el-button>
 							<el-button size="mini" @click.prevent="ApplyForRegistrations(scope.row)" type="warning" plain>
@@ -68,7 +68,7 @@
 		data() {
 			let that = this;
 			return {
-				 SetKesDept: { //联动菜单配置
+				SetKesDept: { //联动菜单配置
 					value: 'id',
 					label: 'kindName',
 					lazy: true,
@@ -91,7 +91,7 @@
 							resolve(temp);
 						}
 					}
-				}, 
+				},
 				//时间
 				pickerOptions: {
 					shortcuts: [{
@@ -125,14 +125,17 @@
 					queryClassifyId: [],
 					queryTime: []
 				},
-				dto:{
-					time1:null,
-					time2:null,
-					fl1:0,
-					fl2:0,
-					fl3:0
+				dto1: {
+					dto: {
+						time1: null,
+						time2: null
+
+					},
+					fl1: null,
+					fl2: null,
+					fl3: null
 				},
-				number:'',
+				number: '',
 				//级联选择器
 				options: [],
 				//表格
@@ -141,7 +144,7 @@
 			}
 		},
 		methods: {
-			 async getSta(id) { //懒加载联动数据
+			async getSta(id) { //懒加载联动数据
 				const data = await this.$http.post("http://localhost:8080/Erp-web/config-file-kind/selectAllConfigFileKind.do",
 						"pId=" + id)
 					.then((res) => {
@@ -160,7 +163,7 @@
 					.catch(err => {
 						console.log(err)
 					})
-			}, 
+			},
 			//分页
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
@@ -176,22 +179,32 @@
 			},
 			//查询按钮
 			open() {
-					this.dto.time1=this.searchFrom.queryTime[0];
-					this.dto.time2=this.searchFrom.queryTime[1];
-					this.dto.fl1=this.searchFrom.queryClassifyId[0];
-					this.dto.fl2=this.searchFrom.queryClassifyId[1];
-					this.dto.fl3=this.searchFrom.queryClassifyId[2];
-					this.$http.post(this.$api+"/supplierfiles/findss", this.$qs.stringify(this.dto))
-						.then(res => {
-							console.log(res.data);
-							this.tableData = res.data;
-						})
-						.catch(err => {
-							console.log(err)
-						});
+				if (this.searchFrom.queryTime != null && this.searchFrom.queryTime.length != 0) {
+					this.dto1.dto.time1 = this.searchFrom.queryTime[0];
+					this.dto1.dto.time2 = this.searchFrom.queryTime[1];
+				};
+				/* this.$set(this.dto,'time1',this.searchFrom.queryTime[0]);
+				this.$set(this.dto,'time2',this.searchFrom.queryTime[1]);
+				this.$set(this.dto,'fl1',this.searchFrom.queryClassifyId[0]);
+				this.$set(this.dto,'fl2',this.searchFrom.queryClassifyId[1]);
+				this.$set(this.dto,'fl3',this.searchFrom.queryClassifyId[2]); */
+				this.dto1.fl1 = this.searchFrom.queryClassifyId[0];
+				this.dto1.fl2 = this.searchFrom.queryClassifyId[1];
+				this.dto1.fl3 = this.searchFrom.queryClassifyId[2];
+				this.$http.post(this.$api + "/supplierfiles/findss", this.$qs.stringify(this.dto1, {
+						arrayFormat: 'dto',
+						allowDots: true
+					}))
+					.then(res => {
+						console.log(res.data);
+						this.tableData = res.data;
+					})
+					.catch(err => {
+						console.log(err)
+					});
 			},
-			selectAll(){
-				this.$http.post(this.$api+"/supplierfiles/findCheck")
+			selectAll() {
+				this.$http.post(this.$api + "/supplierfiles/findCheck")
 					.then(res => {
 						console.log(res.data);
 						this.tableData = res.data;
@@ -204,7 +217,12 @@
 
 			},
 			ApplyForRegistrationInfo(row) {
-				this.$router.push({path: '/ApplyForRegistrationInfo',query:{arr:row}}); 
+				this.$router.push({
+					path: '/ApplyForRegistrationInfo',
+					query: {
+						arr: row
+					}
+				});
 			},
 			ApplyForRegistrations(row) {
 				this.$router.push({
@@ -212,12 +230,12 @@
 					query: {
 						arr: row
 					}
-				}); 
+				});
 			}
 		},
 		mounted() {
 			this.selectAll();
-			this.selectOptions(); 
+			this.selectOptions();
 		}
 	}
 </script>

@@ -86,10 +86,10 @@
 			</el-form>
 		</div>
 		<el-drawer :visible.sync="table" direction="rtl" size="50%">
-			<el-form :inline="true" :model="formInline" class="demo-form-inline">
+			<el-form :inline="true" :model="productFileDto" class="demo-form-inline">
 				<center>
 					<el-form-item label="请选择产品分类">
-						<el-cascader @change="handleChange" v-model="formInline.queryClassifyId" ref="cascader" :options="options" :props="SetKesDept"></el-cascader>
+						<el-cascader @change="handleChange" v-model="productFileDto.queryClassifyId" ref="cascader" :options="options" :props="SetKesDept"></el-cascader>
 					</el-form-item>
 					<el-form-item label="">
 						<el-button type="primary" @click="onSubmit()">搜索</el-button>
@@ -144,7 +144,7 @@
 					}
 				},
 				options: [],
-				formInline: {
+				productFileDto: {
 					queryClassifyId: []
 				},
 				rules: {
@@ -195,7 +195,8 @@
 					})
 			},
 			onSubmit() {
-				this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfilewl.do")
+				
+				this.$http.post("http://localhost:8080/Erp-web/productfile/findProductfilewl.do",this.$qs.stringify(this.productFileDto))
 					.then(res => {
 						this.gridData = res.data;
 					})
