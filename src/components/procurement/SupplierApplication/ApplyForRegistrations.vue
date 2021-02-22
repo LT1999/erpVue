@@ -211,7 +211,7 @@
 					aData.getHours() + ":" +
 					aData.getMinutes() + ":" +
 					aData.getSeconds();
-					
+					console.log(this.supplierId);
 				this.dto.offers.forEach(item => {
 					item.registrartime = this.registrartime;
 					item.supplierNo = this.supplierNo;
@@ -313,7 +313,7 @@
 		created() {
 			this.form = this.$route.query.arr;
 			this.supplierNo = this.form.supplierNo;
-			this.supplierId=this.form.supplierId;
+			this.supplierId=this.form.id;
 			this.selectOptions();
 			this.qb();
 		}
@@ -330,7 +330,6 @@
 
 	#buttons {
 		float: right;
-		margin-right: 50px;
 		margin-bottom: 20px;
 	}
 

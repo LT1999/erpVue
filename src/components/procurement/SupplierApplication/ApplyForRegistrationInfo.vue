@@ -7,7 +7,8 @@
 		</el-breadcrumb>
 
 		<el-row style="margin-bottom: 10px;">
-			<el-col :span="1" :push="22">
+			<el-col :span="4" :push="20">
+				<el-button type="warning" size="medium" @click="pdf()">pdf打印</el-button>
 				<el-button type="primary" size="medium" @click="back()">返回</el-button>
 			</el-col>
 		</el-row>
@@ -513,6 +514,9 @@
 		methods: {
 			back() {
 				location.href = "#/ApplyForRegistration"
+			},
+			pdf(){
+				this.getPdf('body', "供应商档案");
 			}
 		},
 		created() {

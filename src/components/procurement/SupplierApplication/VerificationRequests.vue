@@ -165,7 +165,6 @@
 			this.form.id=this.$route.query.arr.id; */
 			this.form = this.$route.query.arr;
 			this.form.auditor = "";
-			s
 			this.selsup();
 		}
 	}

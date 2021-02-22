@@ -1,5 +1,5 @@
 <template>
-	<div id="DataReportExcel">
+	<div id="pdfDom">
 		<el-breadcrumb separator="/" style="margin-bottom: 30px;">
 			<el-breadcrumb-item>采购管理</el-breadcrumb-item>
 			<el-breadcrumb-item>标准数据报表</el-breadcrumb-item>
@@ -9,7 +9,7 @@
 			<el-form ref="searchFrom" inline>
 				<el-col>
 					<el-form-item label="请选择数据库表的名称">
-						<el-select v-model="value" placeholder="请选择">
+						<el-select v-model="value" placeholder="请选择" @change="selectChang">
 							<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 							</el-option>
 						</el-select>
@@ -20,37 +20,30 @@
 							</el-option>
 						</el-select>
 					</el-form-item>
-					<el-button @click="exportClick" type="primary" plain style=" margin-left: 20px;font-size: 13px;">导出</el-button>
+					<a id="exportExcel"></a>
+					<el-button @click="exportClick()" type="primary" plain style=" margin-left: 20px;font-size: 13px;">导出</el-button>
 				</el-col>
 			</el-form>
-			<div class="hello">
-				<!-- <div id="histogram" style="width: 600px;height:400px;"></div> -->
-				<div id="diagram" style="width: 31.25rem;height:31.25rem;margin-left:15.625rem;"></div>
-				<!-- <div id="brokenLineGraph" style="width: 800px;height:400px;"></div> -->
-			</div>
 		</el-card>
 	</div>
 </template>
 
 <script>
-	var echarts = require('echarts/lib/echarts');
-	// 引入柱状图
-	require('echarts/lib/chart/bar');
-	// 引入提示框和标题组件
-	require('echarts/lib/component/tooltip');
-	require('echarts/lib/component/title');
+	import XLSX from 'xlsx'
+
 	export default {
 		data() {
 			return {
+				elExport: '',
 				options: [{
 					value: '1',
 					label: '供应商档案'
 				}, {
 					value: '2',
-					label: '采购报价单'
+					label: '供应商报价单'
 				}, {
 					value: '3',
-					label: '采购执行单'
+					label: '采购总单'
 				}],
 				value: '',
 				option: [{
@@ -58,132 +51,218 @@
 					label: 'excel'
 				}, {
 					value: '2',
-					label: 'pdf'
-				}, {
-					value: '3',
 					label: 'xml'
 				}],
 				value2: '',
-				legendData: '',
-				seriesData: '',
-				selected: '',
-				name: '',
-				nameList: [
-					'赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许', '何', '吕', '施',
-					'张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章', '云', '苏', '潘', '葛', '奚', '范',
-					'彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳', '酆', '鲍', '史', '唐', '费', '廉', '岑', '薛', '雷',
-					'贺', '倪', '汤', '滕', '殷', '罗', '毕', '郝', '邬', '安', '常', '乐', '于', '时', '傅', '皮', '卞', '齐', '康', '伍', '余', '元', '卜',
-					'顾', '孟', '平', '黄', '和', '穆', '萧', '尹', '姚', '邵', '湛', '汪', '祁', '毛', '禹', '狄', '米', '贝', '明', '臧', '计', '伏', '成',
-					'戴', '谈', '宋', '茅', '庞', '熊', '纪', '舒', '屈', '项', '祝', '董', '梁', '杜', '阮', '蓝', '闵', '席', '季', '麻', '强', '贾', '路',
-					'娄', '危'
-				],
-				nameLen: ''
+				datalist: '',
+				name: ''
 			}
 		},
 		methods: {
-			bing() {
-				// 基于准备好的dom，初始化echarts实例
-				var bing = echarts.init(document.getElementById('diagram'));
-				//绘制饼图
-				var option = {
-					title: {
-						text: '同名数量统计',
-						subtext: '纯属虚构',
-						left: 'center'
-					},
-					tooltip: {
-						trigger: 'item',
-						formatter: '{a} <br/>{b} : {c} ({d}%)'
-					},
-					legend: {
-						type: 'scroll',
-						orient: 'vertical',
-						right: 10,
-						top: 20,
-						bottom: 20,
-						data: data.legendData,
-
-						selected: data.selected
-					},
-					series: [{
-						name: '姓名',
-						type: 'pie',
-						radius: '55%',
-						center: ['40%', '50%'],
-						data: data.seriesData,
-						emphasis: {
-							itemStyle: {
-								shadowBlur: 10,
-								shadowOffsetX: 0,
-								shadowColor: 'rgba(0, 0, 0, 0.5)'
-							}
-						}
-					}]
-				};
-				bing.setOption(option);
-			},
-			genData(count) {
-				for (var i = 0; i < count; i++) {
-					this.name = Math.random() > 0.65 ?
-						this.makeWord(4, 1) + '·' + this.makeWord(3, 0) :
-						this.makeWord(2, 1);
-					this.legendData.push(name);
-					this.seriesData.push({
-						name: name,
-						value: Math.round(Math.random() * 100000)
-					});
-					this.selected[name] = i < 6;
-				}
-			},
-			makeWord(max, min) {
-				this.nameLen = Math.ceil(Math.random() * max + min);
-				for (var i = 0; i < this.nameLen; i++) {
-					this.name.push(this.nameList[Math.round(Math.random() * this.nameList.length - 1)]);
-				}
-				console.log(this.name);
-			},
-			exportClick() {
-				this.$axios.post("/freceipt/export", this.$qs.stringify(this.checkform), {
-						responseType: 'arraybuffer'
-					})
+			selectlist1() {
+				this.$http.post(this.$api + "/supplierfiles/selectAll")
 					.then(res => {
 						console.log(res.data);
-						if (res) {
-							// _this.loading = false;
-							const aLink = document.createElement("a");
-							let blob = new Blob([res.data], {
-								type: "application/vnd.ms-excel"
-							})
-							aLink.href = URL.createObjectURL(blob)
-							aLink.setAttribute('download', '保单信息' + '.xlsx') // 设置下载文件名称
-							aLink.click()
-							this.$refs.loadElement.appendChild(aLink)
-						}
+						this.datalist = res.data;
+						this.name = "供应商档案";
 					})
 					.catch(error => {
 						console.log(error);
 					})
+			},
+			selectlist2() {
+				this.$http.post(this.$api + "/offer/selectAll")
+					.then(res => {
+						console.log(res.data);
+						this.datalist = res.data;
+						this.name = "供应商报价单";
+					})
+					.catch(error => {
+						console.log(error);
+					})
+			},
+			selectlist3() {
+				this.$http.post(this.$api + "/purchase/selectAll")
+					.then(res => {
+						console.log(res.data);
+						this.datalist = res.data;
+						this.name = "采购总单";
+					})
+					.catch(error => {
+						console.log(error);
+					})
+			},
+			selectChang() {
+
+				if (this.value == 1) {
+					this.selectlist1();
+				} else if (this.value == 2) {
+					this.selectlist2();
+				} else if (this.value == 3) {
+					this.selectlist3();
+				}
+			},
+			exportClick() {
+				if (this.value2 == 1) {
+					if (this.value == "") {
+						this.$message({
+							message: '请选择需打印的表',
+							type: 'warning'
+						});
+					}else{
+						this.excel(this.datalist);
+					}
+				} else if (this.value2 == 2) {
+					if (this.value == "") {
+						this.$message({
+							message: '请选择需打印的表',
+							type: 'warning'
+						});
+					}else{
+						this.exportXml();
+					}
+				} else {
+					this.$message({
+						message: '请选择打印格式',
+						type: 'warning'
+					});
+				}
+			},
+			exportXml() {
+				// 这里遍历数据，排好我们上面需要的xml格式
+				console.log(this.datalist.map)
+				let arr = this.datalist.map((item) => { //该处中的datalist是从后台获取数据保存的集合
+					let json = {};
+					json.yi= item.id; //purchaseplanId、register、registerTime、dispatch是datalist中的属性名
+					json.er= item.Supplier_No;
+					json.san= item.Supplier_Name;
+					json.si= item.Supplier_Address;
+					//			        let ipArr = item.ipmac.split(";");
+					//			        ipArr.map((val) => {
+					//			          json.macs.mac.push({
+					//			            _addr: val,
+					//			          });
+					//			        });
+					return json;
+				});
+				let obj = {
+					bwlist: {
+						_type: "white",
+						acc: arr,
+					},
+				};
+				console.log(obj) // 2222
+				// 调用$x2js 将我们的json数据转换成xml数据格式
+				let xml = this.$x2js.js2xml(obj);
+				// console.log(xml) // 下面就是我们想要的xml文件的数据格式了
+				//  <bwlist type="white">
+				//		<acc account="0020047843">
+				//			<ips />
+				//			<macs>
+				//				<mac addr="1C872CCC0400" />
+				//				<mac addr="308D99148364" />
+				//			</macs>
+				//		 </acc>
+				//	 </bwlist>
+				let url = window.URL.createObjectURL(
+					new Blob([xml], {
+						type: "text/xml"
+					})
+				);
+				console.log(url)
+				// 这里会生成一个url   blob:http://www.ceshi.com:111/5a8d3b47-a3e9-40ba-8341-ebb2016fe5f8
+
+				// 然后就可以创建a标签 最后下载下来了
+				let link = document.createElement("a");
+				link.style.display = "none";
+				link.href = url;
+				link.setAttribute("download", this.name);
+				document.body.appendChild(link);
+				link.click();
+			},
+			excel(rs) {
+				let data = [{}]
+				for (let k in rs[0]) {
+					data[0][k] = k
+				}
+				data = data.concat(rs)
+				console.table(data);
+				this.exportExcel(data, this.name)
+			},
+			// 导出 Excel
+			exportExcel(json, downName, type) {
+				// 获取列名
+				let keyMap = []
+				for (let k in json[0]) {
+					keyMap.push(k)
+				}
+
+				// 用来保存转换好的json
+				let tmpdata = []
+				json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {
+					v: v[k],
+					position: (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
+				}))).reduce((prev, next) => prev.concat(next)).forEach(function(v) {
+					tmpdata[v.position] = {
+						v: v.v
+					}
+				})
+
+				let outputPos = Object.keys(tmpdata) // 设置区域，比如表格从A1到D10
+				let tmpWB = {
+					SheetNames: ['mySheet'], // 保存的表标题
+					Sheets: {
+						'mySheet': Object.assign({},
+							tmpdata, // 内容
+							{
+								'!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1] // 设置填充区域
+							})
+					}
+				}
+				// 创建二进制对象写入转换好的字节流
+				let tmpDown = new Blob([this.s2ab(XLSX.write(tmpWB, {
+						bookType: (type === undefined ? 'xlsx' : type),
+						bookSST: false,
+						type: 'binary'
+					} // 这里的数据是用来定义导出的格式类型
+				))], {
+					type: ''
+				})
+
+				this.elExport.download = downName + '.xlsx' // 下载名称
+				this.elExport.href = URL.createObjectURL(tmpDown) // 绑定a标签到新创建对象超链接
+				this.elExport.click() // 模拟点击实现下载
+
+				// 释放，用 URL.revokeObjectURL() 释放
+				setTimeout(() => URL.revokeObjectURL(tmpDown), 100)
+			},
+			// 字符串转字符流
+			s2ab(s) {
+				var buf = new ArrayBuffer(s.length)
+				var view = new Uint8Array(buf)
+				for (var i = 0; i !== s.length; ++i) {
+					view[i] = s.charCodeAt(i) & 0xFF
+				}
+				return buf
+			},
+			// 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+			getCharCol(n) {
+				let s = ''
+				let m = 0
+				while (n > 0) {
+					m = n % 26 + 1
+					s = String.fromCharCode(m + 64) + s
+					n = (n - m) / 26
+				}
+				return s
 			}
 		},
 		mounted() {
-			this.bing();
+			this.elExport = document.getElementById('exportExcel');
 		}
 	}
 </script>
 
 <style scoped>
-	table {
-		margin: 3px;
-	}
 
-	#DataReportExcel>>>.el-table th {
-		text-align: center;
-	}
-
-	#DataReportExcel>>>.el-table td {
-		padding: 0px;
-		height: 50px;
-		line-height: 50px;
-		text-align: center;
-	}
 </style>

@@ -53,6 +53,7 @@
 				this.$http.post(this.$api + "/offer/findCheck")
 					.then(res => {
 						this.tableData = res.data;
+						console.log(this.tableData);
 					})
 					.catch(err => {
 						console.log(err)

@@ -193,6 +193,7 @@
 			selectAll(){
 				this.$http.post(this.$api+"/supplierfiles/findCheck")
 					.then(res => {
+						console.log(res.data);
 						this.tableData = res.data;
 					})
 					.catch(err => {

@@ -11,6 +11,7 @@
 		<div id="card">
 			<el-form ref="form" :model="form" label-width="130px">
 				<div id="buttons">
+					<el-button type="warning" @click="pdf()">pdf打印</el-button>
 					<el-button type="primary" @click="back()">返回</el-button>
 				</div>
 				<el-card class="box-card">
@@ -110,6 +111,9 @@
 			},
 			back() {
 					location.href = "#/RequestForChanges"
+			},
+			pdf(){
+				this.getPdf('card',"供应商申请单");
 			}
 		},
 		created() {
