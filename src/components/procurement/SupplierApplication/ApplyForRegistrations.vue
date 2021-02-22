@@ -254,6 +254,9 @@
 				this.shuzu.goodsPrice = this.gridData[this.index].realCostPrice;
 				this.shuzu.goodsSubtotal = this.gridData[this.index].realCostPrice;
 				//把数据添加到数组末尾
+				this.dto.offers = this.dto.offers.filter((items) => {
+					return items.goodsNo != this.shuzu.goodsNo;
+				});
 				this.dto.offers.push(this.shuzu);
 				this.shuzu ={};
 				//关闭所有模态框

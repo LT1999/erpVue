@@ -11,7 +11,7 @@
 		<div id="card">
 			<el-form ref="form" :rules="rules" :model="form" label-width="130px">
 				<div id="buttons">
-					<el-button type="success" @click="submit('审核通过')">通过</el-button>
+					<el-button type="success" @click="submit('已审核')">通过</el-button>
 					<el-button type="warning" @click="submit('审核未通过')">未通过</el-button>
 					<el-button type="primary" @click="back()">返回</el-button>
 				</div>
@@ -164,6 +164,7 @@
 			this.form.auditor=this.$route.query.arr.auditor;
 			this.form.id=this.$route.query.arr.id; */
 			this.form = this.$route.query.arr;
+			console.log(this.form)
 			this.form.auditor = "";
 			this.selsup();
 		}

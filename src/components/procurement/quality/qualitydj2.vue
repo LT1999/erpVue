@@ -161,7 +161,6 @@
 			},
 			initialize(row) {
 				this.form = row;
-				alert(this.form.productNo);
 				var aData = new Date();
 				this.registrantTime =
 					aData.getFullYear() + "-" +

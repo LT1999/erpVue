@@ -130,7 +130,7 @@
 				if (check=='已审核') {
 					this.tableData.forEach(item => {
 						count += parseInt(item.checkQualified);
-						item.qualifiedQuantity = item.checkQualified;
+						item.qualifiedQuantity += item.checkQualified;
 						item.checkQualified = 0;
 					})
 					count += parseInt(this.form.qualifiedQuantity);
@@ -200,7 +200,6 @@
 			},
 			initialize(row) {
 				this.form = row;
-				alert(this.form.productNo);
 				var aData = new Date();
 				this.auditorTime =
 					aData.getFullYear() + "-" +

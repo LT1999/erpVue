@@ -86,20 +86,31 @@ procurement 采购模块
 		purchaseOrder-Audit:采购执行单审核
 		purchaseOrder-Audit-info:采购执行单审核
 		purchaseOrderSelect:采购执行单查询
-  recommend:产品供应商推荐管理
-    supplierRegistration:产品供应商推荐登记
-    supplierRegistration2:产品供应商推荐登记
-    audit:产品供应商推荐登记审核
-    audit2:产品供应商推荐登记审核
-    query:产品供应商推荐查询
-    changes:产品供应商推荐变更
-    changes2:产品供应商推荐变更
-  quality:采购质量控制管理
-    qualitydJ:质检结果登记
-    qualitydJ2:质检结果登记
-    qualitysh:质检结果登记复核
-    qualitysh2:质检结果登记复核
-    qualitycx:质检结果查询
+	recommend:产品供应商推荐管理
+		supplierRegistration:产品供应商推荐登记
+		supplierRegistration2:产品供应商推荐登记
+		audit:产品供应商推荐登记审核
+		audit2:产品供应商推荐登记审核
+		query:产品供应商推荐查询
+		changes:产品供应商推荐变更
+		changes2:产品供应商推荐变更
+	quality:采购质量控制管理
+		qualitydJ:质检结果登记
+		qualitydJ2:质检结果登记
+		qualitysh:质检结果登记复核
+		qualitysh2:质检结果登记复核
+		qualitycx:质检结果查询
+	supplierprofile : 供应商档案管理
+		Infostration.vue : 供应商档案登记
+		Infostrationreview.vue :供应商档案登记复核
+		InfoChange.vue : 供应商档案查询/删除/变更
+		InfoDelete.vue : 供应商档案永久删除/恢复	
+	invoicemanagement : 采购发票管理
+		Invoicestration : 发票信息登记
+		Invoicestrationreview : 发票信息登记复核
+		Invoicequery : 发票信息查询
+	procurementcostquery : 采购成本查询
+		Costquery : 采购成本查询
 
     SupplierApplication:供应商申请审批管理
       ApplyForRegistration:申请登记
