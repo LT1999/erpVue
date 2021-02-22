@@ -125,15 +125,12 @@
 					queryClassifyId: [],
 					queryTime: []
 				},
-				dto1: {
-					dto: {
-						time1: null,
-						time2: null
-
-					},
-					fl1: null,
-					fl2: null,
-					fl3: null
+				dto: {
+					time1:null,
+					time2:null,
+					fl1: 0,
+					fl2: 0,
+					fl3: 0
 				},
 				number: '',
 				//级联选择器
@@ -179,20 +176,23 @@
 			},
 			//查询按钮
 			open() {
-				if (this.searchFrom.queryTime != null && this.searchFrom.queryTime.length != 0) {
-					this.dto1.dto.time1 = this.searchFrom.queryTime[0];
-					this.dto1.dto.time2 = this.searchFrom.queryTime[1];
+				
+				if (this.searchFrom.queryTime != null && this.searchFrom.queryTime.length>0) {
+					this.dto.time1 = this.searchFrom.queryTime[0];
+					this.dto.time2 = this.searchFrom.queryTime[1];
+				}else{
+					this.dto.time1 = "";
+					this.dto.time2 = "";
 				};
 				/* this.$set(this.dto,'time1',this.searchFrom.queryTime[0]);
 				this.$set(this.dto,'time2',this.searchFrom.queryTime[1]);
 				this.$set(this.dto,'fl1',this.searchFrom.queryClassifyId[0]);
 				this.$set(this.dto,'fl2',this.searchFrom.queryClassifyId[1]);
 				this.$set(this.dto,'fl3',this.searchFrom.queryClassifyId[2]); */
-				this.dto1.fl1 = this.searchFrom.queryClassifyId[0];
-				this.dto1.fl2 = this.searchFrom.queryClassifyId[1];
-				this.dto1.fl3 = this.searchFrom.queryClassifyId[2];
-				this.$http.post(this.$api + "/supplierfiles/findss", this.$qs.stringify(this.dto1, {
-						arrayFormat: 'dto',
+				this.dto.fl1 = this.searchFrom.queryClassifyId[0];
+				this.dto.fl2 = this.searchFrom.queryClassifyId[1];
+				this.dto.fl3 = this.searchFrom.queryClassifyId[2];
+				this.$http.post(this.$api + "/supplierfiles/findss", this.$qs.stringify(this.dto, {
 						allowDots: true
 					}))
 					.then(res => {
