@@ -6,10 +6,12 @@
 			<el-breadcrumb-item>放货管理</el-breadcrumb-item>
 			<el-breadcrumb-item>放货查询</el-breadcrumb-item>
 		</el-breadcrumb>
+		<el-button type="primary" plain size="medium" @click="back" style="float: right; margin-bottom: 15px;">返回</el-button>
 		<div id="card">
 			<el-card class="box-card">
 				<div style="padding-bottom: 10px; ">
 					<span style="font-size: 12px;padding-left: 30px; color: #C6C6C9;">符合条件的产品种类:{{number1}}例，总价:{{number2}}元</span>
+					
 				</div>
 				<div id="table" style="padding-left: 20px;padding-right: 20px;">
 					<el-table :data="tableData" border stripe style="width: 100%" stripe>
@@ -48,8 +50,10 @@
 	export default {
 		data() {
 			return {
+				
 				sz: [],
-				number: '',
+				number1:0,
+				number2:0,
 				tableData: [],
 				input: '',
 				currentPage1: 5,
@@ -76,6 +80,9 @@
 					.catch(err => {
 						console.log(err)
 					});
+			},
+			back(){
+				
 			},
 			reviewButton(row) {
 				this.$router.push({
@@ -150,5 +157,10 @@
 
 	.el-table .success-row {
 		background: oldlace;
+	}
+	#butt {
+		margin-bottom: 20px;
+		width: 80px;
+		float: right;
 	}
 </style>
