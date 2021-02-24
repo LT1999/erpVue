@@ -34,7 +34,12 @@
 			<div>
 				<el-table :data="tableData" style="text-align: center;" border>
 					<el-table-column prop="supplierNo" label="供应商编号" width="200px">
-					</el-table-column><!-- 点击供应商编号要跳转到供应商档案查询 -->
+						<template slot-scope="scope">
+							<span class="buttonText" style="cursor:pointer" @click="jup(scope.row)">{{ scope.row.supplierNo }}</span>
+						</template>
+					</el-table-column>
+					<!-- 点击供应商编号要跳转到供应商档案查询  
+					supplierprofile/InfoChange-info -->
 					<el-table-column prop="supplierName" label="供应商名称">
 					</el-table-column>
 					<el-table-column prop="firstKindName" label="I级分类">
@@ -49,9 +54,9 @@
 					</el-table-column>
 					<el-table-column prop="review" label="操作">
 						<template slot-scope="scope">
-							<el-button size="mini" type="success" plain @click="selInfoChange(scope.row)">
+							<el-button size="mini" type="success" plain @click="selInfo(scope.row)">
 								查看
-							</el-button>
+							</el-button><!-- 点击查看跳转到ReleaseCargo/ReleaseCargoQuery-info -->
 						</template>
 					</el-table-column>
 				</el-table>
@@ -229,17 +234,26 @@
 						console.log(err)
 					}); 
 			},
+			jup(row) {
+				console.log(row)
+				this.$router.push({
+					path: '/InfoChange-info',
+					query: {
+						arr: row
+					}
+				});
+			},
 			handleChange() {
 
 			},
 			Changeinfo(row) {
 				this.$router.push({path: '/InfoChange2',query:{arr:row}});
 			},
-			selInfoChange(row) {
+			selInfo(row) {
 				
 				//console.log(row);
 				this.$router.push({
-					path: '/InfoChange-info',
+					path: '/ReleaseCargoQuery-info',
 					query: {
 						arr: row
 					}
