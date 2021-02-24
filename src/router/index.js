@@ -878,6 +878,12 @@ export default new Router({
 					name: 'qualitycx',
 					component: qualitycx => require(['@/components/procurement/quality/qualitycx.vue'],
 						qualitycx)
+				},
+				{ /*采购成本查询 */
+					path: '/Costquery',
+					name: 'Costquery',
+					component: Costquery => require(['@/components/procurement/procurementcostquery/Costquery.vue'],
+						Costquery)
 				}
 			]
 		}
