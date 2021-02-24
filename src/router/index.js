@@ -884,6 +884,12 @@ export default new Router({
 					name: 'Costquery',
 					component: Costquery => require(['@/components/procurement/procurementcostquery/Costquery.vue'],
 						Costquery)
+				},
+				{ /*放货审核 */
+					path: '/ReleaseCargoAudit',
+					name: 'ReleaseCargoAudit',
+					component: ReleaseCargoAudit => require(['@/components/procurement/ReleaseCargo/ReleaseCargoAudit.vue'],
+						ReleaseCargoAudit)
 				}
 			]
 		}
