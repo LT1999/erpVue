@@ -127,5 +127,6 @@ procurement 采购模块
 	
 	ReleaseCargo:放货管理
 	ReleaseCargoAudit:放货审核
+	ReleaseCargoQuery:放货查询
 	    
    
