@@ -3,35 +3,33 @@
 	<div id="box">
 		<el-breadcrumb>
 			<el-breadcrumb-item>采购管理</el-breadcrumb-item>
-			<el-breadcrumb-item>采购发票管理</el-breadcrumb-item>
-			<el-breadcrumb-item>发票信息登记</el-breadcrumb-item>
+			<el-breadcrumb-item>放货管理</el-breadcrumb-item>
+			<el-breadcrumb-item>放货查询</el-breadcrumb-item>
 		</el-breadcrumb>
+		<el-button type="primary" plain size="medium" @click="back" style="float: right; margin-bottom: 15px;">返回</el-button>
 		<div id="card">
 			<el-card class="box-card">
 				<div style="padding-bottom: 10px; ">
-					<span style="font-size: 20px;padding-left: 30px; color: #6275A6;">发票信息登记</span>
-
-					<br />
-					<span style="font-size: 12px;padding-left: 30px; color: #C6C6C9;">等待登记发票信息的采购执行单总数 :{{number}}例 </span>
+					<span style="font-size: 12px;padding-left: 30px; color: #C6C6C9;">符合条件的产品种类:{{number1}}例，总价:{{number2}}元</span>
+					
 				</div>
 				<div id="table" style="padding-left: 20px;padding-right: 20px;">
 					<el-table :data="tableData" border stripe style="width: 100%" stripe>
-						<el-table-column prop="purchase.purchaseqNo" label="采购执行单编号" width="200px">
+						<el-table-column prop="supplierNo" label="产品编号" width="200px">
 						</el-table-column>
-						<el-table-column prop="purchase.productNo" label="产品编号">
+						<el-table-column prop="supplierName" label="产品名称">
 						</el-table-column>
-						<el-table-column prop="purchase.productName" label="产品名称">
+						<el-table-column prop="firstKindName" label="I级分类">
 						</el-table-column>
-						<el-table-column prop="purchase.purchaseMoney" label="应开发票总额">
+						<el-table-column prop="secondKindName" label="II级分类">
 						</el-table-column>
-						<el-table-column prop="Haveinvoice" label="已开发票总额" :formatter="Haveinvoice">
+						<el-table-column prop="threeKindName" label="III级分类">
 						</el-table-column>
-						<el-table-column prop="Noinvoice" label="未开发票总额" :formatter="Noinvoice">
+						<el-table-column prop="supplierBuyer" label="单价">
 						</el-table-column>
-						<el-table-column prop="review" label="登记">
-							<template slot-scope="scope">
-								<el-button @click="reviewButton(scope.row)" size="mini" type="success" plain>登记</el-button>
-							</template>
+						<el-table-column prop="supplierBuyer" label="数量">
+						</el-table-column>
+						<el-table-column prop="supplierBuyer" label="小计">
 						</el-table-column>
 					</el-table>
 				</div>
@@ -52,8 +50,10 @@
 	export default {
 		data() {
 			return {
+				
 				sz: [],
-				number:'',
+				number1:0,
+				number2:0,
 				tableData: [],
 				input: '',
 				currentPage1: 5,
@@ -64,34 +64,29 @@
 		},
 		methods: {
 			selectAll() {
-				
-				this.$http.post("http://localhost:8081/invoice/selAllInvoice")
+				this.$http.post("http://localhost:8081/supplierfiles/selectCheck")
 					.then(res => {
 						this.tableData = res.data;
-						this.number=this.tableData.length
+
 					})
 					.catch(err => {
 						console.log(err)
 					});
-				/* this.$http.post("http://localhost:8080/Erp-web/productfile/getProductfileByCheckTag.do")
+				this.$http.post("http://localhost:8081/supplierfiles/selectCount")
 					.then(res => {
 						this.number = res.data;
 
 					})
 					.catch(err => {
 						console.log(err)
-					}); */
+					});
 			},
-			Noinvoice(row){
-				return parseInt(row.purchase.purchaseMoney)-0;
-			},
-			Haveinvoice(row){
-				return '0.00';
+			back(){
+				
 			},
 			reviewButton(row) {
-				console.log(row)
 				this.$router.push({
-					path: '/Invoicestration2',
+					path: '/Infostrationreview2',
 					query: {
 						arr: row
 					}
@@ -162,5 +157,10 @@
 
 	.el-table .success-row {
 		background: oldlace;
+	}
+	#butt {
+		margin-bottom: 20px;
+		width: 80px;
+		float: right;
 	}
 </style>

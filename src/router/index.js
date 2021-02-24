@@ -879,11 +879,29 @@ export default new Router({
 					component: qualitycx => require(['@/components/procurement/quality/qualitycx.vue'],
 						qualitycx)
 				},
-				{
-					path: '/FangHucx',
-					name: 'FangHucx',
-					component: FangHucx => require(['@/components/procurement/releaseCargo/FangHucx.vue'],
-						FangHucx)
+				{ /*采购成本查询 */
+					path: '/Costquery',
+					name: 'Costquery',
+					component: Costquery => require(['@/components/procurement/procurementcostquery/Costquery.vue'],
+						Costquery)
+				},
+				{ /*放货审核 */
+					path: '/ReleaseCargoAudit',
+					name: 'ReleaseCargoAudit',
+					component: ReleaseCargoAudit => require(['@/components/procurement/ReleaseCargo/ReleaseCargoAudit.vue'],
+						ReleaseCargoAudit)
+				}
+				,{ /*放货查询 */
+					path: '/ReleaseCargoQuery',
+					name: 'ReleaseCargoQuery',
+					component: ReleaseCargoQuery => require(['@/components/procurement/ReleaseCargo/ReleaseCargoQuery.vue'],
+						ReleaseCargoQuery)
+				}
+				,{ /*放货查询 */
+					path: '/ReleaseCargoQuery-info',
+					name: 'ReleaseCargoQueryinfo',
+					component: ReleaseCargoQueryinfo => require(['@/components/procurement/ReleaseCargo/ReleaseCargoQuery-info.vue'],
+						ReleaseCargoQueryinfo)
 				}
 			]
 		}
