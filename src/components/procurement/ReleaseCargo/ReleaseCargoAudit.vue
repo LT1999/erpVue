@@ -56,7 +56,7 @@
 		},
 		methods: {
 			selectAll() {
-				this.$http.post(this.$api + "/offer/findCheck")
+				this.$http.post(this.$api + "/purchase/selectReleaseCargoCheck")
 					.then(res => {
 						this.tableData = res.data;
 						console.log(this.tableData);
