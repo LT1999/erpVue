@@ -126,4 +126,6 @@ procurement 采购模块
     review2:采购计划审核
 	
 	ReleaseCargo:放货管理
+	ReleaseCargoAudit:放货审核
+	    
    
