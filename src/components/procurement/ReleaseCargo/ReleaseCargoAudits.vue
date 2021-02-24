@@ -7,7 +7,6 @@
 				<el-breadcrumb-item>放货审核</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
-
 		<div id="card">
 			<el-form ref="form" :rules="rules" :model="form" label-width="130px">
 				<div id="buttons">
