@@ -890,6 +890,11 @@ export default new Router({
 					name: 'ReleaseCargoAudit',
 					component: ReleaseCargoAudit => require(['@/components/procurement/ReleaseCargo/ReleaseCargoAudit.vue'],
 						ReleaseCargoAudit)
+				},{ /*放货查询 */
+					path: '/ReleaseCargoQuery',
+					name: 'ReleaseCargoQuery',
+					component: ReleaseCargoQuery => require(['@/components/procurement/ReleaseCargo/ReleaseCargoQuery.vue'],
+						ReleaseCargoQuery)
 				}
 			]
 		}
