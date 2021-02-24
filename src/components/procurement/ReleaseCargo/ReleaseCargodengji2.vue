@@ -33,27 +33,24 @@
     							</template>
     						</el-table-column>
     						<el-table-column prop="productName" label="产品名称" width="150"></el-table-column>
-    						<el-table-column prop="productId" label="产品编号" width="200"></el-table-column>
-    						<el-table-column prop="productDescribe" label="描述" width="150"></el-table-column>
-    						<el-table-column label="数量" width="80">
+    						<el-table-column prop="productNo" label="产品编号" width="200"></el-table-column>
+    						<el-table-column prop="purchasedetail[0].quantity" label="采购数量" width="150"></el-table-column>
+							<el-table-column prop="releaseCargo" label="已放货数量"></el-table-column>
+    						<el-table-column label="放货数量" width="80">
     							<template slot-scope="scope">
-    								<el-input v-model="scope.row.amount" @change="sumzje(scope.row,scope.$index)"></el-input>
+    								<el-input v-model="scope.row.checkReleaseCargo" @change="sumzje(scope.row,scope.$index)"></el-input>
     							</template>
     						</el-table-column>
-    						<el-table-column prop="amountUnit" label="单位" width="80"></el-table-column>
-    						<el-table-column prop="costPrice" label="成本单价(元)" width="120"></el-table-column>
-    						<el-table-column prop="subtotal" label="小计(元)">
-    							<!-- <template slot-scope="scope">
-                    <el-input :disabled="true"  v-model="num" clearable></el-input>
-                  </template> -->
+    						<el-table-column prop="purchasedetail[0].price" label="成本单价(元)" width="120"></el-table-column>
+    						<el-table-column prop="subtotal1" label="小计(元)">
     						</el-table-column>
     					</el-table>
     					<br />
     					<div>
-    						<el-form-item label="总件数:">
+    						<el-form-item label="放货件数:">
     							<el-input class="inp2" v-model="formInline.amountSum"></el-input>
     						</el-form-item>
-    						<el-form-item label="总金额:">
+    						<el-form-item label="放货金额:">
     							<el-input class="inp2" v-model="formInline.costPriceSum"></el-input>
     						</el-form-item>
     						<!-- <span class="sp1">总件数:</span><span>总金额:</span> -->
@@ -88,20 +85,18 @@
     			<el-form-item label="请选择产品菜单">
     				<el-cascader v-model="formInline.classification" :options="options" @change="handleChange"></el-cascader>
     			</el-form-item>
-    			<el-button type="primary" @click="onSubmit">搜索</el-button>
+    			<el-button type="primary">搜索</el-button>
     			</el-form-item>
     		</el-form>
     	</div>
     	<br />
     	<el-table :data="gridData">
-    		<el-table-column prop="productId" label="产品编号" width="150"></el-table-column>
+    		<el-table-column prop="productNo" label="产品编号" width="150"></el-table-column>
     		<el-table-column prop="productName" label="产品名称" width="100"></el-table-column>
-    		<el-table-column prop="type" label="用途类型" width="100"></el-table-column>
-    		<el-table-column prop="personalUnit" label="单位" width="50"></el-table-column>
-    		<el-table-column prop="costPrice" label="成本单价(元)" width="150"></el-table-column>
-    		<el-table-column label="入库">
+    		<el-table-column prop="purchasedetail[0].price" label="成本单价(元)" width="150"></el-table-column>
+    		<el-table-column label="登记">
     			<template slot-scope="scope">
-    				<el-button @click.native.prevent="add(scope.row)" type="text" size="small">入库</el-button>
+    				<el-button @click.native.prevent="add(scope.row)" type="text" size="small">登记</el-button>
     			</template>
     		</el-table-column>
     	</el-table>
@@ -112,12 +107,6 @@
 
 <script>
 	export default {
-		created() {
-			this.shijian();
-			//this.selectAllDESIGN();
-
-			//alert(this.Price);
-		},
 		data() {
 			return {
 				sum: 1, //数量
@@ -159,7 +148,8 @@
 					storeTag: '已申请', //库存标志
 				},
 				tableData: [],
-				datas: {},
+				dto: {
+				},
 				warehouse: {
 					productName: '', //产品名称
 					productId: '', //产品id
@@ -168,7 +158,9 @@
 					costPrice: '', //单价
 					amount: 1, //数量
 					subtotal: '' //小计
-				}
+				},
+				b:true
+				
 			}
 		}
 		/* ,
@@ -183,100 +175,60 @@
 		,
 		methods: {
 			onSubmit() {
-				//console.log('submit!');
-				this.$set(this.datas, 'gather', this.formInline);
-				this.tableData.forEach(item=>{
-					this.$delete(item,'id');
+				var sum=this.formInline.amountSum;
+				alert(sum);
+				this.tableData.forEach(item => {
+					alert(sum +item.releaseCargo)
+					if((sum +item.releaseCargo)>item.purchaseQuantity){
+						 this.$message.error('请输入正确数量');
+						 this.b=false;
+						 return false;
+					}
+					
 				})
-				this.$set(this.datas, 'gatherDetails', this.tableData);
-				this.$http.post("http://localhost:8080/Erp-web/gather/addGatherDetails.do", this.$qs.stringify(this.datas, {
-						arrayFormat: 'gatherDetails',
-						allowDots: true
-					}))
-					.then(res => {
-						console.log(this.formInline.productName);
-						if (res.status == 200) {
-							this.$message({
-								message: '提交成功！',
-								type: 'success',
-								duration: 1000
-							});
-							this.$router.go(0);
-						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				if(this.b){
+					this.$set(this.dto,'purchaseList',this.tableData);
+					this.$http.post(this.$api + "/purchase/updateByPrimaryKeyReleaseCargo", this.$qs.stringify(this.dto, {
+							arrayFormat: 'purchaseList',
+							allowDots: true
+						}))
+						.then(res => {
+							if (res.data >0) {
+								this.$message({
+									message: '提交成功！',
+									type: 'success',
+									duration: 1000
+								});
+								this.$router.go(0);
+							}
+						})
+						.catch(err => {
+							console.log(err)
+						})
+				}
+				
 
 			},
 			handleChange(value) {
 				console.log(value);
 			},
 			sumzje(row,index) {
-				/* alert() */
-				this.tableData[row.id].subtotal=parseInt(row.amount)*row.costPrice;
-		/* 	=; */
+				row.subtotal1=row.purchasedetail[0].price*row.checkReleaseCargo;
 				this.formInline.costPriceSum =0;
 				this.formInline.amountSum =0;
 				this.tableData.forEach(item => {
-					this.formInline.costPriceSum = this.formInline.costPriceSum + item.subtotal;
-					this.formInline.amountSum = parseInt(this.formInline.amountSum)  +parseInt(item.amount) ;
+					if(item.checkReleaseCargo==''||item.checkReleaseCargo==null){
+						item.checkReleaseCargo=0;
+					}
+					this.formInline.costPriceSum += item.subtotal1;
+					this.formInline.amountSum += parseInt(item.checkReleaseCargo);
 				})
 			},
 			add(row) {
-				this.$delete(row, 'changeTag');
-				this.$delete(row, 'changeTime');
-				this.$delete(row, 'changer');
-				this.$delete(row, 'checkTag');
-				this.$delete(row, 'checkTime');
-				this.$delete(row, 'checker');
-				this.$delete(row, 'deleteTag');
-				this.$delete(row, 'deleteTime');
-				this.$delete(row, 'designCellTag');
-				this.$delete(row, 'designModuleTag');
-				this.$delete(row, 'designProcedureTag');
-				this.$delete(row, 'factoryName');
-				this.$delete(row, 'fileChangeAmount');
-				this.$delete(row, 'firstKindId');
-				this.$delete(row, 'firstKindName');
-				this.$delete(row, 'lifecycle');
-				this.$delete(row, 'listPrice');
-				this.$delete(row, 'personalUnit');
-				this.$delete(row, 'personalValue');
-				this.$delete(row, 'priceChangeTag');
-				this.$delete(row, 'productClass');
-
-				this.$delete(row, 'productNick');
-				this.$delete(row, 'providerGroup');
-				this.$delete(row, 'realCostPrice');
-				this.$delete(row, 'register');
-				this.$delete(row, 'registerTime');
-				this.$delete(row, 'responsiblePerson');
-
-				this.$delete(row, 'secondKindId');
-				this.$delete(row, 'secondKindName');
-				this.$delete(row, 'thirdKindName');
-				this.$delete(row, 'twinId');
-				this.$delete(row, 'twinName');
-				this.$delete(row, 'type');
-				this.$delete(row, 'warranty');
-				//alert(this.index);
-				//把数据添加到数组末尾
-				//this.formInline.tableData.push(this.gridData[this.index]);
-				/* this.warehouse.productName= row.productName; //产品名称
-				this.warehouse.productId= row.productId; //产品id
-				this.warehouse.productDescribe= row.productDescribe; //描述
-				this.warehouse.amountUnit= row.amountUnit; //单位
-				this.warehouse.costPrice= row.costPrice; //单价
-				this.warehouse.amount= 1; //数量
-				this.warehouse.subtotal= row.costPrice * this.warehouse.amount; //小计 */
-				this.$set(row,'amount',0);
-				this.$set(row,'subtotal',row.costPrice * row.amount);
-				this.$set(this.tableData, row.id, row);
-				console.log(this.tableData);
+				this.$set(row,"subtotal1",0);
+				this.tableData.push(row);
 				//关闭所有模态框;
 				this.table = false;
-				//alert(this.gridData.realCostPrice);
 			},
 			selectAllDESIGN() {
 				this.$http.post("http://localhost:8080/Erp-web/productfile/selectAllDESIGN.do")
@@ -299,8 +251,23 @@
 				var time = "";
 				time = year + "-" + month + "-" + date;
 				this.formInline.registerTime = time;
+			},
+			initialize(row){
+				this.$http.post(this.$api + "/purchase/selectNotReleaseCargo","supplierNo="+row.supplierNo)
+					.then(res => {
+						this.gridData = res.data;
+						console.log("手动阀手动阀");
+						console.log(this.tableData);
+					})
+					.catch(err => {
+						console.log(err)
+					}); 
 			}
 
+		},
+		mounted() {
+			this.initialize(this.$route.query.row);
+			this.shijian();
 		}
 	}
 </script>
