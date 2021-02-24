@@ -878,6 +878,12 @@ export default new Router({
 					name: 'qualitycx',
 					component: qualitycx => require(['@/components/procurement/quality/qualitycx.vue'],
 						qualitycx)
+				},
+				{
+					path: '/FangHucx',
+					name: 'FangHucx',
+					component: FangHucx => require(['@/components/procurement/releaseCargo/FangHucx.vue'],
+						FangHucx)
 				}
 			]
 		}
