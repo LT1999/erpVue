@@ -10,19 +10,19 @@
 			<div>
 				<span style="font-size: 12px; color: #C6C6C9;float: left;">当前等待审核的申请单总数 :{{number}}例 </span>
 				<el-table :data="tableData" style="text-align: center;" border>
-					<el-table-column prop="offerNo" label="申请单编号" width="200px">
+					<el-table-column prop="purchaseqNo" label="采购单编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="1" label="放货人">
+					<el-table-column prop="purchasedetailList[0].supplierNo" label="供应商编号">
 					</el-table-column>
-					<el-table-column prop="2" label="采购人">
+					<el-table-column prop="purchasedetailList[0].supplierName" label="供应商名称">
 					</el-table-column>
-					<el-table-column prop="3" label="登记时间">
+					<el-table-column prop="productNo" label="商品编号">
 					</el-table-column>
-					<el-table-column prop="4" label="归还时间">
+					<el-table-column prop="productName" label="商品名称">
 					</el-table-column>
-					<el-table-column prop="5" label="总件数">
-					</el-table-column>
-					<el-table-column prop="6" label="总金额">
+					<el-table-column prop="checkReleaseCargo" label="放货数量">
+					</el-table-column>>
+					<el-table-column prop="releaseCargo" label="已放货数量">
 					</el-table-column>
 					<el-table-column prop="review" label="操作">
 						<template slot-scope="scope">
@@ -34,7 +34,7 @@
 				</el-table>
 			</div>
 			<div class="block">
-				
+
 				<el-pagination style="margin-top: 10px;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
 				 :current-page="currentPage" :page-sizes="[5, 7, 9]" :page-size="3" layout="total, sizes, prev, pager, next, jumper"
 				 :total="10">
@@ -49,29 +49,37 @@
 		data() {
 			return {
 				//表格
-				tableData: [{
-					'offerNo':1,
-					1:1,
-					2:2,
-					3:3,
-					4:4,
-					5:5,
-					6:6
-				}],
+				tableData: [],
 				currentPage: 10,
-				number:0
+				number: 0
 			}
 		},
 		methods: {
 			selectAll() {
-				/* this.$http.post(this.$api + "/offer/findCheck")
+				this.$http.post(this.$api + "/purchase/selectReleaseCargoCheck")
 					.then(res => {
 						this.tableData = res.data;
-						this.number=this.tableData.length;
+						this.number = this.tableData.length;
 					})
 					.catch(err => {
 						console.log(err)
-					}); */
+					});
+			},
+			//分页
+			handleSizeChange(val) {
+				console.log(`每页 ${val} 条`);
+			},
+			handleCurrentChange(val) {
+				console.log(`当前页: ${val}`);
+			},
+			handleEdit(index, row) {
+				this.$message(index + "-" + row);
+			},
+			handleDelete(index, row) {
+				this.$message(index + "-" + row);
+			},
+			handleChange() {
+
 			},
 			//分页
 			handleSizeChange(val) {
@@ -90,6 +98,7 @@
 
 			},
 			ReleaseCargoAudits(row) {
+				console.log(row);
 				this.$router.push({
 					path: '/ReleaseCargoAudits',
 					query: {

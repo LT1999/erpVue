@@ -138,6 +138,7 @@
 				}
 				this.$set(this.purchaseDto, 'purchasedetailList', this.tableData);
 				this.$set(this.purchaseDto, 'purchase', this.form);
+				this.$set(this.purchaseDto.purchase,'purchasedetailList',this.tableData);
 				this.$http.post(this.$api + "/purchase/updatePurchaseAndPurchaseDetail", this.$qs.stringify(this.purchaseDto, {
 						arrayFormat: 'purchasedetailList',
 						allowDots: true

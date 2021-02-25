@@ -8,7 +8,7 @@
 			</el-breadcrumb>
 		</div>
 		<div id="card">
-			<el-form ref="form" :rules="rules" :model="form" label-width="130px">
+			<el-form ref="form"  :model="form" label-width="130px">
 				<div id="buttons">
 					<el-button type="success" @click="submit('已审核')">通过</el-button>
 					<el-button type="warning" @click="submit('审核未通过')">未通过</el-button>
@@ -16,108 +16,71 @@
 				</div>
 				<el-card class="box-card">
 					<h3>放货登记单</h3><br />
-					<el-form ref="form2" :rules="rules" :model="form2" label-width="130px">
+					<el-form ref="form2"  :model="form2" label-width="130px">
 						<el-row>
 							<el-col :span="8" :push='1'>
-								<el-form-item label="申请单编号">
-									<span>{{form2.supplierName}}</span>
+								<el-form-item label="采购单编号">
+									<span>{{form2.purchaseqNo}}</span>
 								</el-form-item>
 							</el-col>
 							<el-col :span="8" :push='6'>
-								<el-form-item label="审核人" prop="auditor">
-									<input></input>
+								<el-form-item label="供应商">
+									<!-- <span>{{form2.purchasedetail.supplierName}}</span> -->
 								</el-form-item>
 							</el-col>
 						</el-row>
-						<el-row>
-							<el-col :span="8" :push='1'>
-								<el-form-item label="分类">
-									<span>{{form2.supplierName}}</span>
-								</el-form-item>
-							</el-col>
-							<el-col :span="8" :push='6'>
-								<el-form-item label="放货人">
-									<span>{{form2.supplierName}}</span>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="8" :push='1'>
-								<el-form-item label="采购人">
-									<span>{{form2.supplierName}}</span>
-								</el-form-item>
-							</el-col>
-							<el-col :span="8" :push='6'>
-								<el-form-item label="入库理由">
-									<span>{{form2.supplierName}}</span>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="8" :push='1'>
-								<el-form-item label="是否归还">
-									<el-select v-model="value">
-										<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-									</el-select>
-								</el-form-item>
-							</el-col>
-							<el-col :span="8" :push='6'>
-								<el-form-item label="归还时间">
-									 <el-date-picker  v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
-								</el-form-item>
-							</el-col>
-						</el-row>
+
 						<el-row>
 							<template>
 								<el-table :data="tableData" style="margin-left: 8%; width: 85%;" border>
-									<el-table-column prop="1" label="序号">
+									<el-table-column prop="id" label="序号">
 									</el-table-column>
-									<el-table-column prop="2" label="商品名称 ">
+									<el-table-column prop="productName" label="商品名称 ">
 									</el-table-column>
-									<el-table-column prop="3" label="商品编号">
+									<el-table-column prop="productNo" label="商品编号">
 									</el-table-column>
-									<el-table-column prop="4" label="当前库存数量">
+									<el-table-column prop="releaseCargo" label="已放货数量">
 									</el-table-column>
-									<el-table-column prop="count" label="数量">
-										<input></input>
+									<el-table-column prop="checkReleaseCargo" label="放货数量">
 									</el-table-column>
-									<el-table-column prop="3" label="单位">
+									<el-table-column prop="purchasedetail[0].price" label="单价(元)">
 									</el-table-column>
-									<el-table-column prop="4" label="单价(元)">
-									</el-table-column>
-									<el-table-column prop="5" label="小计(元)">
-									</el-table-column>
+									<!-- <el-table-column  label="小计(元)">
+										<template slot-scope="scope">
+											<span>{{scope.checkReleaseCargo}}</span>
+										</template>
+									</el-table-column> -->
 								</el-table>
 							</template>
 						</el-row>
-						<el-row>
+						<!-- <el-row>
 							<el-col :span="8" :push='1'>
-								<el-form-item label="总件数">
+								<el-form-item label="放货件数">
 									<span>{{form2.supplierName}}</span>
 								</el-form-item>
 							</el-col>
 							<el-col :span="8" :push='6'>
-								<el-form-item label="总金额">
+								<el-form-item label="放货金额">
 									<span>{{form2.supplierName}}</span>
 								</el-form-item>
 							</el-col>
-						</el-row>
+						</el-row> -->
 						<el-row>
 							<el-col :span="8" :push='1'>
-								<el-form-item label="登记人">
-									<span>{{form2.supplierName}}</span>
+								<el-form-item label="审核人">
+									<input></input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="8" :push='6'>
-								<el-form-item label="登记时间">
-									<span>{{form2.supplierName}}</span>
+								<el-form-item label="审核时间">
+									<span>{{value}}</span>
 								</el-form-item>
 							</el-col>
 						</el-row>
 						<el-row>
 							<el-col :span="21" :push="1">
 								<el-form-item label="备注" style="width: 100%;">
-									<el-input style="width: 100%;" v-model="form.supplierName" type="textarea" :autosize="{ minRows: 4, maxRows: 6}"></el-input>
+									<el-input style="width: 100%;" type="textarea" v-model="value1" :autosize="{ minRows: 4, maxRows: 6}"></el-input>
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -141,66 +104,45 @@
 					label: '否'
 				}],
 				value: '',
-				value1:'',
-				rules: {
-					auditor: [{
-						required: true,
-						message: '请填写审核人',
-						trigger: 'blur'
-					}]
-				},
+				value1: '',
+				
 				form: {},
-				form2: {'supplierName':'2020-2-2'},
-				tableData: [{
-					1: 1,
-					2: 2,
-					3: 3,
-					4: 4,
-					5: 5,
-					'count': 3
-				}]
+				form2: {
+				},
+				tableData: []
 
 			};
 		},
 		methods: {
 			submit(check) {
-				this.$refs.form2.validate((valid) => {
-					if (valid) {
-						this.$confirm('确认审核结果?', '提示', {
-							confirmButtonText: '确定',
-							cancelButtonText: '取消',
-							type: 'warning'
-						}).then(() => {
-							var aData = new Date();
-							this.form.auditorTime = aData.getFullYear() + "-" +
-								(aData.getMonth() + 1) + "-" +
-								aData.getDate() + " " +
-								aData.getHours() + ":" +
-								aData.getMinutes() + ":" +
-								aData.getSeconds();
-							/* this.$http.post(this.$api + "/offer/updateByPrimaryKey", this.$qs.stringify(this.form))
-								.then(res => {
-									if (res.data > 0) {
-										this.$message({
-											message: '审核成功！',
-											type: 'success'
-										});
-										location.href = "#/ReleaseCargoAudit";
-									}
-								})
-								.catch(err => {
-									console.log(err)
-								}); */
-						}).catch(() => {
-							this.$message({
-								type: 'info',
-								message: '已取消'
-							});
-						});
-					} else {
-						return false;
+				if(check==='已审核'){
+					this.tableData[0].releaseCargo+=this.tableData[0].checkReleaseCargo;
+					this.tableData[0].checkReleaseCargo=0;
+					if(this.tableData[0].releaseCargo==this.tableData[0].purchaseQuantity){
+						this.tableData[0].releaseCargoCheck='已审核';
+					}else{
+						this.tableData[0].releaseCargoCheck='待登记';
 					}
-				});
+				}else{
+					this.tableData[0].checkReleaseCargo=0;
+					this.tableData[0].releaseCargoCheck='待登记';
+				}
+				this.$http.post(this.$api + "/purchase/updateByKeyReleaseCargo",this.$qs.stringify(this.tableData[0], {
+							arrayFormat: 'purchaseList',
+							allowDots: true
+						}))
+					.then(res => {
+						if (res.data >0) {
+							this.$message({
+								message: '提交成功！',
+								type: 'success',
+								duration: 1000
+							});
+							this.$router.go(-1);}
+					})
+					.catch(err => {
+						console.log(err)
+					});
 			},
 			back() {
 				this.$confirm('审核已完成?立即返回', '提示', {
@@ -216,30 +158,27 @@
 					});
 				});
 			},
-			selsup() {
-				/* this.$http.post(this.$api + "/supplierfiles/selectByPrimaryKey", "id=" + this.form.supplierId)
-					.then(res => {
-						this.form2 = res.data;
-					})
-					.catch(err => {
-						console.log(err)
-					}); */
+			initialize(arr){
+				this.form2=arr;
+				/* this.$set(this.form2,"supplierName",arr.purchasedetail[0].supplierName); */
+				this.tableData[0]=arr;
+			},
+			shijian() {
+				var now = new Date();
+				var year = now.getFullYear(); //得到年份
+				var month = now.getMonth(); //得到月份
+				var date = now.getDate(); //得到日期
+				month = month + 1;
+				if (month < 10) month = "0" + month;
+				if (date < 10) date = "0" + date;
+				var time = "";
+				time = year + "-" + month + "-" + date;
+				this.value = time;
 			}
 		},
 		mounted() {
-			/* this.tableData.push(this.form); */
-		},
-		created() {
-			/* this.form.goodsDiscount=this.$route.query.arr.goodsDiscount;
-			this.form.goodsSubtotal=this.$route.query.arr.goodsSubtotal;
-			this.form.goodsPrice=this.$route.query.arr.goodsPrice;
-			this.form.goodsDescribe=this.$route.query.arr.goodsDescribe;
-			this.form.goodsName=this.$route.query.arr.goodsName;
-			this.form.offerNo=this.$route.query.arr.offerNo;
-			this.form.auditor=this.$route.query.arr.auditor;
-			this.form.id=this.$route.query.arr.id; */
-			this.form2 = this.$route.query.arr;
-			this.selsup();
+			this.initialize(this.$route.query.arr);
+			this.shijian();
 		}
 	}
 </script>
