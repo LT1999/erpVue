@@ -74,8 +74,8 @@
 
 					<el-row>
 						<el-col :span="8" :push='2'>
-							<el-form-item label="采购数量">
-								<span>{{form.purchaseQuantity}}</span>
+							<el-form-item label="放货数量">
+								<span>{{form.releaseCargo}}</span>
 							</el-form-item>
 						</el-col>
 						<el-col :span="8" :push='8'>
@@ -127,6 +127,7 @@
 				if (count <= this.form.purchaseQuantity) {
 					this.$set(this.purchaseDto, 'purchasedetailList', this.tableData);
 					this.$set(this.purchaseDto, 'purchase', this.form);
+					this.$set(this.purchaseDto.purchase,'purchasedetailList',this.tableData);
 					this.$http.post(this.$api + "/purchase/updatePurchaseAndPurchaseDetail", this.$qs.stringify(this.purchaseDto, {
 							arrayFormat: 'purchasedetailList',
 							allowDots: true

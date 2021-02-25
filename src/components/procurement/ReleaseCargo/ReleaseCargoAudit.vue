@@ -12,21 +12,21 @@
 				<el-table :data="tableData" style="text-align: center;" border>
 					<el-table-column prop="purchaseqNo" label="采购单编号" width="200px">
 					</el-table-column>
-					<el-table-column prop="purchasedetail[0].supplierNo" label="供应商编号">
+					<el-table-column prop="purchasedetailList[0].supplierNo" label="供应商编号">
 					</el-table-column>
-					<el-table-column prop="purchasedetail[0].supplierName" label="供应商名称">
+					<el-table-column prop="purchasedetailList[0].supplierName" label="供应商名称">
 					</el-table-column>
 					<el-table-column prop="productNo" label="商品编号">
 					</el-table-column>
 					<el-table-column prop="productName" label="商品名称">
 					</el-table-column>
 					<el-table-column prop="checkReleaseCargo" label="放货数量">
-					</el-table-column>
+					</el-table-column>>
 					<el-table-column prop="releaseCargo" label="已放货数量">
 					</el-table-column>
 					<el-table-column prop="review" label="操作">
 						<template slot-scope="scope">
-							<el-button size="mini" @click.prevent="VerificationRequests(scope.row)" type="warning" plain>
+							<el-button size="mini" @click.prevent="ReleaseCargoAudits(scope.row)" type="warning" plain>
 								审核
 							</el-button>
 						</template>
@@ -34,7 +34,7 @@
 				</el-table>
 			</div>
 			<div class="block">
-				
+
 				<el-pagination style="margin-top: 10px;" @size-change="handleSizeChange" @current-change="handleCurrentChange"
 				 :current-page="currentPage" :page-sizes="[5, 7, 9]" :page-size="3" layout="total, sizes, prev, pager, next, jumper"
 				 :total="10">
@@ -51,7 +51,7 @@
 				//表格
 				tableData: [],
 				currentPage: 10,
-				number:''
+				number: 0
 			}
 		},
 		methods: {
@@ -59,11 +59,11 @@
 				this.$http.post(this.$api + "/purchase/selectReleaseCargoCheck")
 					.then(res => {
 						this.tableData = res.data;
-						console.log(this.tableData);
+						this.number = this.tableData.length;
 					})
 					.catch(err => {
 						console.log(err)
-					}); 
+					});
 			},
 			//分页
 			handleSizeChange(val) {
@@ -81,9 +81,26 @@
 			handleChange() {
 
 			},
-			VerificationRequests(row) {
+			//分页
+			handleSizeChange(val) {
+				console.log(`每页 ${val} 条`);
+			},
+			handleCurrentChange(val) {
+				console.log(`当前页: ${val}`);
+			},
+			handleEdit(index, row) {
+				this.$message(index + "-" + row);
+			},
+			handleDelete(index, row) {
+				this.$message(index + "-" + row);
+			},
+			handleChange() {
+
+			},
+			ReleaseCargoAudits(row) {
+				console.log(row);
 				this.$router.push({
-					path: '/VerificationRequests',
+					path: '/ReleaseCargoAudits',
 					query: {
 						arr: row
 					}

@@ -34,14 +34,14 @@
     						</el-table-column>
     						<el-table-column prop="productName" label="产品名称" width="150"></el-table-column>
     						<el-table-column prop="productNo" label="产品编号" width="200"></el-table-column>
-    						<el-table-column prop="purchasedetail[0].quantity" label="采购数量" width="150"></el-table-column>
+    						<el-table-column prop="purchasedetailList[0].quantity" label="采购数量" width="150"></el-table-column>
 							<el-table-column prop="releaseCargo" label="已放货数量"></el-table-column>
     						<el-table-column label="放货数量" width="80">
     							<template slot-scope="scope">
     								<el-input v-model="scope.row.checkReleaseCargo" @change="sumzje(scope.row,scope.$index)"></el-input>
     							</template>
     						</el-table-column>
-    						<el-table-column prop="purchasedetail[0].price" label="成本单价(元)" width="120"></el-table-column>
+    						<el-table-column prop="purchasedetailList[0].price" label="成本单价(元)" width="120"></el-table-column>
     						<el-table-column prop="subtotal1" label="小计(元)">
     						</el-table-column>
     					</el-table>
@@ -93,7 +93,7 @@
     	<el-table :data="gridData">
     		<el-table-column prop="productNo" label="产品编号" width="150"></el-table-column>
     		<el-table-column prop="productName" label="产品名称" width="100"></el-table-column>
-    		<el-table-column prop="purchasedetail[0].price" label="成本单价(元)" width="150"></el-table-column>
+    		<el-table-column prop="purchasedetailList[0].price" label="成本单价(元)" width="150"></el-table-column>
     		<el-table-column label="登记">
     			<template slot-scope="scope">
     				<el-button @click.native.prevent="add(scope.row)" type="text" size="small">登记</el-button>
@@ -176,9 +176,7 @@
 		methods: {
 			onSubmit() {
 				var sum=this.formInline.amountSum;
-				alert(sum);
 				this.tableData.forEach(item => {
-					alert(sum +item.releaseCargo)
 					if((sum +item.releaseCargo)>item.purchaseQuantity){
 						 this.$message.error('请输入正确数量');
 						 this.b=false;
@@ -199,7 +197,7 @@
 									type: 'success',
 									duration: 1000
 								});
-								this.$router.go(0);
+								this.$router.go(-1);
 							}
 						})
 						.catch(err => {
@@ -213,7 +211,7 @@
 				console.log(value);
 			},
 			sumzje(row,index) {
-				row.subtotal1=row.purchasedetail[0].price*row.checkReleaseCargo;
+				row.subtotal1=row.purchasedetailList[0].price*row.checkReleaseCargo;
 				this.formInline.costPriceSum =0;
 				this.formInline.amountSum =0;
 				this.tableData.forEach(item => {
