@@ -148,18 +148,7 @@
 										});
 					        
 				}
-				/* this.$http.post("http://localhost:8081/invoice/updateByPrimaryKey", this.$qs.stringify(this.form))
-						.then(res => {
-							this.$message({
-								message: '审核成功',
-								type: 'success'
-							});
-							location.href = "#/Invoicestrationreview"
-					
-						})
-						.catch(err => {
-							console.log("审核失败" + err);
-						}); */
+				
 			},
 			back() {
 				location.href = "#/Invoicestrationreview"
