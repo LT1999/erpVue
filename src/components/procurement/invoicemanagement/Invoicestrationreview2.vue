@@ -110,7 +110,7 @@
 					auditor: '', //审核人
 					auditorTime: '', //审核时间
 					checkMark: '已审核' ,//审核标志
-					Nowinvoice:''//本次支出金额
+					Nowinvoice:'0'//本次支出金额
 				},
 				tableData: [{
 					supplierName: this.$route.query.arr.supplierName, //供应商名称
@@ -123,22 +123,43 @@
 			};
 		},
 		methods: {
-			onSubmit() {
-				this.form.invoicemoney=this.$route.query.arr.invoicemoney+parseInt(this.form.Nowinvoice)
-				console.log(this.form);//updateByPrimaryKey
-				this.$http.post("http://localhost:8081/invoice/updateByPrimaryKey", this.$qs.stringify(this.form))
-					.then(res => {
-						this.$message({
-							message: '审核成功',
-							type: 'success'
-						});
-						location.href = "#/Invoicestrationreview"
-				
-					})
-					.catch(err => {
-						console.log("审核失败" + err);
-					});
-				
+			onSubmit() { 
+				this.form.invoicemoney=parseInt(this.form.Nowinvoice)+parseInt(this.form.invoicemoney2);
+				//+parseInt(this.form.Nowinvoice)
+				console.log(this.form.invoicemoney);//updateByPrimaryKey
+				var number=parseInt(this.form.shouldinvoicemoney)-parseInt(this.form.invoicemoney2);
+				if(parseInt(this.form.Nowinvoice)>number){
+					this.$message({
+						message: '您填写的本次开票金额太大请重新填写',
+						type: 'warning'
+					}); 
+				}else{
+					this.$http.post("http://localhost:8081/invoice/updateByPrimaryKey", this.$qs.stringify(this.form))
+										.then(res => {
+											this.$message({
+												message: '审核成功',
+												type: 'success'
+											});
+											location.href = "#/Invoicestrationreview"
+									
+										})
+										.catch(err => {
+											console.log("审核失败" + err);
+										});
+					        
+				}
+				/* this.$http.post("http://localhost:8081/invoice/updateByPrimaryKey", this.$qs.stringify(this.form))
+						.then(res => {
+							this.$message({
+								message: '审核成功',
+								type: 'success'
+							});
+							location.href = "#/Invoicestrationreview"
+					
+						})
+						.catch(err => {
+							console.log("审核失败" + err);
+						}); */
 			},
 			back() {
 				location.href = "#/Invoicestrationreview"
