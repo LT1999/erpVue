@@ -26,7 +26,7 @@
 					</el-table-column>
 					<el-table-column prop="review" label="操作">
 						<template slot-scope="scope">
-							<el-button size="mini" @click.prevent="VerificationRequests(scope.row)" type="warning" plain>
+							<el-button size="mini" @click.prevent="ReleaseCargoAudits(scope.row)" type="warning" plain>
 								审核
 							</el-button>
 						</template>
@@ -49,21 +49,29 @@
 		data() {
 			return {
 				//表格
-				tableData: [],
+				tableData: [{
+					'offerNo':1,
+					1:1,
+					2:2,
+					3:3,
+					4:4,
+					5:5,
+					6:6
+				}],
 				currentPage: 10,
-				number:''
+				number:0
 			}
 		},
 		methods: {
 			selectAll() {
-				this.$http.post(this.$api + "/offer/findCheck")
+				/* this.$http.post(this.$api + "/offer/findCheck")
 					.then(res => {
 						this.tableData = res.data;
-						console.log(this.tableData);
+						this.number=this.tableData.length;
 					})
 					.catch(err => {
 						console.log(err)
-					}); 
+					}); */
 			},
 			//分页
 			handleSizeChange(val) {
@@ -81,9 +89,9 @@
 			handleChange() {
 
 			},
-			VerificationRequests(row) {
+			ReleaseCargoAudits(row) {
 				this.$router.push({
-					path: '/VerificationRequests',
+					path: '/ReleaseCargoAudits',
 					query: {
 						arr: row
 					}

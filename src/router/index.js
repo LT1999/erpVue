@@ -8,7 +8,7 @@ import main from '@/components/main/main'
 Vue.use(Router)
 
 export default new Router({
- 
+
 	routes: [{ /* 登录页面 */
 			path: '/',
 			name: 'login',
@@ -890,13 +890,31 @@ export default new Router({
 					name: 'ReleaseCargoAudit',
 					component: ReleaseCargoAudit => require(['@/components/procurement/ReleaseCargo/ReleaseCargoAudit.vue'],
 						ReleaseCargoAudit)
+				},
+				{ /*放货审核-s */
+					path: '/ReleaseCargoAudits',
+					name: 'ReleaseCargoAudits',
+					component: ReleaseCargoAudits => require(['@/components/procurement/ReleaseCargo/ReleaseCargoAudits.vue'],
+						ReleaseCargoAudits)
 				}
 				,{ /*放货查询 */
 					path: '/ReleaseCargoQuery',
 					name: 'ReleaseCargoQuery',
 					component: ReleaseCargoQuery => require(['@/components/procurement/ReleaseCargo/ReleaseCargoQuery.vue'],
 						ReleaseCargoQuery)
-				}
+				},
+        { /*放货登记 */
+        	path: '/ReleaseCargodengji',
+        	name: 'ReleaseCargodengji',
+        	component: ReleaseCargodengji => require(['@/components/procurement/ReleaseCargo/ReleaseCargodengji.vue'],
+        		ReleaseCargodengji)
+        },
+        { /*放货登记 */
+        	path: '/ReleaseCargodengji2',
+        	name: 'ReleaseCargodengji2',
+        	component: ReleaseCargodengji2 => require(['@/components/procurement/ReleaseCargo/ReleaseCargodengji2.vue'],
+        		ReleaseCargodengji2)
+        }
 				,{ /*放货查询 */
 					path: '/ReleaseCargoQuery-info',
 					name: 'ReleaseCargoQueryinfo',
